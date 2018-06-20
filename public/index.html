@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Lava Wallet</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<head>
+		<meta charset="UTF-8">
+		<title>Lava Wallet</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="../assets/semantic/dist/semantic.css" rel="stylesheet">
+		<link href="../assets/css/main.css" rel="stylesheet">
+	</head>
 
+	<body>
+		<div class="ui main">
+			<h2 class="ui header">
+				<img src="https://avatars2.githubusercontent.com/u/38132633?s=460&v=4" class="ui circular image">
+			</h2>
+			<h1 class="ui header">
+				<a style="font-weight: 100;color: black;">Lava</a>
+				<a style="color: #f05113; font-weight: 400;">Wallet</a>
+			</h1>
+			<div class="ui three item menu">
+				<a class="item" onClick="load('Home');">Home</a>
+				<a class="item" onClick="load('Transfer');">Transfer</a>
+				<a class="item" onClick="load('History');">History</a>
+			</div>
+			<div class="content" id="content">
 
-  <link href="assets/main.css" rel="stylesheet"></head>
-  <body>
+			</div>
+		</div>
+		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="../assets/js/main.js"></script>
+		<script>if (window.module) module = window.module;</script>
+	</body>
 
-
-
-      
-
-
-    <div class="row pretty-navbar">
-      <div class="col s4">Home</div>
-      <div class="col s4">Transfer</div>
-      <div class="col s4">History</div>
-    </div>
-
-
-
-    <h1>Lava Wallet</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-
-
-  <script type="text/javascript" src="bundle.js"></script></body>
 </html>

@@ -1,0 +1,20 @@
+.main {
+    padding: 10%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.ui.menu {
+    border:none; 
+    border-bottom: 1px solid #f05113;
+    box-sizing: border-box;
+}
+
+.ui.menu .item:before {
+    background: rgba(242, 113, 28, 0);
+    padding-top:1px;
+}
+
+.item:hover {
+    padding-top:0;
+}
