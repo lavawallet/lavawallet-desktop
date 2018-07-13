@@ -6,20 +6,32 @@
 
 ## To Use
 
+##### Linux:
+ - Install nodejs 8
+ - Run the following commands:
 ```bash
-
 # Install dependencies
 npm install
 # Compile
 npm run webpack
 # Run the app
 npm run app
-```  
+```
+##### Windows:
+ - Install nodejs 8 from [here](https://nodejs.org/en/download/)
+ - From administrative powershell window, run `npm install --global --production windows-build-tools`
+ - Run `npm config set msvs_version 2015 --global`
+ - Close and re-open your terminal window
+ - Navigate to the project folder, run the following:
+ - `npm install`
+ - `npm run webpack` NOTE: if you receive "Error: ENOENT: no such file or directory, scandir", check TROUBLESHOOTING section.
+ - `npm run app` NOTE: if you receive "Error: A dynamic link library (DLL) initialization routine failed.", check TROUBLESHOOTING section.
+
 
 # Developer TODO
 1. Finish the transfer tab
 
-2. Integrate lava balance and lava transfers 
+2. Integrate lava balance and lava transfers
 
 
 
@@ -52,6 +64,10 @@ npm run app
   - web3 interface path
 
 
+
+## TROUBLESHOOTING:
+ - If during `npm run webpack` you get "Error: ENOENT: no such file or directory, scandir", then delete your `node\_modules` folder and re-run `npm install`
+ - If during `npm run app` you get "Error: A dynamic link library (DLL) initialization routine failed", then you need to install the native electron modules (full info [here](https://electronjs.org/docs/tutorial/using-native-node-modules)). TLDR; first run `npm install --save-dev electron-rebuild`, then run `./node_modules/.bin/electron-rebuild`. Note that you may need to run `./node_modules/.bin/electron-rebuild` again after each time you run `npm install`.
 
 
 ## License
