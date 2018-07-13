@@ -76,7 +76,7 @@ export default class AccountImport {
 
               var keyObject = keythereum.dump(this.password, this.privateKeyRaw, new Buffer(dk.salt), new Buffer(dk.iv), {options});
 
-              self.renderAccount(keyObject.address);
+               self.renderAccount(keyObject.address);
 
                console.log('created key object', keyObject )
 
@@ -94,7 +94,12 @@ export default class AccountImport {
               var fileContents = await self.readInputFile(this.keystoreFile)
 
 
+
               this.address = fileContents.address;
+
+              if(!this.address.startsWith('0x')){
+                this.address = '0x' + this.address;
+              }
 
               self.renderAccount(this.address);
 
@@ -137,6 +142,12 @@ export default class AccountImport {
 
   renderAccount(address)
   {
+
+
+    if(!address.startsWith('0x')){
+      address = '0x' + address;
+    }
+
     console.log('render account ', address);
 
     //make a blocky
