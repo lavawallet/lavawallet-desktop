@@ -25,6 +25,11 @@ overflow-y: auto;
 {
   font-size: 1.5em;
   text-align:center;
+
+  .active
+  {
+        border-bottom: 4px solid #448ad2;
+  }
 }
 
 .absolute-bottom
@@ -33,6 +38,11 @@ overflow-y: auto;
   bottom:10px;
   left:50px;
   padding:5px 15px;
+}
+
+.clickable:hover
+{
+  cursor:pointer;
 }
 
 .hoverable:hover

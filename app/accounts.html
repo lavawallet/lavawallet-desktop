@@ -23,12 +23,12 @@
 
 
 
-           <span class="nav-group-item" v-for="(item, index) in accounts" v-on:click="selectAccount($event)" v-bind:data-address="item.address">
+           <span class="nav-group-item clickable " v-for="(item, index) in accounts" v-on:click="selectAccount($event)" v-bind:data-address="item.address">
              <span class="icon " v-bind:class="{'icon-star': (item.address == selectedAddress),'icon-star-empty': (item.address != selectedAddress)}"></span>
              {{ item.address }}
            </span>
 
-           <span class="nav-group-item" v-on:click="clickButton('addaccount')" v-if="accounts.length == 0">
+           <span class="nav-group-item clickable" v-on:click="clickButton('addaccount')" v-if="accounts.length == 0">
              <span class="icon icon-plus-circled"></span>
              Add Account
            </span>
@@ -43,9 +43,9 @@
          <div class="whitespace-md"></div>
 
             <div class="row white-text quick-nav" v-if="tokenLoaded" v-cloak>
-               <div class="col s4 teal lighten-2 hoverable">Overview</div>
-               <div class="col s4 teal lighten-2 hoverable">Deposit</div>
-               <div class="col s4 teal lighten-2 hoverable">Withdraw</div>
+               <div class="col s4 teal lighten-2 hoverable clickable" v-on:click="setMode('overview')" v-bind:class="{'active': menuMode=='overview'}">Overview</div>
+               <div class="col s4 teal lighten-2 hoverable clickable" v-on:click="setMode('deposit')" v-bind:class="{'active': menuMode=='deposit'}">Deposit</div>
+               <div class="col s4 teal lighten-2 hoverable clickable" v-on:click="setMode('withdraw')" v-bind:class="{'active': menuMode=='withdraw'}">Withdraw</div>
             </div>
 
              <div class="loading-container text-center"  v-if="(!tokenLoaded && selectedAddress)" v-cloak>
@@ -53,33 +53,40 @@
              </div>
 
 
+             <div class="account-overview" v-if="tokenLoaded && menuMode == 'overview' " v-cloak>
+                <ul class="collection" >
+                   <li class="collection-item">
+                     <div class="selected-account-address" v-if="selectedAddress" v-cloak>
+                         {{selectedAddress}}
 
+                         <span class="copy-content icon icon-docs" v-on:click="copySelectedAddress()"> </span>
+                     </div>
+                   </li>
+                   <li class="collection-item">
+                     <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
+                         ETH Balance: {{ethBalance}}
+                     </div>
+                   </li>
+                   <li class="collection-item">
+                     <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
+                       Token Balance: {{tokenBalance}}
+                     </div>
+                   </li>
 
-            <ul class="collection" v-if="tokenLoaded" v-cloak>
-             <li class="collection-item">
-               <div class="selected-account-address" v-if="selectedAddress" v-cloak>
-                   {{selectedAddress}}
+                   <li class="collection-item">
+                     <div class="selected-account-balance" v-if="lavaBalance != null" v-cloak>
+                       Lava Balance: {{lavaBalance}}
+                     </div>
+                   </li>
+                 </ul>
+              </div>
 
-                   <span class="copy-content icon icon-docs" v-on:click="copySelectedAddress()"> </span>
-               </div>
-             </li>
-             <li class="collection-item">
-               <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
-                   ETH Balance: {{ethBalance}}
-               </div>
-             </li>
-             <li class="collection-item">
-               <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
-                 Token Balance: {{tokenBalance}}
-               </div>
-             </li>
+              <div class="account-deposit" v-if="tokenLoaded && menuMode == 'deposit' " v-cloak>
 
-             <li class="collection-item">
-               <div class="selected-account-balance" v-if="lavaBalance != null" v-cloak>
-                 Lava Balance: {{lavaBalance}}
-               </div>
-             </li>
-           </ul>
+              </div>
+
+              <div class="account-withdraw" v-if="tokenLoaded && menuMode == 'withdraw' " v-cloak>
+              </div>
 
 
 

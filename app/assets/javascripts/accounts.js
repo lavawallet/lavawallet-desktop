@@ -30,6 +30,8 @@ export default class Accounts {
           tokenBalance: null,
           lavaBalance: null,
 
+          menuMode: 'overview',
+
           flashMessage: null
         },
         created: async function () {
@@ -57,6 +59,11 @@ export default class Accounts {
                 default:
                     break;
             }
+
+          },
+          setMode: function (modeName) {
+            console.log('set mode:', modeName);
+            this.menuMode = modeName;
 
           },
           selectAccount: function (e) {
