@@ -42,7 +42,7 @@
 
          <div class="whitespace-md"></div>
 
-            <div class="row white-text quick-nav" v-if="tokenLoaded" v-cloak>
+            <div class="row white-text quick-nav quick-nav-blue" v-if="tokenLoaded" v-cloak>
                <div class="col s4 teal lighten-2 hoverable clickable" v-on:click="setMode('overview')" v-bind:class="{'active': menuMode=='overview'}">Overview</div>
                <div class="col s4 teal lighten-2 hoverable clickable" v-on:click="setMode('deposit')" v-bind:class="{'active': menuMode=='deposit'}">Deposit</div>
                <div class="col s4 teal lighten-2 hoverable clickable" v-on:click="setMode('withdraw')" v-bind:class="{'active': menuMode=='withdraw'}">Withdraw</div>

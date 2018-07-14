@@ -32,11 +32,25 @@
 
       <p> Under construction... </p>
 
-      <div class="row white-text quick-nav">
-         <div class="col s4 orange lighten-2 hoverable">Standard Transfer</div>
-         <div class="col s4 orange lighten-2 hoverable">Lava Transfer</div>
-         <div class="col s4 orange lighten-2 hoverable">Volcano Transfer</div>
+      <div class="row white-text quick-nav quick-nav-red">
+         <div class="col s4 orange lighten-2 hoverable clickable" v-on:click="setMode('standard')" v-bind:class="{'active': menuMode=='standard'}">Standard Transfer</div>
+         <div class="col s4 orange lighten-2 hoverable clickable" v-on:click="setMode('lava')" v-bind:class="{'active': menuMode=='lava'}">Lava Transfer</div>
+         <div class="col s4 orange lighten-2 hoverable clickable" v-on:click="setMode('volcano')" v-bind:class="{'active': menuMode=='volcano'}">Volcano Transfer</div>
       </div>
+
+
+      <div class="transfer-standard" v-if="tokenLoaded && menuMode == 'standard' " v-cloak>
+
+      </div>
+
+      <div class="transfer-lava" v-if="tokenLoaded && menuMode == 'lava' " v-cloak>
+
+      </div>
+
+      <div class="transfer-volcano" v-if="tokenLoaded && menuMode == 'volcano' " v-cloak>
+
+      </div>
+
 
 
     </div>

@@ -21,7 +21,9 @@ export default class Transfer {
         el: '#transfer',
         data: {
           selectedAddress: existingActiveAddress,
-          errorMessage: null
+          errorMessage: null,
+          menuMode: 'standard',
+          tokenLoaded: true 
         },
         created: async function () {
 
@@ -41,6 +43,10 @@ export default class Transfer {
                     break;
             }
 
+          },
+          setMode: function(modeName)
+          {
+            this.menuMode = modeName;
           }
 
          }

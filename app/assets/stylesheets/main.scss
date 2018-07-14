@@ -26,11 +26,29 @@ overflow-y: auto;
   font-size: 1.5em;
   text-align:center;
 
+}
+
+
+
+.quick-nav-blue
+{
   .active
   {
         border-bottom: 4px solid #448ad2;
   }
 }
+
+
+.quick-nav-red
+{
+  .active
+  {
+        border-bottom: 4px solid #e65838;
+  }
+}
+
+
+
 
 .absolute-bottom
 {
