@@ -16,7 +16,7 @@ async function createWindow () {
 
   // and load the index.html of the app.
   //mainWindow.loadFile('public/index.html')
-  mainWindow.loadURL('http://localhost:3000')
+  mainWindow.loadURL('http://localhost:3142')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

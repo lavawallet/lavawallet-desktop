@@ -21,6 +21,14 @@ overflow-y: auto;
 }
 
 
+.subtitle-banner {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+
 .quick-nav
 {
   font-size: 1.5em;
@@ -66,4 +74,41 @@ overflow-y: auto;
 .hoverable:hover
 {
    opacity: 0.9;
+}
+
+
+.simple-input
+{
+  input
+  {
+    border: 1px solid #00b89c;
+    padding: 0.1em 0.8em;
+    border-radius: 0.2em;
+  }
+  div
+  {
+      display: inline-flex;
+          justify-content: flex-start;
+  }
+}
+
+
+//colors
+.electric-blue
+{
+    background-color: #209cee;
+}
+
+//font size
+
+.is-size-8 {
+    font-size: 1.2rem !important;
+}
+
+.is-size-6 {
+    font-size: 1rem !important;
+}
+
+.is-size-5 {
+    font-size: 0.8rem !important;
 }

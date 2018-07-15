@@ -32,6 +32,10 @@ export default class Accounts {
 
           menuMode: 'overview',
 
+          depositAmount: 0,
+          withdrawAmount:0,
+
+
           flashMessage: null
         },
         created: async function () {

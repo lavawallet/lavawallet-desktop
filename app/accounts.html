@@ -63,18 +63,18 @@
                      </div>
                    </li>
                    <li class="collection-item">
-                     <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
+                     <div class="selected-account-balance is-size-8" v-if="tokenBalance != null" v-cloak>
                          ETH Balance: {{ethBalance}}
                      </div>
                    </li>
                    <li class="collection-item">
-                     <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
-                       Token Balance: {{tokenBalance}}
+                     <div class="selected-account-balance is-size-8" v-if="tokenBalance != null" v-cloak>
+                       External Balance: {{tokenBalance}}
                      </div>
                    </li>
 
                    <li class="collection-item">
-                     <div class="selected-account-balance" v-if="lavaBalance != null" v-cloak>
+                     <div class="selected-account-balance is-size-8" v-if="lavaBalance != null" v-cloak>
                        Lava Balance: {{lavaBalance}}
                      </div>
                    </li>
@@ -83,9 +83,59 @@
 
               <div class="account-deposit" v-if="tokenLoaded && menuMode == 'deposit' " v-cloak>
 
+                <div class="subtitle-banner electric-blue white-text" v-if="tokenBalance != null" v-cloak>
+                  External Balance: {{tokenBalance}}
+                </div>
+
+                <div class="row">
+                  <div class="col s6">
+
+
+                    <div class="input-field"   >
+                      <div class="label">Deposit Tokens</div>
+                      <input placeholder="" id="depositAmount" type="text" class="validate" v-model='depositAmount' >
+                    </div>
+
+                  </div>
+                  <div class="col s6">
+
+                    <div class="is-size-8" v-if="lavaBalance != null" v-cloak>
+                      Lava Balance: {{lavaBalance}}
+                    </div>
+
+
+                  </div>
+                </div>
+
+
               </div>
 
               <div class="account-withdraw" v-if="tokenLoaded && menuMode == 'withdraw' " v-cloak>
+
+                <div class="subtitle-banner electric-blue white-text" v-if="tokenBalance != null" v-cloak>
+                  External Balance: {{tokenBalance}}
+                </div>
+
+                <div class="row">
+                  <div class="col s6">
+
+                    <div class="simple-input"   >
+                      <div class="label">Withdraw Tokens</div>
+                      <input placeholder="" id="withdrawAmount" type="text" class="validate" v-model='withdrawAmount' >
+                      <div class="btn">Withdraw</div>
+                    </div>
+
+                  </div>
+                  <div class="col s6">
+
+                    <div class="is-size-8" v-if="lavaBalance != null" v-cloak>
+                      Lava Balance: {{lavaBalance}}
+                    </div>
+
+
+                  </div>
+                </div>
+
               </div>
 
 
