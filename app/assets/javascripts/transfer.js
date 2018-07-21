@@ -7,11 +7,11 @@ export default class Transfer {
 
   }
 
-  init(socketClient){
+  init(socketClient,txSidebar){
     var self = this;
     self.socketClient = socketClient;
 
-    var self = this;
+    this.txSidebar=txSidebar;
 
     var existingActiveAddress = window.sessionStorage.getItem("activeAddress");
 
@@ -23,7 +23,7 @@ export default class Transfer {
           selectedAddress: existingActiveAddress,
           errorMessage: null,
           menuMode: 'standard',
-          tokenLoaded: true 
+          tokenLoaded: true
         },
         created: async function () {
 

@@ -23,20 +23,24 @@
 
       // Or with jQuery
 
-      window.addEventListener('load', function(){
+      /*window.addEventListener('load', function(){
 
-
-
-        var sb = document.getElementById('tx-sidebar');
-
-
-
-        var instance = M.Sidenav.getInstance( sb );
-        instance.open();
-
-      }, false )
+      }, false )*/
 
 
     }
+
+
+    open()
+    {
+      console.log('meep')
+      var sb = document.getElementById('tx-sidebar');
+
+      var instance = M.Sidenav.getInstance( sb );
+      instance.open();
+
+
+    }
+
 
 }

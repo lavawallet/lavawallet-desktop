@@ -49,11 +49,11 @@ function init()
   }
 
   if(document.getElementById("accounts")){
-    accounts.init(socketClient);
+    accounts.init(socketClient,txSidebar);
   }
 
   if(document.getElementById("transfer")){
-    transfer.init(socketClient);
+    transfer.init(socketClient,txSidebar);
   }
 
   if(document.getElementById("add-account")){

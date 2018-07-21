@@ -7,11 +7,11 @@ export default class Accounts {
 
   }
 
-  init(socketClient){
+  init(socketClient,txSidebar){
     var self = this;
     self.socketClient = socketClient;
 
-    var self = this;
+    this.txSidebar=txSidebar;
 
     var existingActiveAddress = window.sessionStorage.getItem("activeAddress");
 
@@ -58,6 +58,13 @@ export default class Accounts {
              switch(buttonName) {
                 case 'addaccount':
                     window.location.href = '/account_add.html'
+                    break;
+                case 'withdraw':
+                    console.log('withdraw', this.withdrawAmount )
+
+                    console.log(self.txSidebar)
+                    self.txSidebar.open();
+
                     break;
 
                 default:
