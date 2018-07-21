@@ -1,7 +1,11 @@
 //const $ = require('jquery')
+import Vue from 'vue';
+
+
  const M = require('./materialize/bin/materialize.js')
 
 
+var sidebar;
 
  export default class TXSidebar {
 
@@ -28,16 +32,39 @@
       }, false )*/
 
 
+
+      //init vue object
+
+      sidebar = new Vue({
+         el: '#tx-sidebar',
+         data: {
+
+
+           title: 'Transaction Information'
+         },
+         methods: {
+         }
+      })
+
     }
 
 
-    open()
+    open(txData)
     {
+
+      this.setTxData(txData)
+
       var sb = document.getElementById('tx-sidebar');
 
       var instance = M.Sidenav.getInstance( sb );
       instance.open();
 
+
+    }
+
+    setTxData(txData)
+    {
+      console.log('setting txData',txData)
 
     }
 

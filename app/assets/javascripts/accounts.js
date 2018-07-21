@@ -2,6 +2,8 @@ import Vue from 'vue';
 
 var accountsComponent;
 
+import TXHelper from './util/tx_helper.js';
+
 export default class Accounts {
   constructor( ){
 
@@ -60,10 +62,11 @@ export default class Accounts {
                     window.location.href = '/account_add.html'
                     break;
                 case 'deposit':
-                    console.log('deposit', this.depositwAmount )
+                    console.log('deposit', this.depositAmount )
 
-                    console.log(self.txSidebar)
-                    self.txSidebar.open();
+                    var txData = TXHelper.getDataForTransaction( 'deposit', this.depositAmount );
+
+                    self.txSidebar.open( txData );
 
                     break;
 
