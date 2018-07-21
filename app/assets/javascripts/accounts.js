@@ -59,6 +59,14 @@ export default class Accounts {
                 case 'addaccount':
                     window.location.href = '/account_add.html'
                     break;
+                case 'deposit':
+                    console.log('deposit', this.depositwAmount )
+
+                    console.log(self.txSidebar)
+                    self.txSidebar.open();
+
+                    break;
+
                 case 'withdraw':
                     console.log('withdraw', this.withdrawAmount )
 

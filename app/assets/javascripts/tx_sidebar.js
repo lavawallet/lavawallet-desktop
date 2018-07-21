@@ -33,7 +33,6 @@
 
     open()
     {
-      console.log('meep')
       var sb = document.getElementById('tx-sidebar');
 
       var instance = M.Sidenav.getInstance( sb );
