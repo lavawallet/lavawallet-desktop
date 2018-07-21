@@ -28,11 +28,17 @@ var socketClient = new SocketClient();
 import AccountNew from './account_new';
 var accountNew = new AccountNew();
 
+import TXSidebar from './tx_sidebar';
+var txSidebar = new TXSidebar();
+
 function init()
 {
   nav.init();
   socketClient.init();
 
+  if(document.getElementById("tx-sidebar")){
+    txSidebar.init();
+  }
 
   if(document.getElementById("home")){
     home.init();
