@@ -21,17 +21,19 @@ export default class Nav {
           tokenAddress:null,
           tokenName:null,
           lavaContractAddress:null,
-          web3Provider:null
+          web3Provider:null,
+          networkEnvironment: null
         },
         created: async function () {
           self.socketClient.socketEmit('getWalletInfo',null,function(data){
-              console.log('got data', data)
+
               settingsComponent.storagePath = data.storagePath;
               settingsComponent.version = data.version;
               settingsComponent.tokenAddress = data.tokenAddress;
               settingsComponent.tokenName = data.tokenName;
               settingsComponent.web3Provider = data.web3Provider;
               settingsComponent.lavaContractAddress = data.lavaContractAddress;
+              settingsComponent.networkEnvironment = data.networkEnvironment;
           });
 
 

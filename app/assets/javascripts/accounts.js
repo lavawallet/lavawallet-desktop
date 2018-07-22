@@ -9,11 +9,14 @@ export default class Accounts {
 
   }
 
-  init(socketClient,txSidebar){
+  init(socketClient,txSidebar, web3,   contractConfig){
     var self = this;
     self.socketClient = socketClient;
 
     this.txSidebar=txSidebar;
+
+    this.web3 = web3;
+    this.contractConfig=contractConfig;
 
     var existingActiveAddress = window.sessionStorage.getItem("activeAddress");
 
@@ -64,7 +67,7 @@ export default class Accounts {
                 case 'deposit':
                     console.log('deposit', this.depositAmount )
 
-                    var txData = TXHelper.getDataForTransaction( 'deposit', this.depositAmount );
+                    var txData = TXHelper.getDataForTransaction( self.web3, self.contractConfig, {contract: 'lavawallet', method: 'deposit', value: this.depositAmount}  );
 
                     self.txSidebar.open( txData );
 
