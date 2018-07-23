@@ -67,7 +67,10 @@ export default class Accounts {
                 case 'deposit':
                     console.log('deposit', this.depositAmount )
                     var env = self.contractConfig.networkEnvironment;
-                    var txCommand = {contract: 'lavawallet', method: 'deposit', value: this.depositAmount};
+                    var address = self.contractConfig.tokenAddress;
+                    var spender = self.contractConfig.lavaContractAddress;
+
+                    var txCommand = {contract: 'erc20token', address: address, method: 'approveAndCall', params: [spender,this.depositAmount,0] };
                     var txOverview = TXHelper.getOverviewForLavaTransaction( self.web3, env, txCommand  );
 
                     self.txSidebar.open( txData );
@@ -76,6 +79,10 @@ export default class Accounts {
 
                 case 'withdraw':
                     console.log('withdraw', this.withdrawAmount )
+                    var env = self.contractConfig.networkEnvironment;
+                    var address = self.contractConfig.lavaContractAddress;
+
+                    var txCommand = {contract: 'lavawallet', address: address, method: 'withdrawTokens', params: [this.depositAmount] };
 
                     console.log(self.txSidebar)
                     self.txSidebar.open();

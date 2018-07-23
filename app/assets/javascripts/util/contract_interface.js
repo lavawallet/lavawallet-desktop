@@ -5,7 +5,7 @@ const walletContractJSON = require('../../../../lib/contracts/LavaWallet.json');
 const approveCallTokenContractJSON = require('../../../../lib/contracts/_0xBitcoinToken.json');
 
 const tokenContractJSON = require('../../../../lib/contracts/ERC20Interface.json');
-//const deployedContractInfo = require('../../../../lib/contracts/DeployedContractInfo.json');
+ //const deployedContractInfo = require('../../../../lib/contracts/DeployedContractInfo.json');
 
 
 module.exports = class ContractInterface  {
@@ -13,16 +13,42 @@ module.exports = class ContractInterface  {
 
   //getWalletContract(web3,env).methods.signatureBurned('lalala').call()
 
-
-
-  static getTokenContract(web3,env)
+  static getContract(web3,env,contractName,contractAddress)
   {
-    return new web3.eth.Contract(tokenContractJSON.abi,ContractInterface.getTokenContractAddress(env))
+    if(contractName == 'erc20token')
+    {
+      return new web3.eth.Contract(tokenContractJSON.abi,contractAddress)
+    }
+
+    if(contractName == 'erc20token_approveAndCall')
+    {
+      return new web3.eth.Contract(approveCallTokenContractJSON.abi,contractAddress)
+    }
+
+    if(contractName == 'lavawallet')
+    {
+      return new web3.eth.Contract(walletContractJSON.abi,contractAddress)
+    }
   }
 
-  static getWalletContract(web3,env)
+  static getTokenContract(web3,env,address)
   {
-    return new web3.eth.Contract(walletContractJSON.abi,ContractInterface.getWalletContractAddress(env))
+    if(!address)
+    {
+      address = ContractInterface.getTokenContractAddress(env);
+    }
+
+    return new web3.eth.Contract(tokenContractJSON.abi,address)
+  }
+
+  static getWalletContract(web3,env,address)
+  {
+    if(!address)
+    {
+      address = ContractInterface.getWalletContractAddress(env);
+    }
+
+    return new web3.eth.Contract(walletContractJSON.abi,address)
   }
 
 

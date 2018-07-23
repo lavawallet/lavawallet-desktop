@@ -21,16 +21,13 @@ export default class TXHelper {
 
   static async getOverviewForLavaTransaction( web3, env, txCommand  )
   {
-    console.log( web3 )
-    console.log( env )
 
 
+  console.log('get data for tx ')
 
+    var txMethod = await TXHelper.getTXMethod( web3, env, txCommand  )
 
-
-    var txMethod = TXHelper.getTXMethod( txCommand  )
-
-    console.log(txMethod)
+    console.log('method',txMethod)
 
     //var txData = this.getTxDataForLavaTransaction(web3, env, txCommand)
 
@@ -38,9 +35,7 @@ export default class TXHelper {
 
 
 
-    console.log( tokenContract )
 
-    console.log('get data for tx ')
     return {
 
 
@@ -49,17 +44,21 @@ export default class TXHelper {
   }
 
   //{contract: 'lavawallet', method: 'deposit', value: this.depositAmount}
-  static async getTxMethod(   txCommand  )
+  static async getTXMethod( web3, env,  txCommand  )
   {
-    var tokenContract = ContractInterface.getTokenContract( web3 , env);
-    var walletContract = ContractInterface.getWalletContract( web3, env);
 
-    var contract;
+    var contract = ContractInterface.getContract ( web3, env, txCommand.contract, txCommand.address)
 
-    if(txCommand.contract =='lavawallet') contract = walletContract;
-    if(txCommand.contract =='erc20token') contract = tokenContract;
-
-    var method = contract[txCommand.method];
+    /*
+    if(txCommand.contract =='lavawallet'){
+      contract = ContractInterface.getWalletContract ( web3, env, txCommand.address)
+    }
+    if(txCommand.contract =='erc20token'){
+      contract = ContractInterface.getTokenContract( web3, env, txCommand.address)
+    }
+    */
+    
+    var method = contract.methods[txCommand.method];
 
     return method;
 
