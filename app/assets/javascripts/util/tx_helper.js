@@ -17,9 +17,13 @@ var web3utils =  require('web3-utils');
 export default class TXHelper {
 
 
+  /**
+  Should return everything that we want to render on the sidepanel
+
+  **/
 
 
-  static async getOverviewForLavaTransaction( web3, env, txCommand  )
+  static async getOverviewForStandardTransaction( web3, env, txCommand  )
   {
 
 
@@ -27,18 +31,28 @@ export default class TXHelper {
 
     var txMethod = await TXHelper.getTXMethod( web3, env, txCommand  )
 
+    var txCount = await web3.eth.getTransactionCount(txCommand.from);
+
     console.log('method',txMethod)
+
+    var max_gas_cost = 17046240;
+    var estimatedGasCost = await txMethod.estimateGas({gas: max_gas_cost, from:txCommand.from, to: txCommand.to });
 
     //var txData = this.getTxDataForLavaTransaction(web3, env, txCommand)
 
     //var relayData = await this.lavaPeer.getRelayData();
 
 
-
+    //from , to, amount (eth) , gasLimit, gasPrice
 
     return {
-
-
+      from: txCommand.from,
+      to: txCommand.to,
+      txCommand: txCommand,
+      txMethod:txMethod,
+      txCount:txCount,
+      gasCost: estimatedGasCost,
+      overviewStyle: 'standard'
 
     } ;
   }
@@ -47,18 +61,10 @@ export default class TXHelper {
   static async getTXMethod( web3, env,  txCommand  )
   {
 
-    var contract = ContractInterface.getContract ( web3, env, txCommand.contract, txCommand.address)
+    var contract = ContractInterface.getContract ( web3, env, txCommand.contract, txCommand.to)
 
-    /*
-    if(txCommand.contract =='lavawallet'){
-      contract = ContractInterface.getWalletContract ( web3, env, txCommand.address)
-    }
-    if(txCommand.contract =='erc20token'){
-      contract = ContractInterface.getTokenContract( web3, env, txCommand.address)
-    }
-    */
-    
-    var method = contract.methods[txCommand.method];
+    //break out the params with ellipses
+    var method = contract.methods[txCommand.method]( ...txCommand.params);
 
     return method;
 
@@ -114,15 +120,15 @@ export default class TXHelper {
 
   static async  getTXOptions(addressTo,addressFrom, txData, txMethod , gasPrice)
   {
-    var txCount = 0;
+      var txCount = 0;
 
-    try{
-       txCount = await this.web3.eth.getTransactionCount(addressFrom);
-      console.log('txCount',txCount)
-     } catch(error) {  //here goes if someAsyncPromise() rejected}
-      console.log('error',error);
-       return error;    //this will result in a resolved promise.
-     }
+      try{
+         txCount = await this.web3.eth.getTransactionCount(addressFrom);
+        console.log('txCount',txCount)
+       } catch(error) {  //here goes if someAsyncPromise() rejected}
+        console.log('error',error);
+         return error;    //this will result in a resolved promise.
+       }
 
 
        console.log('estimating gas ')

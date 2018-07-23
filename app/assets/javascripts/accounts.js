@@ -70,10 +70,14 @@ export default class Accounts {
                     var address = self.contractConfig.tokenAddress;
                     var spender = self.contractConfig.lavaContractAddress;
 
-                    var txCommand = {contract: 'erc20token', address: address, method: 'approveAndCall', params: [spender,this.depositAmount,0] };
-                    var txOverview = TXHelper.getOverviewForLavaTransaction( self.web3, env, txCommand  );
+                    var txCommand = {from: this.selectedAddress,
+                      contract: 'erc20token',
+                      to: address,
+                      method: 'approveAndCall',
+                      params: [spender,this.depositAmount,0] };
+                    var txOverview = TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
 
-                    self.txSidebar.open( txData );
+                    self.txSidebar.open( txOverview );
 
                     break;
 
@@ -82,10 +86,16 @@ export default class Accounts {
                     var env = self.contractConfig.networkEnvironment;
                     var address = self.contractConfig.lavaContractAddress;
 
-                    var txCommand = {contract: 'lavawallet', address: address, method: 'withdrawTokens', params: [this.depositAmount] };
+                    var txCommand = {from: this.selectedAddress,
+                      contract: 'lavawallet',
+                      to: address,
+                      method: 'withdrawTokens',
+                      params: [this.withdrawAmount] };
 
                     console.log(self.txSidebar)
-                    self.txSidebar.open();
+                    var txOverview = TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
+
+                    self.txSidebar.open(txOverview);
 
                     break;
 
