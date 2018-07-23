@@ -91,7 +91,7 @@ async function loadWeb3(socketClient)
   await new Promise(  (resolve, reject) => {
 
     socketClient.socketEmit('getWalletInfo',null,function(data){
-      console.log(' hi data ' ,data)
+     
 
       contractConfig.tokenAddress = data.tokenAddress;
       contractConfig.tokenName = data.tokenName;

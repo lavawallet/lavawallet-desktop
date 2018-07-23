@@ -1,7 +1,7 @@
 
-const LavaPacketUtils = require('./lava-packet-utils')
-const LavaNetworkUtils = require('./lava-network-utils')
-const LavaBalanceUtils = require('./lava-balance-utils')
+ const LavaPacketUtils = require('./lava-packet-utils')
+//const LavaNetworkUtils = require('./lava-network-utils')
+//const LavaBalanceUtils = require('./lava-balance-utils')
 
 
 
@@ -19,35 +19,60 @@ export default class TXHelper {
 
 
 
-  static async getDataForLavaTransaction( web3, contractConfig, txCommand  )
+  static async getOverviewForLavaTransaction( web3, env, txCommand  )
   {
     console.log( web3 )
-    console.log( contractConfig )
-
-    var env = contractConfig.networkEnvironment;
+    console.log( env )
 
 
 
-    var tokenContract = ContractInterface.getTokenContract( web3 , env);
-    var walletContract = ContractInterface.getWalletContract( web3, env);
 
 
-    var txData = lavaPacketUtils.getFunctionCall(web3,packetData)
+    var txMethod = TXHelper.getTXMethod( txCommand  )
 
-    var relayData = await this.lavaPeer.getRelayData();
+    console.log(txMethod)
+
+    //var txData = this.getTxDataForLavaTransaction(web3, env, txCommand)
+
+    //var relayData = await this.lavaPeer.getRelayData();
 
 
 
     console.log( tokenContract )
 
     console.log('get data for tx ')
-    return ;
+    return {
+
+
+
+    } ;
   }
 
+  //{contract: 'lavawallet', method: 'deposit', value: this.depositAmount}
+  static async getTxMethod(   txCommand  )
+  {
+    var tokenContract = ContractInterface.getTokenContract( web3 , env);
+    var walletContract = ContractInterface.getWalletContract( web3, env);
+
+    var contract;
+
+    if(txCommand.contract =='lavawallet') contract = walletContract;
+    if(txCommand.contract =='erc20token') contract = tokenContract;
+
+    var method = contract[txCommand.method];
+
+    return method;
+
+  }
+
+  static async getTxDataForLavaTransaction( web3, env, txCommand  )
+  {
 
 
+  }
 
   //account should be {address: aaa, privateKey: bbb}
+  //submit a lava packet
   static async submitTransaction( web3, env , account )
   {
 
