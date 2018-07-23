@@ -36,45 +36,13 @@ export default class TXHelper {
 
     var walletContract = ContractInterface.getWalletContract(this.web3,this.relayConfig.environment);
 
-    console.log(walletContract.options.address) //undefined
-
-
     var addressFrom = this.getRelayAccount().address;
     var addressTo = walletContract.options.address;
 
 
-    console.log('addressFrom ! ',addressFrom)
-
     var lavaTransferMethod = lavaPacketUtils.getContractLavaMethod(walletContract,packetData)
 
-
-    try{
-      var txCount = await this.web3.eth.getTransactionCount(addressFrom);
-      console.log('txCount',txCount)
-     } catch(error) {  //here goes if someAsyncPromise() rejected}
-      console.log('error',error);
-       return error;    //this will result in a resolved promise.
-     }
-
      var txData = lavaPacketUtils.getFunctionCall(this.web3,packetData)
-
-
-
-
-       console.log('estimating gas ')
-
-
-     var max_gas_cost = 7046240;
-     var estimatedGasCost = await lavaTransferMethod.estimateGas({gas: max_gas_cost, from:addressFrom, to: addressTo });
-
-     if( estimatedGasCost > max_gas_cost){
-       console.log("Gas estimate too high!  Something went wrong ")
-       return;
-     }
-
-     console.log('estimated gas ', estimatedGasCost)
-
-
 
       var relayData = await this.lavaPeer.getRelayData();
 
@@ -86,18 +54,7 @@ export default class TXHelper {
        relayingGasPrice = relayData.ethGasFast;
      }
 
-     //safelow ?
-      console.log('relayingGasPrice ', relayingGasPrice)
-
-     const txOptions = {
-       nonce: web3utils.toHex(txCount),
-       gas: web3utils.toHex(estimatedGasCost),
-       gasPrice: web3utils.toHex(web3utils.toWei(relayingGasPrice.toString(), 'gwei') ),
-       value: 0,
-       to: addressTo,
-       from: addressFrom,
-       data: txData
-     }
+     var txOptions = this.getTXOptions(addressTo,addressFrom,txData, lavaTransferMethod , relayingGasPrice  )
 
      var privateKey =  this.getRelayAccount().privateKey;
 
@@ -112,6 +69,46 @@ export default class TXHelper {
 
 
 
+  }
+
+  static async  getTXOptions(addressTo,addressFrom, txData, txMethod , gasPrice)
+  {
+    var txCount = 0;
+
+    try{
+       txCount = await this.web3.eth.getTransactionCount(addressFrom);
+      console.log('txCount',txCount)
+     } catch(error) {  //here goes if someAsyncPromise() rejected}
+      console.log('error',error);
+       return error;    //this will result in a resolved promise.
+     }
+
+
+       console.log('estimating gas ')
+
+
+       var max_gas_cost = 7046240;
+       var estimatedGasCost = await txMethod.estimateGas({gas: max_gas_cost, from:addressFrom, to: addressTo });
+
+       if( estimatedGasCost > max_gas_cost){
+         console.log("Gas estimate too high!  Something went wrong ")
+         return;
+       }
+
+       console.log('estimated gas ', estimatedGasCost)
+
+
+
+    var txOptions = {
+      nonce: web3utils.toHex(txCount),
+      gas: web3utils.toHex(estimatedGasCost),
+      gasPrice: web3utils.toHex(web3utils.toWei(gasPrice.toString(), 'gwei') ),
+      value: 0,
+      to: addressTo,
+      from: addressFrom,
+      data: txData
+    }
+    return txOptions;
   }
 
 
