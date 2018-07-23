@@ -15,33 +15,33 @@ module.exports = class ContractInterface  {
 
 
 
-  static getTokenContract(web3,contractConfig)
+  static getTokenContract(web3,env)
   {
-    return new web3.eth.Contract(tokenContractJSON.abi,ContractInterface.getTokenContractAddress(contractConfig))
+    return new web3.eth.Contract(tokenContractJSON.abi,ContractInterface.getTokenContractAddress(env))
   }
 
-  static getWalletContract(web3,contractConfig)
+  static getWalletContract(web3,env)
   {
-    return new web3.eth.Contract(walletContractJSON.abi,ContractInterface.getWalletContractAddress(contractConfig))
+    return new web3.eth.Contract(walletContractJSON.abi,ContractInterface.getWalletContractAddress(env))
   }
 
 
-  static getTokenContractAddress(contractConfig)
+  static getTokenContractAddress(env)
   {
-    if(contractConfig.networkEnvironment == 'ropsten')
+    if(env == 'ropsten')
     {
       return deployedContractInfo.networks.testnet.contracts._0xbitcointoken.blockchain_address;
-    }else if(contractConfig.networkEnvironment == 'mainnet'){
+    }else if(env == 'mainnet'){
       return deployedContractInfo.networks.mainnet.contracts._0xbitcointoken.blockchain_address;
     }
 
   }
-  static getWalletContractAddress(contractConfig)
+  static getWalletContractAddress(env)
   {
-    if(contractConfig.networkEnvironment == 'ropsten')
+    if(env == 'ropsten')
     {
       return deployedContractInfo.networks.testnet.contracts.lavawallet.blockchain_address;
-    }else if(contractConfig.networkEnvironment == 'mainnet'){
+    }else if(env == 'mainnet'){
       return deployedContractInfo.networks.mainnet.contracts.lavawallet.blockchain_address;
     }
 

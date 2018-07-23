@@ -67,7 +67,7 @@ export default class Accounts {
                 case 'deposit':
                     console.log('deposit', this.depositAmount )
 
-                    var txData = TXHelper.getDataForTransaction( self.web3, self.contractConfig, {contract: 'lavawallet', method: 'deposit', value: this.depositAmount}  );
+                    var txData = TXHelper.getDataForLavaTransaction( self.web3, self.contractConfig, {contract: 'lavawallet', method: 'deposit', value: this.depositAmount}  );
 
                     self.txSidebar.open( txData );
 

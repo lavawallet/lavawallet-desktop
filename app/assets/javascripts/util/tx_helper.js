@@ -1,4 +1,10 @@
 
+const LavaPacketUtils = require('./lava-packet-utils')
+const LavaNetworkUtils = require('./lava-network-utils')
+const LavaBalanceUtils = require('./lava-balance-utils')
+
+
+
 
 
 const Tx = require('ethereumjs-tx')
@@ -13,14 +19,25 @@ export default class TXHelper {
 
 
 
-
-
-  static  getDataForTransaction( web3,   contractConfig, txCommand  )
+  static async getDataForLavaTransaction( web3, contractConfig, txCommand  )
   {
     console.log( web3 )
     console.log( contractConfig )
 
-    var tokenContract = ContractInterface.getTokenContract( web3 , contractConfig);
+    var env = contractConfig.networkEnvironment;
+
+
+
+    var tokenContract = ContractInterface.getTokenContract( web3 , env);
+    var walletContract = ContractInterface.getWalletContract( web3, env);
+
+
+    var txData = lavaPacketUtils.getFunctionCall(web3,packetData)
+
+    var relayData = await this.lavaPeer.getRelayData();
+
+
+
     console.log( tokenContract )
 
     console.log('get data for tx ')
@@ -30,21 +47,21 @@ export default class TXHelper {
 
 
 
-
-  static async submitTransaction( )
+  //account should be {address: aaa, privateKey: bbb}
+  static async submitTransaction( web3, env , account )
   {
 
-    var walletContract = ContractInterface.getWalletContract(this.web3,this.relayConfig.environment);
+    var walletContract = ContractInterface.getWalletContract( web3, env);
 
-    var addressFrom = this.getRelayAccount().address;
+    var addressFrom = account.address;
     var addressTo = walletContract.options.address;
 
 
     var lavaTransferMethod = lavaPacketUtils.getContractLavaMethod(walletContract,packetData)
 
-     var txData = lavaPacketUtils.getFunctionCall(this.web3,packetData)
+    var txData = lavaPacketUtils.getFunctionCall(web3,packetData)
 
-      var relayData = await this.lavaPeer.getRelayData();
+    var relayData = await this.lavaPeer.getRelayData();
 
 
      var relayingGasPrice = relayData.ethGasNormal; //this.relayConfig.solutionGasPriceWei
@@ -56,11 +73,11 @@ export default class TXHelper {
 
      var txOptions = this.getTXOptions(addressTo,addressFrom,txData, lavaTransferMethod , relayingGasPrice  )
 
-     var privateKey =  this.getRelayAccount().privateKey;
+     var privateKey =  account.privateKey;
 
      return new Promise(function (result,error) {
 
-          this.sendSignedRawTransaction(this.web3,txOptions,addressFrom,privateKey, function(err, res) {
+          this.sendSignedRawTransaction(web3,txOptions,addressFrom,privateKey, function(err, res) {
            if (err) error(err)
              result(res)
          })
