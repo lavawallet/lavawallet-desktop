@@ -47,25 +47,47 @@ var sidebar;
     }
 
 
-    openSidebar(txData)
+    openSidebar(txOverview)
     {
 
-      this.setTxData(txData)
+      this.setTxOverviewData(txOverview)
 
       var sb = document.getElementById('tx-sidebar');
 
 
       var instance = M.Sidenav.getInstance( sb );
-     
+
       instance.open();
 
 
     }
 
-    setTxData(txData)
+    setTxOverviewData(txOverviewData)
     {
-      console.log('setting txData',txData)
+      console.log('setting txData',txOverviewData)
 
+      this.attachBlockie(txOverviewData.from, 'blockie-from' );
+      this.attachBlockie(txOverviewData.to, 'blockie-to' );
+
+
+    }
+
+    attachBlockie(seed,elementId)
+    {
+      //make a blocky
+      var icon = blockies.create({ // All options are optional
+        seed: seed, // seed used to generate icon data, default: random
+
+        size: 20, // width/height of the icon in blocks, default: 8
+        scale: 6, // width/height of each block in pixels, default: 4
+
+        });
+
+      var blockieContainer = document.getElementById(elementId);
+      while (blockieContainer.firstChild) {
+        blockieContainer.removeChild(blockieContainer.firstChild);
+      }
+      blockieContainer.appendChild(icon); // icon is a canvas element
     }
 
 

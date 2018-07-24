@@ -57,7 +57,7 @@ export default class Accounts {
 
         },
         methods: {
-           clickButton: function (buttonName) {
+           clickButton: async function (buttonName) {
              // `this` inside methods points to the Vue instance
              console.log('clicked ' + buttonName + '!')
 
@@ -76,7 +76,7 @@ export default class Accounts {
                       to: address,
                       functionName: 'approveAndCall',
                       params: [spender,this.depositAmount,"0x00"] };
-                    var txOverview = TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
+                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
 
 
                     self.txSidebar.openSidebar( txOverview );
@@ -95,7 +95,7 @@ export default class Accounts {
                       params: [this.selectedAddress,this.withdrawAmount] };
 
                     console.log('sidebar', self.txSidebar)
-                    var txOverview = TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
+                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
 
                     self.txSidebar.openSidebar(txOverview);
 
