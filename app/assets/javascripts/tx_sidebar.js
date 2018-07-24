@@ -56,7 +56,7 @@ var sidebar;
               var ethAmountFloat = parseFloat(this.txOverview.ethAmount);
 
               var maxTotalFloat = ethAmountFloat + maxFeeFloat;
- 
+
               this.maxFee = maxFeeFloat.toPrecision(4);
               this.maxTotal = maxTotalFloat.toPrecision(4) ;
               // Code that will run only after the
@@ -69,7 +69,10 @@ var sidebar;
              switch(buttonName)
              {
                 case 'accept':
-                   self.executeTransaction(this.txOverview);
+                    var txParams =  Object.assign({}, this.txOverview);//clone
+                    txParams.gasPrice = this.gasPrice;
+
+                   self.executeTransaction(txParams);
                    self.setDisplay('view-transaction')
                    break;
                 case 'reject':
