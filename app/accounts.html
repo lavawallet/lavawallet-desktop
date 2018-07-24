@@ -10,7 +10,7 @@
     <%= require('html-loader!./assets/html/navbar.html') %>
 
 
-        <%= require('html-loader!./assets/html/tx_sidebar.html') %>
+       <%= require('html-loader!./assets/html/tx_sidebar.html') %>
 
     <div class="container" id="accounts">
 
@@ -93,17 +93,20 @@
                   <div class="col s6">
 
 
-                    <div class="simple-input"   >
+                    <div class="simple-input-container"   >
                       <div class="label">Deposit Tokens</div>
-                      <input placeholder="" id="depositAmount" type="text" class="validate" v-model='depositAmount' >
-                      <div class="btn" v-on:click="clickButton('deposit')">Deposit</div>
-                    </div>
+                        <div class="simple-input"   >
+                          <input placeholder="" id="depositAmount" type="text" class="validate" v-model='depositAmount' >
+                          </div>
+                          <div class="btn" v-on:click="clickButton('deposit')">Deposit</div>
+                      </div>
 
                   </div>
                   <div class="col s6">
-
-                    <div class="is-size-8" v-if="lavaBalance != null" v-cloak>
-                      Lava Balance: {{lavaBalance}}
+                    <div class="padding-1">
+                      <div class="is-size-8" v-if="lavaBalance != null" v-cloak>
+                        Lava Balance: {{lavaBalance}}
+                      </div>
                     </div>
 
 
@@ -122,17 +125,20 @@
                 <div class="row">
                   <div class="col s6">
 
-                    <div class="simple-input"   >
+                    <div class="simple-input-container"   >
                       <div class="label">Withdraw Tokens</div>
-                      <input placeholder="" id="withdrawAmount" type="text" class="validate" v-model='withdrawAmount' >
+                        <div class="simple-input"   >
+                          <input placeholder="" id="withdrawAmount" type="text" class="validate" v-model='withdrawAmount' >
+                        </div>
                       <div class="btn" v-on:click="clickButton('withdraw')">Withdraw</div>
                     </div>
 
                   </div>
                   <div class="col s6">
-
-                    <div class="is-size-8" v-if="lavaBalance != null" v-cloak>
-                      Lava Balance: {{lavaBalance}}
+                    <div class="padding-1">
+                      <div class="is-size-8" v-if="lavaBalance != null" v-cloak>
+                        Lava Balance: {{lavaBalance}}
+                      </div>
                     </div>
 
 

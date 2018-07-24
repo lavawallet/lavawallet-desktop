@@ -53,7 +53,7 @@ export default class TXHelper {
       gasCost: estimatedGasCost,
       overviewStyle: 'standard'
 
-    }  
+    }
   }
 
   //{contract: 'lavawallet', method: 'deposit', value: this.depositAmount}
@@ -61,9 +61,9 @@ export default class TXHelper {
   {
 
     var contract = ContractInterface.getContract ( web3, env, txCommand.contract, txCommand.to)
-
+ 
     //break out the params with ellipses
-    var method = contract.methods[txCommand.method]( ...txCommand.params);
+    var method = contract.methods[txCommand.functionName]( ...txCommand.params);
 
     return method;
 

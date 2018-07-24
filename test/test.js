@@ -44,7 +44,7 @@ var assert = require('assert');
         from:'0xB11ca87E32075817C82Cc471994943a4290f4a14',
         contract: 'erc20token_approveAndCall',
         to: '0xb6ed7644c69416d67b522e20bc294a9a9b405b31',
-        method: 'approveAndCall',
+        functionName: 'approveAndCall',
         params: ['0x69a02e511e027e5c26d2fbe4192e45b41db32819',amount, '0x00'   ]};
 
       var overview = await TXHelper.getOverviewForStandardTransaction(web3, env, txCommand)

@@ -16,20 +16,18 @@ var sidebar;
 
      var options = {};
 
-      document.addEventListener('DOMContentLoaded', function() {
+
+     /*
+      Need to use
+        document.dispatchEvent(new Event('SidenavContentLoaded'));
+      after vue components are loaded
+
+     */
+      document.addEventListener('SidenavContentLoaded', function() {
+        console.log('init sidenav')
         var elems = document.querySelectorAll('.sidenav');
         var instances = M.Sidenav.init(elems, options);
       });
-
-      // Initialize collapsible (uncomment the lines below if you use the dropdown variation)
-      // var collapsibleElem = document.querySelector('.collapsible');
-      // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
-
-      // Or with jQuery
-
-      /*window.addEventListener('load', function(){
-
-      }, false )*/
 
 
 
@@ -49,14 +47,16 @@ var sidebar;
     }
 
 
-    open(txData)
+    openSidebar(txData)
     {
 
       this.setTxData(txData)
 
       var sb = document.getElementById('tx-sidebar');
 
+
       var instance = M.Sidenav.getInstance( sb );
+     
       instance.open();
 
 

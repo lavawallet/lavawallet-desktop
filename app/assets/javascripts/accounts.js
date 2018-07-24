@@ -22,7 +22,6 @@ export default class Accounts {
 
 
 
-
      accountsComponent = new Vue({
         el: '#accounts',
         data: {
@@ -54,6 +53,8 @@ export default class Accounts {
               self.renderAccountData(existingActiveAddress)
             }
 
+            document.dispatchEvent(new Event('SidenavContentLoaded'));
+
         },
         methods: {
            clickButton: function (buttonName) {
@@ -71,13 +72,14 @@ export default class Accounts {
                     var spender = self.contractConfig.lavaContractAddress;
 
                     var txCommand = {from: this.selectedAddress,
-                      contract: 'erc20token',
+                      contract: 'erc20token_approveAndCall',
                       to: address,
-                      method: 'approveAndCall',
-                      params: [spender,this.depositAmount,0] };
+                      functionName: 'approveAndCall',
+                      params: [spender,this.depositAmount,"0x00"] };
                     var txOverview = TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
 
-                    self.txSidebar.open( txOverview );
+
+                    self.txSidebar.openSidebar( txOverview );
 
                     break;
 
@@ -89,13 +91,13 @@ export default class Accounts {
                     var txCommand = {from: this.selectedAddress,
                       contract: 'lavawallet',
                       to: address,
-                      method: 'withdrawTokens',
-                      params: [this.withdrawAmount] };
+                      functionName: 'withdrawTokens',
+                      params: [this.selectedAddress,this.withdrawAmount] };
 
-                    console.log(self.txSidebar)
+                    console.log('sidebar', self.txSidebar)
                     var txOverview = TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
 
-                    self.txSidebar.open(txOverview);
+                    self.txSidebar.openSidebar(txOverview);
 
                     break;
 

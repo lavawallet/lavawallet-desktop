@@ -27,7 +27,7 @@ export default class Transfer {
         },
         created: async function () {
 
-
+            document.dispatchEvent(new Event('SidenavContentLoaded'));
         },
         methods: {
            clickButton: function (buttonName) {
