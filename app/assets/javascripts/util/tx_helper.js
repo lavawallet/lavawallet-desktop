@@ -37,7 +37,8 @@ export default class TXHelper {
     var max_gas_cost = 17046240;
 
     try{
-      var estimatedGasCost = await txMethod.estimateGas({gas: max_gas_cost, from:txCommand.from, to: txCommand.to });
+      var estimatedGasCost = await txMethod.estimateGas({
+        gas: max_gas_cost, from:txCommand.from, to: txCommand.to });
     }catch(e)
     {
       estimatedGasCost = max_gas_cost;

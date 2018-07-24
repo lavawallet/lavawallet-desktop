@@ -103,6 +103,22 @@ overflow-y: auto;
 }
 
 
+.round-canvas-edges
+{
+  canvas
+  {
+    border-radius: 5em;
+  }
+
+}
+
+.overflow-ellipsis
+{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .padding-1
 {
   padding: 1em;

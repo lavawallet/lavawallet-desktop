@@ -7,12 +7,22 @@
 
    {{title}}
 
-   <li><div class="user-view">
-     <div class="background">
-       
-       <div class="blockie-icon" id="blockie-from"> </div>
-       <div class="blockie-icon" id="blockie-to"> </div>
+   <li><div class=" ">
 
+     <div class="sidebar-header">
+
+       <div class="row">
+         <div class="col s6 center">
+           <div class="blockie-icon round-canvas-edges" id="blockie-from"> </div>
+           <label style="width:60px;" class="overflow-ellipsis"> {{ txOverview.from }} </label>
+         </div>
+          <div class="col s6 center">
+           <div class="blockie-icon round-canvas-edges" id="blockie-to"> </div>
+            <label style="width:60px;" class="overflow-ellipsis"> {{ txOverview.to }} </label>
+         </div>
+
+
+       </div>
 
 
      </div>

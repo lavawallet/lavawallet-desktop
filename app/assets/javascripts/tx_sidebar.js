@@ -36,7 +36,7 @@ var sidebar;
       sidebar = new Vue({
          el: '#tx-sidebar',
          data: {
-
+           txOverview: {},
 
            title: 'Transaction Information'
          },
@@ -64,6 +64,7 @@ var sidebar;
 
     setTxOverviewData(txOverviewData)
     {
+      Vue.set(sidebar,'txOverview',txOverviewData)
       console.log('setting txData',txOverviewData)
 
       this.attachBlockie(txOverviewData.from, 'blockie-from' );
@@ -79,7 +80,7 @@ var sidebar;
         seed: seed, // seed used to generate icon data, default: random
 
         size: 20, // width/height of the icon in blocks, default: 8
-        scale: 6, // width/height of each block in pixels, default: 4
+        scale: 4, // width/height of each block in pixels, default: 4
 
         });
 
