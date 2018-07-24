@@ -72,12 +72,14 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: ''
     },
- 
+    target: 'node',
     module: {
         rules: [
             {
                 test: /\.js$/,
-                 exclude: /(node_modules|bower_components)/,
+                 exclude: path.resolve(__dirname, 'node_modules'),
+
+
                 use: [
                     {
                         loader: 'babel-loader',
@@ -86,6 +88,10 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+              test: /\.node$/,
+              use: 'node-loader'
             },
             {
                 test: /\.scss$/,

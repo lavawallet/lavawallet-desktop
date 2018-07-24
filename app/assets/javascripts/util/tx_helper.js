@@ -46,7 +46,7 @@ export default class TXHelper {
 
 
 
-    var relayData = await  EthGasOracle.getGasData();
+    var gasPriceData = await  EthGasOracle.getGasData();
 
 
     return {
@@ -57,8 +57,8 @@ export default class TXHelper {
       txMethod:txMethod,
       txCount:txCount,
       gasCost: estimatedGasCost,
-      gasPriceNormal: relayData.ethGasNormal,
-      gasPriceFast: relayData.ethGasFast,
+      gasPriceNormal: gasPriceData.ethGasNormal,
+      gasPriceFast: gasPriceData.ethGasFast,
       txError:txError,
       overviewStyle: 'standard'
 
