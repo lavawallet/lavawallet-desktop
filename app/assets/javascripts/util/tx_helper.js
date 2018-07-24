@@ -32,7 +32,7 @@ export default class TXHelper {
 
     var txCount = await web3.eth.getTransactionCount(txCommand.from);
 
-    var txError = '';
+    var txError = null;
     var max_gas_cost = 17046240;
 
     try{

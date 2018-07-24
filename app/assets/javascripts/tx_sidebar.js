@@ -37,9 +37,32 @@ var sidebar;
          el: '#tx-sidebar',
          data: {
            txOverview: {},
+           gasPrice: 0,
+           maxFee: 0,
+           maxTotal: 0,
 
            title: 'Confirm Transaction'
          },
+         updated: function () {
+            this.$nextTick(function () {
+              console.log('sidebar updated')
+
+              var gasPriceEth = (parseFloat(this.gasPrice) / 1e8);
+
+              var gasCostFloat = parseFloat(this.txOverview.gasCost)
+
+              var maxFeeFloat = gasCostFloat * gasPriceEth;
+
+              var ethAmountFloat = parseFloat(this.txOverview.ethAmount);
+
+              var maxTotalFloat = ethAmountFloat + maxFeeFloat;
+ 
+              this.maxFee = maxFeeFloat.toPrecision(4);
+              this.maxTotal = maxTotalFloat.toPrecision(4) ;
+              // Code that will run only after the
+              // entire view has been re-rendered
+            })
+          },
          methods: {
            clickButton: async function (buttonName) {
 
@@ -96,13 +119,18 @@ var sidebar;
     setDisplay(displayName)
     {
       console.log('set display  ', displayName)
-      // if view-transaction  then show a page with all the tx listed out, like metamask 
+      // if view-transaction  then show a page with all the tx listed out, like metamask
     }
 
 
     setTxOverviewData(txOverviewData)
     {
       Vue.set(sidebar,'txOverview',txOverviewData)
+      Vue.set(sidebar,'gasPrice',txOverviewData.gasPriceNormal)
+
+
+
+
       console.log('setting txData',txOverviewData)
 
       this.attachBlockie(txOverviewData.from, 'blockie-from' );
