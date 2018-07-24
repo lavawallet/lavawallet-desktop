@@ -38,7 +38,7 @@ var sidebar;
          data: {
            txOverview: {},
 
-           title: 'Transaction Information'
+           title: 'Confirm Transaction'
          },
          methods: {
          }
