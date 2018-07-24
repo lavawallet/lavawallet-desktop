@@ -107,7 +107,7 @@
    </li>
 
    <li class=" row center">
-     <div class="btn green lighten-1 hoverable clickable" v-on:click="clickButton('accept')">
+     <div class="btn green lighten-1 hoverable clickable" v-if="!txOverview.txError"  v-on:click="clickButton('accept')">
        Accept
      </div>
 
