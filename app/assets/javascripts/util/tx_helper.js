@@ -3,8 +3,7 @@
 //const LavaNetworkUtils = require('./lava-network-utils')
 //const LavaBalanceUtils = require('./lava-balance-utils')
 
-
-
+import EthGasOracle from '../eth-gas-oracle.js';
 
 
 const Tx = require('ethereumjs-tx')
@@ -45,13 +44,21 @@ export default class TXHelper {
       txError = e.message ;
     }
 
+
+
+    var relayData = await  EthGasOracle.getGasData();
+
+
     return {
       from: txCommand.from,
       to: txCommand.to,
+      ethAmount: 0,
       txCommand: txCommand,
       txMethod:txMethod,
       txCount:txCount,
       gasCost: estimatedGasCost,
+      gasPriceNormal: relayData.ethGasNormal,
+      gasPriceFast: relayData.ethGasFast,
       txError:txError,
       overviewStyle: 'standard'
 
@@ -92,7 +99,7 @@ export default class TXHelper {
 
     var txData = lavaPacketUtils.getFunctionCall(web3,packetData)
 
-    var relayData = await this.lavaPeer.getRelayData();
+    var relayData = await ethGasOracle.getRelayData();
 
 
      var relayingGasPrice = relayData.ethGasNormal; //this.relayConfig.solutionGasPriceWei

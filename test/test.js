@@ -9,7 +9,7 @@ web3.setProvider(new web3.providers.HttpProvider(INFURA_MAINNET_URL))
 var env = 'mainnet';
 
 import TXHelper from '../app/assets/javascripts/util/tx_helper.js';
-
+import EthGasOracle from '../app/assets/javascripts/eth-gas-oracle.js';
 
 
 var assert = require('assert');
@@ -55,6 +55,12 @@ var assert = require('assert');
 
     });
 
+    it('uses gas oracle ', async function() {
+
+          var relayData = await  EthGasOracle.getGasData();
+          assert.ok(relayData)
+
+   });
 
 
 
