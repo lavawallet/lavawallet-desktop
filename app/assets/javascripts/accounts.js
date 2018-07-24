@@ -56,6 +56,16 @@ export default class Accounts {
             document.dispatchEvent(new Event('SidenavContentLoaded'));
 
         },
+
+        updated: function () {
+           this.$nextTick(function () {
+             self.txSidebar.updateAccountData(self.getAccountData());
+           })
+         },
+
+
+
+
         methods: {
            clickButton: async function (buttonName) {
              // `this` inside methods points to the Vue instance
@@ -77,8 +87,9 @@ export default class Accounts {
                       to: address,
                       functionName: 'approveAndCall',
                       params: [spender,this.depositAmount,"0x00"] };
-                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
 
+                      self.txSidebar.openSidebar(   );
+                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
 
                     self.txSidebar.openSidebar( txOverview );
 
@@ -98,6 +109,7 @@ export default class Accounts {
                       params: [tokenAddress,this.withdrawAmount] };
 
                     console.log('sidebar', self.txSidebar)
+
                     var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
 
                     self.txSidebar.openSidebar(txOverview);
@@ -194,6 +206,9 @@ export default class Accounts {
         Vue.set(accountsComponent, 'tokenBalance', accountInfo.tokenBalance )
         Vue.set(accountsComponent, 'lavaBalance', accountInfo.tokenBalance )
     }
+
+
+
   }
 
 
@@ -236,6 +251,14 @@ export default class Accounts {
 
 
       Vue.set(accountsComponent, 'accounts', accounts )
+  }
+
+  getAccountData(){
+    return {
+      ethBalance: accountsComponent.ethBalance,
+      selectedAddress: accountsComponent.selectedAddress
+
+    }
   }
 
 

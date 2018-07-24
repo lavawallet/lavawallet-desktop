@@ -40,8 +40,9 @@ var sidebar;
            gasPrice: 0,
            maxFee: 0,
            maxTotal: 0,
-
-           title: 'Confirm Transaction'
+           ethBalance: 0,
+           title: 'Confirm Transaction',
+           minorError: null
          },
          updated: function () {
             this.$nextTick(function () {
@@ -59,6 +60,12 @@ var sidebar;
 
               this.maxFee = maxFeeFloat.toPrecision(4);
               this.maxTotal = maxTotalFloat.toPrecision(4) ;
+
+
+              if( this.maxTotal > this.ethBalance )
+              {
+                this.minorError="Insufficient ETH for transaction."
+              }
               // Code that will run only after the
               // entire view has been re-rendered
             })
@@ -92,7 +99,8 @@ var sidebar;
     openSidebar(txOverview)
     {
 
-      this.setTxOverviewData(txOverview)
+
+
 
       var sb = document.getElementById('tx-sidebar');
 
@@ -100,6 +108,9 @@ var sidebar;
 
       instance.open();
 
+      if(txOverview){
+        this.setTxOverviewData(txOverview)
+      }
 
     }
 
@@ -110,6 +121,12 @@ var sidebar;
       var instance = M.Sidenav.getInstance( sb );
 
       instance.close();
+    }
+
+    updateAccountData(accountData)
+    {
+      Vue.set(sidebar,'ethBalance',accountData.ethBalance)
+
     }
 
     executeTransaction(txOverviewData)

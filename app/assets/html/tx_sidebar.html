@@ -106,8 +106,14 @@
      </div>
    </li>
 
+
+   <div class="error-container card red lighten-2 white-text padding-1" v-if="minorError" v-cloak>
+      {{ minorError }}
+   </div>
+
+
    <li class=" row center">
-     <div class="btn green lighten-1 hoverable clickable" v-if="!txOverview.txError"  v-on:click="clickButton('accept')">
+     <div class="btn green lighten-1 hoverable clickable" v-if="!txOverview.txError && !minorError"  v-on:click="clickButton('accept')">
        Accept
      </div>
 
