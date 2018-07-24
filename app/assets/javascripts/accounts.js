@@ -71,7 +71,8 @@ export default class Accounts {
                     var address = self.contractConfig.tokenAddress;
                     var spender = self.contractConfig.lavaContractAddress;
 
-                    var txCommand = {from: this.selectedAddress,
+                    var txCommand = {
+                      from: this.selectedAddress,
                       contract: 'erc20token_approveAndCall',
                       to: address,
                       functionName: 'approveAndCall',
@@ -87,12 +88,14 @@ export default class Accounts {
                     console.log('withdraw', this.withdrawAmount )
                     var env = self.contractConfig.networkEnvironment;
                     var address = self.contractConfig.lavaContractAddress;
+                    var tokenAddress = self.contractConfig.tokenAddress;
 
-                    var txCommand = {from: this.selectedAddress,
+                    var txCommand = {
+                      from: this.selectedAddress,
                       contract: 'lavawallet',
                       to: address,
                       functionName: 'withdrawTokens',
-                      params: [this.selectedAddress,this.withdrawAmount] };
+                      params: [tokenAddress,this.withdrawAmount] };
 
                     console.log('sidebar', self.txSidebar)
                     var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );

@@ -33,16 +33,16 @@ export default class TXHelper {
 
     var txCount = await web3.eth.getTransactionCount(txCommand.from);
 
-
+    var txError = '';
     var max_gas_cost = 17046240;
-    var estimatedGasCost = await txMethod.estimateGas({gas: max_gas_cost, from:txCommand.from, to: txCommand.to });
 
-    //var txData = this.getTxDataForLavaTransaction(web3, env, txCommand)
-
-    //var relayData = await this.lavaPeer.getRelayData();
-
-
-    //from , to, amount (eth) , gasLimit, gasPrice
+    try{
+      var estimatedGasCost = await txMethod.estimateGas({gas: max_gas_cost, from:txCommand.from, to: txCommand.to });
+    }catch(e)
+    {
+      estimatedGasCost = max_gas_cost;
+      txError = e.message ;
+    }
 
     return {
       from: txCommand.from,
@@ -51,6 +51,7 @@ export default class TXHelper {
       txMethod:txMethod,
       txCount:txCount,
       gasCost: estimatedGasCost,
+      txError:txError,
       overviewStyle: 'standard'
 
     }
@@ -61,7 +62,7 @@ export default class TXHelper {
   {
 
     var contract = ContractInterface.getContract ( web3, env, txCommand.contract, txCommand.to)
- 
+
     //break out the params with ellipses
     var method = contract.methods[txCommand.functionName]( ...txCommand.params);
 
