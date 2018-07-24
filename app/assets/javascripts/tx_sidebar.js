@@ -10,7 +10,7 @@ var sidebar;
  export default class TXSidebar {
 
    init(){
-
+     var self = this;
 
      console.log('init', M )
 
@@ -41,6 +41,22 @@ var sidebar;
            title: 'Confirm Transaction'
          },
          methods: {
+           clickButton: async function (buttonName) {
+
+             switch(buttonName)
+             {
+                case 'accept':
+                   self.executeTransaction(this.txOverview);
+                   self.setDisplay('view-transaction')
+                   break;
+                case 'reject':
+                   self.closeSidebar();
+                   break;
+
+             }
+
+           }
+
          }
       })
 
@@ -54,13 +70,35 @@ var sidebar;
 
       var sb = document.getElementById('tx-sidebar');
 
-
       var instance = M.Sidenav.getInstance( sb );
 
       instance.open();
 
 
     }
+
+    closeSidebar()
+    {
+      var sb = document.getElementById('tx-sidebar');
+
+      var instance = M.Sidenav.getInstance( sb );
+
+      instance.close();
+    }
+
+    executeTransaction(txOverviewData)
+    {
+      console.log('execute tx  ', txOverviewData)
+
+    }
+
+
+    setDisplay(displayName)
+    {
+      console.log('set display  ', displayName)
+      // if view-transaction  then show a page with all the tx listed out, like metamask 
+    }
+
 
     setTxOverviewData(txOverviewData)
     {
