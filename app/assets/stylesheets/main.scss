@@ -81,12 +81,24 @@ overflow-y: auto;
 
 }
 
+
+.input-sm
+{
+  input
+  {
+    height: 30px !important;
+  }
+
+}
+
 .simple-input
 {
-  padding:5px;
+  padding:5px !important;
 
   input
   {
+    width: 70% !important; //hacky?
+
     border: 1px solid #00b89c !important;
     padding: 0.1em 0.8em !important;
     border-radius: 0.2em !important;
@@ -117,6 +129,11 @@ overflow-y: auto;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.margin-0
+{
+    margin: 0 !important;
 }
 
 .padding-1

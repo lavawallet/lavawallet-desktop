@@ -2,10 +2,11 @@
 
  <div id="tx-sidebar" class="sidenav  ">
 
-
+   <!--
    <a href="#" data-target="tx-sidebar" class="sidenav-trigger"><i class="material-icons">x</i></a>
+ -->
 
-   <h4>{{title}}</h4>
+   <h4 class="center">{{title}}</h4>
 
   <div class=" ">
 
@@ -32,50 +33,60 @@
 
 
 
-   <ul class="padding-1">
-   <li>
-     <div class="sidebar-parameter-container">
+   <ul class="padding-1 margin-0">
+   <li class="row margin-0">
+     <div class="sidebar-parameter-container col s6">
        <div class="sidebar-parameter-label">
          ETH Amount
        </div>
      </div>
-
-     <a class="subheader">   {{ txOverview.ethAmount }}</a>
+     <div class="simple-input input-sm col s6">
+       <input v-model='txOverview.ethAmount'>    </input>
+     </div>
    </li>
-   <li>
-     <div class="sidebar-parameter-container">
+   <li class="row margin-0">
+     <div class="sidebar-parameter-container col s6">
        <div class="sidebar-parameter-label">
          Gas Limit
        </div>
      </div>
-     <a class="subheader"> {{ txOverview.gasCost }}</a>
+     <div class="simple-input input-sm col s6">
+       <input v-model='txOverview.gasCost'>    </input>
+     </div>
    </li>
-   <li>
-     <div class="sidebar-parameter-container">
+   <li class="row margin-0">
+     <div class="sidebar-parameter-container col s6">
        <div class="sidebar-parameter-label">
          Gas Price
        </div>
      </div>
-     <a class="subheader"> {{ txOverview.gasPriceNormal }}</a>
+     <div class="simple-input input-sm col s6">
+       <input v-model='txOverview.gasPrice'>    </input>
+     </div>
+
    </li>
-   <li>
-     <div class="sidebar-parameter-container">
+   <li class="row margin-0">
+     <div class="sidebar-parameter-container col s6">
        <div class="sidebar-parameter-label">
          Max TX Fee
        </div>
      </div>
-     <a class="subheader"> </a>
+     <div class="col s6">
+       <div class='subtitle'> 111 </div>
+     </div>
    </li>
-   <li>
-     <div class="sidebar-parameter-container">
+   <li class="row margin-0 ">
+     <div class="sidebar-parameter-container col s6">
        <div class="sidebar-parameter-label">
          Max Total
        </div>
      </div>
-     <a class="waves-effect" href="#!"> </a>
+     <div class="col s6">
+       <div class='subtitle'> 111 </div>
+     </div>
    </li>
 
-   <li class="center">
+   <li class=" row center">
      <div class="btn green lighten-1 hoverable clickable" v-on:click="clickButton('accept')">
        Accept
      </div>
