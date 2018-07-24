@@ -33,7 +33,6 @@ export default class TXHelper {
 
     var txCount = await web3.eth.getTransactionCount(txCommand.from);
 
-    console.log('method',txMethod)
 
     var max_gas_cost = 17046240;
     var estimatedGasCost = await txMethod.estimateGas({gas: max_gas_cost, from:txCommand.from, to: txCommand.to });
@@ -54,7 +53,7 @@ export default class TXHelper {
       gasCost: estimatedGasCost,
       overviewStyle: 'standard'
 
-    } ;
+    }  
   }
 
   //{contract: 'lavawallet', method: 'deposit', value: this.depositAmount}
