@@ -114,7 +114,7 @@ export default class Accounts {
 
                     self.txSidebar.openSidebar( txOverview );
 
-                    break; 
+                    break;
 
                 case 'withdraw':
                     console.log('withdraw', this.withdrawAmount )
@@ -220,6 +220,9 @@ export default class Accounts {
 
         Vue.set(accountsComponent, 'ethBalance', accountInfo.ethBalance )
         Vue.set(accountsComponent, 'tokenBalance', accountInfo.tokenBalance )
+
+
+
         Vue.set(accountsComponent, 'lavaBalance', accountInfo.lavaBalance )
     }
 

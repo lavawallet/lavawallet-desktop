@@ -129,6 +129,9 @@ export default class TXHelper {
 
      var privateKey =  account.privateKey;
 
+     console.log('send tx: ')
+     console.log(txData)
+     console.log(txOptions)
 
 
      return new Promise(function (result,error) {
@@ -173,7 +176,20 @@ export default class TXHelper {
                                     ]
                                 }, [...params]);
 
-
+          case 'withdrawTokens':    return  web3.eth.abi.encodeFunctionCall({
+                                        name: 'withdrawTokens',
+                                        type: 'function',
+                                        "inputs": [
+                                          {
+                                            "name": "token",
+                                            "type": "address"
+                                          },
+                                          {
+                                            "name": "tokens",
+                                            "type": "uint256"
+                                          }
+                                        ]
+                                    }, [...params]);
 
 
     }

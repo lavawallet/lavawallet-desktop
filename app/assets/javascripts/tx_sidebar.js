@@ -52,11 +52,13 @@ var sidebar;
             this.$nextTick(function () {
               console.log('sidebar updated')
 
-              var gasPriceEth = (parseFloat(this.gasPrice) / 1e8).toFixed(1);
+              var gasPriceEthRaw = (parseFloat(this.gasPrice) / 1e8)
+
+              var gasPriceEth = gasPriceEthRaw.toFixed(1);
 
               var gasCostFloat = parseFloat(this.txOverview.gasCost)
 
-              var maxFeeFloat = gasCostFloat * gasPriceEth;
+              var maxFeeFloat = gasCostFloat * gasPriceEthRaw;
 
               var ethAmountFloat = parseFloat(this.txOverview.ethAmount);
 
