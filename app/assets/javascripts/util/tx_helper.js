@@ -101,21 +101,27 @@ export default class TXHelper {
     var addressTo = txOverviewData.to;
     var gasPriceGwei = txOverviewData.gasPrice;
     var gasCost = txOverviewData.gasCost;
-    var txParams = txOverviewData.params;
+    var methodName = txOverviewData.txCommand.functionName;
 
-    return await TXHelper.submitTransaction(web3, account, txMethod, txParams, addressTo, gasCost, gasPriceGwei    );
+    return await TXHelper.submitTransaction(web3, account, txMethod, methodName, addressTo, gasCost, gasPriceGwei    );
   }
 
   //account should be {address: aaa, privateKey: bbb}
   //submit a lava packet
-  static async submitTransaction( web3,  account,  txMethod,  txParams, addressTo, gasCost, gasPriceGwei )
+  static async submitTransaction( web3,  account,  txMethod,  methodName, addressTo, gasCost, gasPriceGwei )
   {
 
     var addressFrom = account.address;
 
 
-    var txData = TXHelper.getABIDataFromFunctionName(web3,txMethod,txParams) //ABI
+    var txData = TXHelper.getABIDataFromFunctionName(web3,methodName,txMethod.arguments) //ABI
 
+
+    if(!txData)
+    {
+      console.error('missing txData', txData)
+      return {success:false,message: 'missing txData'}
+    }
 
      var txOptions = await this.getTXOptions(web3, addressTo,addressFrom,txData, txMethod , gasCost, gasPriceGwei   )
 
@@ -139,10 +145,10 @@ export default class TXHelper {
   }
 
 
-  static getABIDataFromFunctionName(methodName,params)
+  static getABIDataFromFunctionName(web3, methodName,params)
   {
 
-    console.log('get ABI from ', methodName )
+    console.log('get ABI from ', methodName, params  )
     var txData;
 
 
