@@ -67,7 +67,7 @@ async function init()
   }
 
   if(document.getElementById("transfer")){
-    transfer.init(socketClient,txSidebar);
+    transfer.init(socketClient,txSidebar,web3,contractConfig);
   }
 
   if(document.getElementById("add-account")){

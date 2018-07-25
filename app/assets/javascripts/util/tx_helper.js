@@ -191,6 +191,21 @@ export default class TXHelper {
                                         ]
                                     }, [...params]);
 
+          case 'transfer':    return  web3.eth.abi.encodeFunctionCall({
+                                        name: 'transfer',
+                                        type: 'function',
+                                        "inputs": [
+                                          {
+                                            "name": "to",
+                                            "type": "address"
+                                          },
+                                          {
+                                            "name": "tokens",
+                                            "type": "uint256"
+                                          }
+                                        ]
+                                    }, [...params]);
+
 
     }
 

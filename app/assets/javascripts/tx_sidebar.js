@@ -153,7 +153,9 @@ var sidebar;
     setTxOverviewData(txOverviewData)
     {
       Vue.set(sidebar,'txOverview',txOverviewData)
-      Vue.set(sidebar,'gasPrice',txOverviewData.gasPriceNormal)
+
+      var gasPriceFormatted = parseFloat(txOverviewData.gasPriceNormal).toPrecision(1)
+      Vue.set(sidebar,'gasPrice', gasPriceFormatted )
 
 
 
