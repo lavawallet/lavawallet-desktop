@@ -90,11 +90,14 @@ async function loadWeb3(socketClient)
 
       var data = await socketClient.emitToSocket('getWalletInfo',null)
 
+      console.log('data', data)
 
       contractConfig.tokenAddress = data.tokenAddress;
       contractConfig.tokenName = data.tokenName;
+      contractConfig.tokenDecimals = data.tokenDecimals;
       contractConfig.web3Provider = data.web3Provider;
       contractConfig.lavaContractAddress = data.lavaContractAddress;
+      contractConfig.lavaRelayURL = data.lavaRelayURL;
       contractConfig.networkEnvironment = data.networkEnvironment;
 
       web3 = new Web3();

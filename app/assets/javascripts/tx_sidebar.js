@@ -52,7 +52,7 @@ var sidebar;
             this.$nextTick(function () {
               console.log('sidebar updated')
 
-              var gasPriceEth = (parseFloat(this.gasPrice) / 1e8);
+              var gasPriceEth = (parseFloat(this.gasPrice) / 1e8).toFixed(1);
 
               var gasCostFloat = parseFloat(this.txOverview.gasCost)
 

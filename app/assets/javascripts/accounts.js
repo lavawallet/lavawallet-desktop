@@ -85,27 +85,36 @@ export default class Accounts {
                     console.log( this.account  )
                     break;
                 case 'deposit':
-                    console.log('deposit', this.depositAmount )
+
                     var env = self.contractConfig.networkEnvironment;
                     var address = self.contractConfig.tokenAddress;
                     var spender = self.contractConfig.lavaContractAddress;
                     var ethAccount = this.selectedAccount;
 
-                    var depositAmount = parseFloat(this.depositAmount)
+                    var tokenDecimals = parseInt(self.contractConfig.tokenDecimals);
+
+                      console.log('pwr', Math.pow(10,tokenDecimals) )
+
+                    var depositAmount = parseFloat(this.depositAmount);
+                    var depositAmountRaw = parseFloat(this.depositAmount) * Math.pow(10,tokenDecimals);
+
+                    console.log('deposit', depositAmount )
+                    console.log('deposit amt ', depositAmountRaw)
+
 
                     var txCommand = {
                       from: this.selectedAddress,
                       contract: 'erc20token_approveAndCall',
                       to: address,
                       functionName: 'approveAndCall',
-                      params: [spender,depositAmount,"0x00"] };
+                      params: [spender,depositAmountRaw,"0x00"] };
 
                       self.txSidebar.openSidebar(   );
                     var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount );
 
                     self.txSidebar.openSidebar( txOverview );
 
-                    break;
+                    break; 
 
                 case 'withdraw':
                     console.log('withdraw', this.withdrawAmount )
@@ -114,18 +123,21 @@ export default class Accounts {
                     var tokenAddress = self.contractConfig.tokenAddress;
                     var ethAccount = this.selectedAccount;
 
-                      var withdrawAmount = parseFloat(this.withdrawAmount)
+                    var tokenDecimals = parseInt(self.contractConfig.tokenDecimals);
+
+                    var withdrawAmount = parseFloat(this.withdrawAmount) ;
+                    var withdrawAmountRaw = parseFloat(this.withdrawAmount) * Math.pow(10,tokenDecimals);
 
                     var txCommand = {
                       from: this.selectedAddress,
                       contract: 'lavawallet',
                       to: address,
                       functionName: 'withdrawTokens',
-                      params: [tokenAddress,withdrawAmount] };
+                      params: [tokenAddress,withdrawAmountRaw] };
 
                     console.log('sidebar', self.txSidebar)
 
-                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAcount );
+                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount );
 
                     self.txSidebar.openSidebar(txOverview);
 
@@ -272,7 +284,7 @@ export default class Accounts {
     if(data.success)
     {
       account = data.account;
-       
+
 
       Vue.set(accountsComponent, 'selectedAccount',  account )
 

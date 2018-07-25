@@ -122,7 +122,7 @@
                           <input placeholder=""   type="text" class="validate" v-model='accountPassword' >
                         </div>
                         <div class=" col s4"   >
-                          <div class="btn electric-blue"  v-on:click="clickButton('unlock')">Unlock</div>
+                          <div class="btn electric-blue"  @keyup.native="clickButton('unlock')"  v-on:click="clickButton('unlock')">Unlock</div>
                         </div>
 
 
