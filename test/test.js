@@ -12,6 +12,19 @@ import TXHelper from '../app/assets/javascripts/util/tx_helper.js';
 import EthGasOracle from '../app/assets/javascripts/eth-gas-oracle.js';
 
 
+import SocketClient from '../app/assets/javascripts/socketclient';
+
+
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
+const { window } = new JSDOM(``, {
+     url: "https://localhost:3000",
+     referrer: "https://localhost:3000",
+     contentType: "text/html",
+     includeNodeLocations: true
+   });
+
 var assert = require('assert');
 
 
@@ -20,22 +33,6 @@ var assert = require('assert');
 
 
     it('uses tx helper ', async function() {
-
-
-
-/*
-      var txCommand = {
-      from: '0xB11ca87E32075817C82Cc471994943a4290f4a14',
-      contract: 'lavawallet',
-      to:'0x69a02e511e027e5c26d2fbe4192e45b41db32819',
-      method: 'depositTokens',
-      params: [11]};
-
-      var overview = await TXHelper.getOverviewForStandardTransaction(web3, env, txCommand)
-
-      assert.ok(overview)
-
-*/
 
 
       var amount = 0;
@@ -47,11 +44,10 @@ var assert = require('assert');
         functionName: 'approveAndCall',
         params: ['0x69a02e511e027e5c26d2fbe4192e45b41db32819',amount, '0x00'   ]};
 
-      var overview = await TXHelper.getOverviewForStandardTransaction(web3, env, txCommand)
+       var overview = await TXHelper.getOverviewForStandardTransaction(web3, env, txCommand)
 
-      console.log(overview)
-
-      assert.ok(overview)
+        console.log(overview)
+      //  assert.ok(overview)
 
     });
 
@@ -63,6 +59,23 @@ var assert = require('assert');
    });
 
 
+   it('can unlock an account', async function() {
+
+
+
+      console.log('window',window.location.hostname)
+
+
+      var socketClient = new SocketClient();
+      await socketClient.init(window);
+        //   var account = await  AccountHelper.unlockAccount('0xd7f4e3980d5780c4c2b3096e95d9b01b16d55abb','password');
+         var data = await socketClient.emitToSocket('unlockAccount',{
+           address:'0xd7f4e3980d5780c4c2b3096e95d9b01b16d55abb',password:'password'});
+
+         console.log(data)
+         assert.ok(data)
+
+  });
 
 
   });

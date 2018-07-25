@@ -43,7 +43,7 @@ async function init()
 
 
   nav.init();
-  await socketClient.init();
+  await socketClient.init(window);
 
 
   await loadWeb3(socketClient);
@@ -51,7 +51,7 @@ async function init()
   console.log('www', web3)
 
   if(document.getElementById("tx-sidebar")){
-    txSidebar.init();
+    txSidebar.init(web3);
   }
 
   if(document.getElementById("home")){
@@ -88,10 +88,8 @@ async function init()
 async function loadWeb3(socketClient)
 {
 
-  await new Promise(  (resolve, reject) => {
+      var data = await socketClient.emitToSocket('getWalletInfo',null)
 
-    socketClient.socketEmit('getWalletInfo',null,function(data){
-     
 
       contractConfig.tokenAddress = data.tokenAddress;
       contractConfig.tokenName = data.tokenName;
@@ -102,12 +100,6 @@ async function loadWeb3(socketClient)
       web3 = new Web3();
       web3.setProvider(contractConfig.web3Provider);
       env = contractConfig.networkEnvironment;
-
-        resolve();
-    });
-
-
-  });
 
 
 }

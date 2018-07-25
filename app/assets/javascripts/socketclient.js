@@ -7,7 +7,7 @@ export default class SocketClient {
 
   }
 
-  async init()
+  async init(window)
   {
     console.log('init socket client')
 
@@ -31,7 +31,7 @@ export default class SocketClient {
     });
 
 
- 
+
 
 
 
@@ -46,6 +46,29 @@ export default class SocketClient {
   //  console.log(this.socket)
 
     await this.socket.emit(name,value,callback)
+  }
+
+
+  async emitToSocket(name,value)
+  {
+      var self = this;
+     
+
+
+    var data = await new Promise(async (resolve, reject) => {
+         await self.socket.emit(name,value,function(data){
+
+           if(data)
+           {
+              resolve(data)
+           }else{
+             reject()
+           }
+
+         })
+      })
+
+      return data;
   }
 
 

@@ -26,7 +26,11 @@ export default class Accounts {
         el: '#accounts',
         data: {
           accounts: [],
+
           selectedAccount: null,
+          accountPassword: null,
+          unlockError: null,
+
           selectedAddress: existingActiveAddress,
 
           tokenLoaded:false,
@@ -75,21 +79,29 @@ export default class Accounts {
                 case 'addaccount':
                     window.location.href = '/account_add.html'
                     break;
+                case 'unlock':
+                    this.account = await self.unlockEthAccount(this.accountPassword)
+
+                    console.log( this.account  )
+                    break;
                 case 'deposit':
                     console.log('deposit', this.depositAmount )
                     var env = self.contractConfig.networkEnvironment;
                     var address = self.contractConfig.tokenAddress;
                     var spender = self.contractConfig.lavaContractAddress;
+                    var ethAccount = this.selectedAccount;
+
+                    var depositAmount = parseFloat(this.depositAmount)
 
                     var txCommand = {
                       from: this.selectedAddress,
                       contract: 'erc20token_approveAndCall',
                       to: address,
                       functionName: 'approveAndCall',
-                      params: [spender,this.depositAmount,"0x00"] };
+                      params: [spender,depositAmount,"0x00"] };
 
                       self.txSidebar.openSidebar(   );
-                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
+                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount );
 
                     self.txSidebar.openSidebar( txOverview );
 
@@ -100,17 +112,20 @@ export default class Accounts {
                     var env = self.contractConfig.networkEnvironment;
                     var address = self.contractConfig.lavaContractAddress;
                     var tokenAddress = self.contractConfig.tokenAddress;
+                    var ethAccount = this.selectedAccount;
+
+                      var withdrawAmount = parseFloat(this.withdrawAmount)
 
                     var txCommand = {
                       from: this.selectedAddress,
                       contract: 'lavawallet',
                       to: address,
                       functionName: 'withdrawTokens',
-                      params: [tokenAddress,this.withdrawAmount] };
+                      params: [tokenAddress,withdrawAmount] };
 
                     console.log('sidebar', self.txSidebar)
 
-                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand  );
+                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAcount );
 
                     self.txSidebar.openSidebar(txOverview);
 
@@ -135,6 +150,8 @@ export default class Accounts {
 
             console.log(address)
 
+            this.selectedAccount = null;
+            this.accountPassword = null;
             this.selectedAddress = address;
             this.tokenBalance = null;
             this.lavaBalance = null;
@@ -148,19 +165,8 @@ export default class Accounts {
           },
           async copySelectedAddress()
           {
+            var data = await self.socketClient.emitToSocket('copyToClipboard',this.selectedAddress)
 
-            var data = await new Promise(async (resolve, reject) => {
-                 self.socketClient.socketEmit('copyToClipboard',this.selectedAddress,function(data){
-
-                   if(data)
-                   {
-                      resolve(data)
-                   }else{
-                     reject()
-                   }
-
-                 })
-              })
 
             self.flashMessage('Copied to clipboard!')
 
@@ -181,18 +187,16 @@ export default class Accounts {
     console.log('grab acct data ')
 
     var self=this;
-    var accountInfo = await new Promise(async (resolve, reject) => {
-         self.socketClient.socketEmit('getAccountInfo',address,function(data){
+    var accountInfo;
 
-           if(data.success)
-           {
-              resolve(data.accountInfo)
-           }else{
-             reject(data.success)
-           }
+    var data = await self.socketClient.emitToSocket('getAccountInfo',address);
 
-         })
-      })
+    if(data.success)
+    {
+      accountInfo = data.accountInfo;
+    }
+
+
 
       console.log('account info',accountInfo)
 
@@ -217,19 +221,19 @@ export default class Accounts {
     var self = this;
 
     console.log('get acct list', self.socketClient)
+    var data =  await self.socketClient.emitToSocket('listStoredAccounts',null);
 
-    var list = await new Promise(async (resolve, reject) => {
-         self.socketClient.socketEmit('listStoredAccounts',null,function(data){
+    console.log('get acct list',  data)
 
-           if(data.success)
-           {
-              resolve(data.list)
-           }else{
-             reject(data.success)
-           }
 
-         })
-      })
+    var list;
+
+    if(data.success)
+    {
+      list = data.list;
+    }
+
+
 
       return list;
   }
@@ -251,6 +255,37 @@ export default class Accounts {
 
 
       Vue.set(accountsComponent, 'accounts', accounts )
+  }
+
+
+  //this is on the front end , we need to access the backend
+  async unlockEthAccount(password)
+  {
+    var address = accountsComponent.selectedAddress;
+
+    console.log('unlocking', address)
+
+    var data = await this.socketClient.emitToSocket('unlockAccount',{address:address,password:password});
+
+    var error = null;
+
+    var account;
+    if(data.success)
+    {
+      account = data.account;
+      console.log('got acct', account)
+
+      Vue.set(accountsComponent, 'selectedAccount',  account )
+
+    }else{
+      error = data.message;
+    }
+
+
+    Vue.set(accountsComponent, 'unlockError',  error )
+
+
+    return account;   // address and pkey
   }
 
   getAccountData(){

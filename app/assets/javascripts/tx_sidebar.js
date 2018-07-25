@@ -4,15 +4,19 @@ import Vue from 'vue';
 
  const M = require('./materialize/bin/materialize.js')
 
+ import TXHelper from './util/tx_helper.js';
+
 
 var sidebar;
 
  export default class TXSidebar {
 
-   init(){
+   init(web3 ){
      var self = this;
 
-     console.log('init', M )
+     this.web3=web3;
+
+
 
      var options = {};
 
@@ -129,10 +133,11 @@ var sidebar;
 
     }
 
-    executeTransaction(txOverviewData)
+    async executeTransaction(txOverviewData)
     {
-      console.log('execute tx  ', txOverviewData)
 
+
+      await TXHelper.executeTransaction(this.web3, txOverviewData)
     }
 
 

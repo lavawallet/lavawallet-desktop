@@ -108,7 +108,7 @@ export default class AccountImport {
 
               //var privateKey = keythereum.recover(password, keyObject);
             },
-            saveAccount: function ( ) {
+            saveAccount: async function ( ) {
               this.errorMessage = null;
                console.log('save' )
 
@@ -120,15 +120,12 @@ export default class AccountImport {
                 // dk:importComponent.dk,
                 // password:importComponent.password
 
-
-               self.socketClient.socketEmit('saveAccount',keyObject,function(data){
+                var data = await  self.socketClient.emitToSocket('saveAccount',keyObject);
 
                  if(data.success)
                  {
                    window.location.href = '/accounts.html'
                  }
-
-               })
 
             },
 

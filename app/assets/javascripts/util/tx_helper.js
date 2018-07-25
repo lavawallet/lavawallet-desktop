@@ -22,11 +22,12 @@ export default class TXHelper {
   **/
 
 
-  static async getOverviewForStandardTransaction( web3, env, txCommand  )
+  static async getOverviewForStandardTransaction( web3, env, txCommand , ethAccount )
   {
 
 
-  console.log('get data for tx ')
+
+    console.log('get data for tx ')
 
     var txMethod = await TXHelper.getTXMethod( web3, env, txCommand  )
 
@@ -50,6 +51,8 @@ export default class TXHelper {
 
 
     return {
+      ethAccount: ethAccount,
+
       from: txCommand.from,
       to: txCommand.to,
       ethAmount: 0,
@@ -84,38 +87,59 @@ export default class TXHelper {
 
   }
 
+
+
+
+
+
+  static async executeTransaction(web3, txOverviewData)
+  {
+    console.log('execute tx ', txOverviewData)
+
+    var account = txOverviewData.ethAccount;
+    var txMethod = txOverviewData.txMethod;
+    var addressTo = txOverviewData.to;
+    var gasPriceGwei = txOverviewData.gasPrice;
+    var gasCost = txOverviewData.gasCost;
+    var txParams = txOverviewData.params;
+
+    return await TXHelper.submitTransaction(web3, account, txMethod, txParams, addressTo, gasCost, gasPriceGwei    );
+  }
+
   //account should be {address: aaa, privateKey: bbb}
   //submit a lava packet
-  static async submitTransaction( web3, env , account )
+  static async submitTransaction( web3,  account,  txMethod,  txParams, addressTo, gasCost, gasPriceGwei )
   {
 
-    var walletContract = ContractInterface.getWalletContract( web3, env);
+  //  var walletContract = ContractInterface.getWalletContract( web3, env);
 
     var addressFrom = account.address;
-    var addressTo = walletContract.options.address;
+  //  var addressTo = walletContract.options.address;
 
 
-    var lavaTransferMethod = lavaPacketUtils.getContractLavaMethod(walletContract,packetData)
-
-    var txData = lavaPacketUtils.getFunctionCall(web3,packetData)
-
-    var relayData = await ethGasOracle.getRelayData();
+  //  var lavaTransferMethod = lavaPacketUtils.getContractLavaMethod(walletContract,packetData)
 
 
-     var relayingGasPrice = relayData.ethGasNormal; //this.relayConfig.solutionGasPriceWei
 
-     if(broadcastingSpeed == 'fast')
-     {
-       relayingGasPrice = relayData.ethGasFast;
-     }
+    var txData = TXHelper.getABIDataFromFunctionName(web3,txMethod,txParams) //ABI
 
-     var txOptions = this.getTXOptions(addressTo,addressFrom,txData, lavaTransferMethod , relayingGasPrice  )
+  //  var txData = lavaPacketUtils.getFunctionCall(web3,packetData)
+
+    //var relayData = await ethGasOracle.getRelayData();
+    // var relayingGasPrice = relayData.ethGasNormal; //this.relayConfig.solutionGasPriceWei
+
+
+     var txOptions = await this.getTXOptions(web3, addressTo,addressFrom,txData, txMethod , gasCost, gasPriceGwei   )
+
+
 
      var privateKey =  account.privateKey;
 
+
+
      return new Promise(function (result,error) {
 
-          this.sendSignedRawTransaction(web3,txOptions,addressFrom,privateKey, function(err, res) {
+          TXHelper.sendSignedRawTransaction(web3,txOptions,addressFrom,privateKey, function(err, res) {
            if (err) error(err)
              result(res)
          })
@@ -126,12 +150,51 @@ export default class TXHelper {
 
   }
 
-  static async  getTXOptions(addressTo,addressFrom, txData, txMethod , gasPrice)
+
+  static getABIDataFromFunctionName(methodName,params)
+  {
+
+    console.log('get ABI from ', methodName )
+    var txData;
+
+
+    switch(methodName)
+    {
+      case 'approveAndCall':    return  web3.eth.abi.encodeFunctionCall({
+                                    name: 'approveAndCall',
+                                    type: 'function',
+                                    "inputs": [
+                                      {
+                                        "name": "spender",
+                                        "type": "address"
+                                      },
+                                      {
+                                        "name": "tokens",
+                                        "type": "uint256"
+                                      },
+                                      {
+                                        "name": "data",
+                                        "type": "bytes"
+                                      }
+                                    ]
+                                }, [...params]);
+
+
+
+
+    }
+
+        return;
+
+
+  }
+
+  static async  getTXOptions(web3, addressTo,addressFrom, txData, txMethod , gasCost, gasPriceGwei )
   {
       var txCount = 0;
 
       try{
-         txCount = await this.web3.eth.getTransactionCount(addressFrom);
+         txCount = await web3.eth.getTransactionCount(addressFrom);
         console.log('txCount',txCount)
        } catch(error) {  //here goes if someAsyncPromise() rejected}
         console.log('error',error);
@@ -143,21 +206,26 @@ export default class TXHelper {
 
 
        var max_gas_cost = 7046240;
-       var estimatedGasCost = await txMethod.estimateGas({gas: max_gas_cost, from:addressFrom, to: addressTo });
 
-       if( estimatedGasCost > max_gas_cost){
+       if(gasCost == null)
+       {
+         gasCost = await txMethod.estimateGas({gas: max_gas_cost, from:addressFrom, to: addressTo });
+       }
+
+
+       if( gasCost > max_gas_cost){
          console.log("Gas estimate too high!  Something went wrong ")
          return;
        }
 
-       console.log('estimated gas ', estimatedGasCost)
+       console.log('estimated gas ', gasCost)
 
 
 
     var txOptions = {
       nonce: web3utils.toHex(txCount),
-      gas: web3utils.toHex(estimatedGasCost),
-      gasPrice: web3utils.toHex(web3utils.toWei(gasPrice.toString(), 'gwei') ),
+      gas: web3utils.toHex(gasCost),
+       gasPrice: web3utils.toHex(web3utils.toWei(gasPriceGwei.toString(), 'gwei') ),
       value: 0,
       to: addressTo,
       from: addressFrom,
@@ -167,9 +235,9 @@ export default class TXHelper {
   }
 
 
-  async sendSignedRawTransaction(web3,txOptions,addressFrom,private_key,callback) {
+  static async sendSignedRawTransaction(web3,txOptions,addressFrom,private_key,callback) {
 
-      var privKey = this.truncate0xFromString( private_key )
+      var privKey = TXHelper.truncate0xFromString( private_key )
 
       const privateKey = new Buffer( privKey, 'hex')
       const transaction = new Tx(txOptions)
@@ -185,14 +253,17 @@ export default class TXHelper {
           var result =  web3.eth.sendSignedTransaction('0x' + serializedTx, callback)
         }catch(e)
         {
+          return {success:false, message: e.message}
           console.log('error',e);
         }
+
+        return {success:true, result: result}
     }
 
 
 
 
-     truncate0xFromString(s)
+     static truncate0xFromString(s)
     {
       if(s.startsWith('0x')){
         return s.substring(2);

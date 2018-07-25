@@ -25,7 +25,11 @@ export default class Nav {
           networkEnvironment: null
         },
         created: async function () {
-          self.socketClient.socketEmit('getWalletInfo',null,function(data){
+
+
+          var data = await self.socketClient.emitToSocket('getWalletInfo',null)
+
+
 
               settingsComponent.storagePath = data.storagePath;
               settingsComponent.version = data.version;
@@ -34,7 +38,7 @@ export default class Nav {
               settingsComponent.web3Provider = data.web3Provider;
               settingsComponent.lavaContractAddress = data.lavaContractAddress;
               settingsComponent.networkEnvironment = data.networkEnvironment;
-          });
+
 
 
         },

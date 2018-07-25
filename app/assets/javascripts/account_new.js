@@ -27,8 +27,12 @@ export default class AccountNew {
           errorMessage: null
         },
         methods: {
-           newAccount: function () {
-             self.socketClient.socketEmit('createAccount',null,function(data){
+           newAccount: async function () {
+
+             var data = await self.socketClient.emitToSocket('createAccount',null);
+
+
+
 
                var acct = JSON.parse(data);
 
@@ -44,9 +48,9 @@ export default class AccountNew {
                accountComponent.accountRendering = true;
 
                self.renderAccount( address )
-             })
+
            },
-           saveAccount: function () {
+           saveAccount: async function () {
 
              //address is changing !!??
 
@@ -55,7 +59,7 @@ export default class AccountNew {
              var options = {};
 
              var keyObject = keythereum.dump(password, (dk.privateKey), (dk.salt), (dk.iv), {options});
- 
+
              if( !accountComponent.address.endsWith(keyObject.address))
              {
                console.log(keyObject.address)
@@ -64,14 +68,15 @@ export default class AccountNew {
                return;
              }
 
-             self.socketClient.socketEmit('saveAccount',keyObject,function(data){
+              var data = await self.socketClient.emitToSocket('saveAccount',keyObject);
+
 
                if(data.success)
                {
                  window.location.href = '/accounts.html'
                }
 
-             })
+
            },
            startBackup: function () {
               Vue.set(accountComponent, 'backingUp', true )

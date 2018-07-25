@@ -11,7 +11,7 @@
     "dev": "webpack-dev-server",
     "electron-dev": "electron ./electron-dev",
     "dist": "npm run webpack && build",
-    "test": "mocha --compilers js:babel-core/register ./test/test.js "
+    "test": "mocha -t 10000 --compilers js:babel-core/register ./test/test.js "
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -32,11 +32,12 @@
     "html-loader": "^0.5.5",
     "jquery": "^3.3.1",
     "js-sha3": "^0.7.0",
+    "jsdom": "^11.11.0",
     "keythereum": "^1.0.4",
     "materialize-css": "^0.100.2",
     "request": "^2.87.0",
-    "sha3": "^1.2.0",
     "scrypt": "git://github.com/admazzola/scrypt.git",
+    "sha3": "^1.2.0",
     "socket.io": "^2.1.1",
     "underscore": "^1.9.1",
     "vue": "^2.5.13",
