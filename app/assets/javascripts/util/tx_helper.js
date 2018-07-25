@@ -111,22 +111,10 @@ export default class TXHelper {
   static async submitTransaction( web3,  account,  txMethod,  txParams, addressTo, gasCost, gasPriceGwei )
   {
 
-  //  var walletContract = ContractInterface.getWalletContract( web3, env);
-
     var addressFrom = account.address;
-  //  var addressTo = walletContract.options.address;
-
-
-  //  var lavaTransferMethod = lavaPacketUtils.getContractLavaMethod(walletContract,packetData)
-
 
 
     var txData = TXHelper.getABIDataFromFunctionName(web3,txMethod,txParams) //ABI
-
-  //  var txData = lavaPacketUtils.getFunctionCall(web3,packetData)
-
-    //var relayData = await ethGasOracle.getRelayData();
-    // var relayingGasPrice = relayData.ethGasNormal; //this.relayConfig.solutionGasPriceWei
 
 
      var txOptions = await this.getTXOptions(web3, addressTo,addressFrom,txData, txMethod , gasCost, gasPriceGwei   )
