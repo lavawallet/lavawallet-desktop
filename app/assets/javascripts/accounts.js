@@ -263,7 +263,6 @@ export default class Accounts {
   {
     var address = accountsComponent.selectedAddress;
 
-    console.log('unlocking', address)
 
     var data = await this.socketClient.emitToSocket('unlockAccount',{address:address,password:password});
 
@@ -273,7 +272,7 @@ export default class Accounts {
     if(data.success)
     {
       account = data.account;
-      console.log('got acct', account)
+       
 
       Vue.set(accountsComponent, 'selectedAccount',  account )
 
