@@ -81,9 +81,14 @@ export default class Transfer {
                 case 'standardTransfer':
                     console.log('standardTransfer', this.standardTransferAmount )
                     var env = self.contractConfig.networkEnvironment;
-                     var addressTo = this.transferTo;
+                    var addressTo = this.transferTo;
                     var tokenAddress = self.contractConfig.tokenAddress;
                     var ethAccount = this.selectedAccount;
+
+
+                    var accountStatus = {
+                      ethBalance: this.ethBalance
+                    }
 
                     var tokenDecimals = parseInt(self.contractConfig.tokenDecimals);
 
@@ -99,9 +104,13 @@ export default class Transfer {
 
                     console.log('sidebar', self.txSidebar)
 
-                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount );
+                   
 
-                    self.txSidebar.openSidebar(txOverview);
+                    self.txSidebar.openSidebar(   );
+
+                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount, accountStatus );
+
+                    self.txSidebar.openSidebar( txOverview );
 
                     break;
 

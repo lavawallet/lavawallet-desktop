@@ -41,11 +41,13 @@ var sidebar;
          el: '#tx-sidebar',
          data: {
            txOverview: {},
+           accountStatus: {},
            gasPrice: 0,
            maxFee: 0,
            maxTotal: 0,
            ethBalance: 0,
            title: 'Confirm Transaction',
+
            minorError: null
          },
          updated: function () {
@@ -153,6 +155,7 @@ var sidebar;
     setTxOverviewData(txOverviewData)
     {
       Vue.set(sidebar,'txOverview',txOverviewData)
+      Vue.set(sidebar,'accountStatus',txOverviewData.accountStatus)
 
       var gasPriceFormatted = parseFloat(txOverviewData.gasPriceNormal).toPrecision(1)
       Vue.set(sidebar,'gasPrice', gasPriceFormatted )

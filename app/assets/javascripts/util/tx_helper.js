@@ -22,7 +22,7 @@ export default class TXHelper {
   **/
 
 
-  static async getOverviewForStandardTransaction( web3, env, txCommand , ethAccount )
+  static async getOverviewForStandardTransaction( web3, env, txCommand , ethAccount , accountStatus)
   {
 
 
@@ -52,6 +52,7 @@ export default class TXHelper {
 
     return {
       ethAccount: ethAccount,
+      accountStatus: accountStatus   ,
 
       from: txCommand.from,
       to: txCommand.to,

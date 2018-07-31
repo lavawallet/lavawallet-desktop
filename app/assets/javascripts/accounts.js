@@ -91,6 +91,10 @@ export default class Accounts {
                     var spender = self.contractConfig.lavaContractAddress;
                     var ethAccount = this.selectedAccount;
 
+                    var accountStatus = {
+                      ethBalance: this.ethBalance
+                    }
+
                     var tokenDecimals = parseInt(self.contractConfig.tokenDecimals);
 
                       console.log('pwr', Math.pow(10,tokenDecimals) )
@@ -109,8 +113,9 @@ export default class Accounts {
                       functionName: 'approveAndCall',
                       params: [spender,depositAmountRaw,"0x00"] };
 
-                      self.txSidebar.openSidebar(   );
-                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount );
+                    self.txSidebar.openSidebar(   );
+
+                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount, accountStatus );
 
                     self.txSidebar.openSidebar( txOverview );
 
