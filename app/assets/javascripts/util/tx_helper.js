@@ -124,7 +124,15 @@ export default class TXHelper {
       return {success:false,message: 'missing txData'}
     }
 
+    //raw tx
      var txOptions = await this.getTXOptions(web3, addressTo,addressFrom,txData, txMethod , gasCost, gasPriceGwei   )
+
+
+
+    /* const estimatedTransaction = new Tx(txOptions);
+     const estimatedTxHash = estimatedTransaction.hash(true).toString('hex')
+     console.log('meep txhash', estimatedTxHash)  //why is this wrong !?
+*/
 
 
 
@@ -135,16 +143,13 @@ export default class TXHelper {
      console.log(txOptions)
 
 
-     return new Promise(function (result,error) {
-
-          TXHelper.sendSignedRawTransaction(web3,txOptions,addressFrom,privateKey, function(err, res) {
-           if (err) error(err)
-             result(res)
-         })
-
-       }.bind(this));
+     var sendResult = await TXHelper.sendSignedRawTransaction(web3,txOptions,privateKey);
 
 
+
+
+
+    return sendResult;
 
   }
 
@@ -261,7 +266,7 @@ export default class TXHelper {
   }
 
 
-  static async sendSignedRawTransaction(web3,txOptions,addressFrom,private_key,callback) {
+  static async sendSignedRawTransaction(web3,txOptions,private_key,callback) {
 
       var privKey = TXHelper.truncate0xFromString( private_key )
 
@@ -274,16 +279,31 @@ export default class TXHelper {
 
       const serializedTx = transaction.serialize().toString('hex')
 
+      const hash = transaction.hash(true).toString('hex')
+      console.log('hashy',hash)
+
         try
         {
-          var result =  web3.eth.sendSignedTransaction('0x' + serializedTx, callback)
+
+
+        var txRes = await new Promise(function (result,error) {
+
+                web3.eth.sendSignedTransaction('0x' + serializedTx, function(err, res) {
+                if (err) error(err)
+                  result(res)
+              })
+
+            }.bind(this));
+
+
+
         }catch(e)
         {
           return {success:false, message: e.message}
           console.log('error',e);
         }
 
-        return {success:true, result: result}
+        return {success:true, result: txRes, txhash: hash}
     }
 
 

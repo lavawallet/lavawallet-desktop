@@ -9,12 +9,36 @@ import Vue from 'vue';
 
 var sidebar;
 
+
+
+/*
+Needs different modes
+
+1. Transaction List
+2. SignData
+3. SignTransaction
+
+
+
+*/
+
+
+
  export default class TXSidebar {
 
    init(web3 ){
      var self = this;
 
      this.web3=web3;
+
+
+
+     //load txHistory
+     var existingTxHistory = JSON.parse(window.localStorage.getItem("txHistory"));
+     if(!existingTxHistory)
+     {
+       existingTxHistory = [];
+     }
 
 
 
@@ -41,6 +65,8 @@ var sidebar;
          el: '#tx-sidebar',
          data: {
            txOverview: {},
+           txHistory: existingTxHistory,
+
            accountStatus: {},
            gasPrice: 0,
            maxFee: 0,
@@ -88,7 +114,11 @@ var sidebar;
                     txParams.gasPrice = this.gasPrice;
 
                    self.executeTransaction(txParams);
-                   self.setDisplay('view-transaction')
+
+
+
+
+                   self.setDisplay('view-transaction');
                    break;
                 case 'reject':
                    self.closeSidebar();
@@ -137,11 +167,33 @@ var sidebar;
 
     }
 
+    addTxToHistory(txid)
+    {
+      var txHistory = JSON.parse( window.localStorage.getItem("txHistory") );
+
+      if(!txHistory)
+      {
+        txHistory = [];
+      }
+
+      console.log('hist',txHistory)
+
+      txHistory.push( {txid: txid} );
+
+      this.updateTxHistory(txHistory);
+    }
+
+    updateTxHistory(list)
+    {
+      window.localStorage.setItem("txHistory",JSON.stringify(list));
+      Vue.set(sidebar,'txHistory',list);
+    }
+
     async executeTransaction(txOverviewData)
     {
+      var txInfo = await TXHelper.executeTransaction(this.web3, txOverviewData);
 
-
-      await TXHelper.executeTransaction(this.web3, txOverviewData)
+      this.addTxToHistory(txInfo.txhash);
     }
 
 

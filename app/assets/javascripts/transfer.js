@@ -2,6 +2,8 @@ import Vue from 'vue';
 
 var transferComponent;
 
+var web3utils =  require('web3-utils');
+var lavaUtils = require("./util/lava-utils");
 
 import TXHelper from './util/tx_helper.js';
 
@@ -43,6 +45,9 @@ export default class Transfer {
           transferTo: null,
           transferAmount: 0,
 
+          expirationBlock: 0,
+          relayerReward: 0,
+
           flashMessage: null
         },
         created: async function () {
@@ -79,12 +84,11 @@ export default class Transfer {
                     break;
 
                 case 'standardTransfer':
-                    console.log('standardTransfer', this.standardTransferAmount )
+
                     var env = self.contractConfig.networkEnvironment;
                     var addressTo = this.transferTo;
                     var tokenAddress = self.contractConfig.tokenAddress;
                     var ethAccount = this.selectedAccount;
-
 
                     var accountStatus = {
                       ethBalance: this.ethBalance
@@ -102,9 +106,69 @@ export default class Transfer {
                       functionName: 'transfer',
                       params: [addressTo,transferAmountRaw] };
 
-                    console.log('sidebar', self.txSidebar)
+                    self.txSidebar.openSidebar(   );
 
-                   
+                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount, accountStatus );
+
+                    self.txSidebar.openSidebar( txOverview );
+
+                    break;
+
+
+                case 'lavaTransfer':
+
+                    var env = self.contractConfig.networkEnvironment;
+                    var addressTo = this.transferTo;
+                    var tokenAddress = self.contractConfig.tokenAddress;
+                    var lavaAddress = self.contractConfig.lavaAddress;
+                    var ethAccount = this.selectedAccount;
+
+                    var accountStatus = {
+                      ethBalance: this.ethBalance
+                    }
+
+                    var tokenDecimals = parseInt(self.contractConfig.tokenDecimals);
+
+                    var transferAmount = parseFloat(this.transferAmount) ;
+                    var transferAmountRaw = parseFloat(this.transferAmount) * Math.pow(10,tokenDecimals);
+
+                    var relayerReward = this.relayerReward;
+                    var expires = this.expirationBlock;
+                    var nonce = web3utils.randomHex(32);
+
+                    var params = lavaUtils.getLavaParamsFromData(
+                        'transfer',
+                        this.selectedAddress,
+                        addressTo,
+                        lavaAddress,
+                        tokenAddress,
+                        transferAmountRaw,
+                        relayerReward,
+                        expires,
+                        nonce);
+
+                    var msgParams = {data: params};
+                    var privKey = ethAccount.privateKey;
+
+                    var signature = lavaUtils.signTypedData(privKey,msgParams);
+
+
+                    var txCommand = {
+                      from: this.selectedAddress,
+                      contract: 'lavawallet',
+                      to: lavaAddress,
+                      functionName: 'transferTokensFromWithSignature',
+                      params: [
+                        'transfer',
+                        this.selectedAddress,
+                        addressTo,
+                        tokenAddress,
+                        transferAmountRaw,
+                        //reward
+                        //expires
+                        //nonce
+                        //signature
+                      ] };
 
                     self.txSidebar.openSidebar(   );
 
