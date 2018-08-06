@@ -10,7 +10,7 @@
     "app": "electron .",
     "dev": "webpack-dev-server",
     "electron-dev": "electron ./electron-dev",
-    "ganache-cli": "ganache-cli --db chaindata -d -m test",
+    "ganache-cli": "ganache-cli -e 100 --db chaindata -d -m test",
     "dist": "npm run webpack && build",
     "test": "mocha -t 10000 --compilers js:babel-core/register ./test/test.js "
   },
