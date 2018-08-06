@@ -147,7 +147,11 @@ export default class Accounts {
                     self.txSidebar.openSidebar(txOverview);
 
                     break;
+                case 'showTxList':
 
+                    self.txSidebar.openSidebar();
+
+                    break;
                 default:
                     break;
             }

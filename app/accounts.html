@@ -193,9 +193,17 @@
        </div>
      </div>
 
-     <div class='flash-message absolute-bottom white-text teal text-center' v-if="flashMessage">
+     <div class='flash-message absolute-bottom white-text teal text-center' v-if="flashMessage" v-cloak>
        {{flashMessage}}
      </div>
+
+
+     <div class="fixed-action-btn" style=" left: 23px; bottom: 50px;" v-cloak >
+       <a class="btn-floating btn-large electric-blue ">
+         <i class="icon icon-list clickable" v-on:click="clickButton('showTxList')"></i>
+       </a>
+     </div>
+
 
    </div>
 

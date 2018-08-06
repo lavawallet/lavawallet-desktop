@@ -64,6 +64,8 @@ Needs different modes
       sidebar = new Vue({
          el: '#tx-sidebar',
          data: {
+           overviewType: null,
+
            txOverview: {},
            txHistory: existingTxHistory,
 
@@ -80,26 +82,38 @@ Needs different modes
             this.$nextTick(function () {
               console.log('sidebar updated')
 
-              var gasPriceEthRaw = (parseFloat(this.gasPrice) / 1e8)
-
-              var gasPriceEth = gasPriceEthRaw.toFixed(1);
-
-              var gasCostFloat = parseFloat(this.txOverview.gasCost)
-
-              var maxFeeFloat = gasCostFloat * gasPriceEthRaw;
-
-              var ethAmountFloat = parseFloat(this.txOverview.ethAmount);
-
-              var maxTotalFloat = ethAmountFloat + maxFeeFloat;
-
-              this.maxFee = maxFeeFloat.toPrecision(4);
-              this.maxTotal = maxTotalFloat.toPrecision(4) ;
-
-
-              if( this.maxTotal > this.ethBalance )
+              if(this.overviewType == 'tx_list')
               {
-                this.minorError="Insufficient ETH for transaction."
+                //get data of each tx from the provider ..
+                
               }
+
+              if(this.overviewType == 'standard_tx')
+              {
+                var gasPriceEthRaw = (parseFloat(this.gasPrice) / 1e8)
+
+                var gasPriceEth = gasPriceEthRaw.toFixed(1);
+
+                var gasCostFloat = parseFloat(this.txOverview.gasCost)
+
+                var maxFeeFloat = gasCostFloat * gasPriceEthRaw;
+
+                var ethAmountFloat = parseFloat(this.txOverview.ethAmount);
+
+                var maxTotalFloat = ethAmountFloat + maxFeeFloat;
+
+                this.maxFee = maxFeeFloat.toPrecision(4);
+                this.maxTotal = maxTotalFloat.toPrecision(4) ;
+
+
+                if( this.maxTotal > this.ethBalance )
+                {
+                  this.minorError="Insufficient ETH for transaction."
+                }
+              }
+
+
+
               // Code that will run only after the
               // entire view has been re-rendered
             })
@@ -116,9 +130,8 @@ Needs different modes
                    self.executeTransaction(txParams);
 
 
+                   this.overviewType = 'tx_list';
 
-
-                   self.setDisplay('view-transaction');
                    break;
                 case 'reject':
                    self.closeSidebar();
@@ -138,8 +151,6 @@ Needs different modes
     {
 
 
-
-
       var sb = document.getElementById('tx-sidebar');
 
       var instance = M.Sidenav.getInstance( sb );
@@ -148,6 +159,8 @@ Needs different modes
 
       if(txOverview){
         this.setTxOverviewData(txOverview)
+      }else{
+        Vue.set(sidebar,'overviewType','tx_list');
       }
 
     }
@@ -197,15 +210,12 @@ Needs different modes
     }
 
 
-    setDisplay(displayName)
-    {
-      console.log('set display  ', displayName)
-      // if view-transaction  then show a page with all the tx listed out, like metamask
-    }
+
 
 
     setTxOverviewData(txOverviewData)
     {
+      Vue.set(sidebar,'overviewType',txOverviewData.overviewType)
       Vue.set(sidebar,'txOverview',txOverviewData)
       Vue.set(sidebar,'accountStatus',txOverviewData.accountStatus)
 
@@ -217,8 +227,12 @@ Needs different modes
 
       console.log('setting txData',txOverviewData)
 
-      this.attachBlockie(txOverviewData.from, 'blockie-from' );
-      this.attachBlockie(txOverviewData.to, 'blockie-to' );
+      var self = this;
+
+      Vue.nextTick(function () {
+        self.attachBlockie(txOverviewData.from, 'blockie-from' );
+        self.attachBlockie(txOverviewData.to, 'blockie-to' );
+      })
 
 
     }

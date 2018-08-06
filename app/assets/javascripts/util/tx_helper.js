@@ -65,7 +65,7 @@ export default class TXHelper {
       gasPriceFast: gasPriceData.ethGasFast,
       txError:txError,
 
-      overviewType: 'standard_tx'
+      overviewType: 'standard_tx' 
 
     }
   }

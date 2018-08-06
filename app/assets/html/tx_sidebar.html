@@ -1,18 +1,26 @@
 <nav style="height:0px;"> <!-- navbar content here  --> </nav>
 
+
+
+
  <div id="tx-sidebar" class="sidenav  ">
 
 
 
 
-   <div class="sidebar-page" data-page-type="tx_list" >
+ <div class="sidebar-page" v-if="overviewType=='tx_list'" data-page-type="tx_list" v-cloak >
 
-     {{}}
-
+   <div class="transaction-list">
+     <div class="" v-for="(item, index) in txHistory">
+       {{ item.txid }}
+     </div>
    </div>
 
 
-<div class="sidebar-page" data-page-type="standard_tx" >
+ </div>
+
+
+<div class="sidebar-page"  v-if="overviewType=='standard_tx'" data-page-type="standard_tx" v-cloak >
 
 
 
