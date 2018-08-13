@@ -11,9 +11,15 @@
  <div class="sidebar-page" v-if="overviewType=='tx_list'" data-page-type="tx_list" v-cloak >
 
    <div class="transaction-list">
-     <div class="" v-for="(item, index) in txHistory">
+
+
+
+     <div class="nav-group-item clickable " v-for="(item, index) in txHistory" v-on:click="selectTransaction()" v-bind:data-txid="item.txid">
+       <span class="icon "  ></span>
        {{ item.txid }}
      </div>
+
+
    </div>
 
 
