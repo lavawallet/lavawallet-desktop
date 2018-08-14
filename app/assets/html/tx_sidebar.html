@@ -12,11 +12,32 @@
 
    <div class="transaction-list">
 
+     <div class="title-header border-bottom-gray " >
+       <div class="center">
+         <div class="padding-sm">
+           Account Name
+         </div>
+         <div class="padding-sm">
+           Account Address
+         </div>
+       </div>
+     </div>
 
 
-     <div class="nav-group-item clickable " v-for="(item, index) in txHistory" v-on:click="selectTransaction()" v-bind:data-txid="item.txid">
-       <span class="icon "  ></span>
-       {{ item.txid }}
+     <div class="whitespace-md"></div>
+
+     <div class="nav-group-item clickable border-bottom-gray" v-for="(item, index) in txHistory" v-on:click="selectTransaction()" v-bind:data-txid="item.txid">
+       <div class="row" > Datetime </div>
+       <div class="row no-wrap" >
+        <div class="col s3" >Icon</div>
+        <div class="col s6" >
+          <div class="no-wrap"> {{ item.txid }} </div>
+          <div class=""> Description </div>
+
+        </div>
+        <div class="col s3" >Amount</div>
+       </div>
+
      </div>
 
 
