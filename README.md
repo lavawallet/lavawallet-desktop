@@ -4,6 +4,14 @@
 ![image](https://user-images.githubusercontent.com/38132633/42248915-2f98be9c-7ef6-11e8-9a46-68c2c0f4ea35.png)
 ![image](https://user-images.githubusercontent.com/38132633/42248914-2d7dc512-7ef6-11e8-87dc-ab63b626f468.png)
 
+
+LIB TO ADD : ?
+var ethers = require('ethers');
+
+
+
+
+
 ## To Use
 
 ```bash
@@ -19,7 +27,7 @@ npm run app
 # Developer TODO
 1. Finish the transfer tab
 
-2. Integrate lava balance and lava transfers 
+2. Integrate lava balance and lava transfers
 
 
 
