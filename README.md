@@ -9,6 +9,11 @@ LIB TO ADD : ?
 var ethers = require('ethers');
 
 
+## TODO
+1. Finish sidebar for monitoring TX
+2. Finish sidebar for signing EIP712 packets
+
+
 
 
 
@@ -52,12 +57,6 @@ npm run app
 -Settings  (also accessible from home)
 * Lets you edit the 'active token' address - the primary token the wallet uses
 
-
-
-## TODO
-1. A little storage file that stores settings:
-  - token address to use
-  - web3 interface path
 
 
 
