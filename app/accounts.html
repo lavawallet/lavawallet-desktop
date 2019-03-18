@@ -26,8 +26,8 @@
 
 
 
-           <span class="nav-group-item clickable list-item-hover-pink" v-for="(item, index) in accounts" v-on:click="selectAccount($event)" v-bind:data-address="item.address">
-             <span class="icon icon-pink " v-bind:class="{'icon-star': (item.address == selectedAddress),'icon-star-empty': (item.address != selectedAddress)}"></span>
+           <span class="nav-group-item clickable list-item-hover-red" v-for="(item, index) in accounts" v-on:click="selectAccount($event)" v-bind:data-address="item.address">
+             <span class="icon color-red " v-bind:class="{'icon-star': (item.address == selectedAddress),'icon-star-empty': (item.address != selectedAddress)}"></span>
              {{ item.address }}
            </span>
 
@@ -48,7 +48,7 @@
 
 
 
-            <div class="row white-text quick-nav quick-nav-pink" v-if="tokenLoaded" v-cloak>
+            <div class="row white-text quick-nav quick-nav-red" v-if="tokenLoaded" v-cloak>
                <div class="col s4 orange lighten-2 hoverable clickable" v-on:click="setMode('overview')" v-bind:class="{'active': menuMode=='overview'}">Overview</div>
             </div>
 
@@ -60,17 +60,19 @@
              <div class="account-overview" v-if="tokenLoaded && menuMode == 'overview' " v-cloak>
                 <ul class="collection" >
                    <li class="collection-item">
-                     <div class="selected-account-address" v-if="selectedAddress" v-cloak>
+                     <div class="selected-account-address is-bold color-red" v-if="selectedAddress" v-cloak>
                          {{selectedAddress}}
 
                          <span class="copy-content icon icon-docs hover-larger" v-on:click="copySelectedAddress()"> </span>
                      </div>
                    </li>
 
-                   <li class="collection-item">
-                     <div class="selected-account-balance is-size-8" v-if="lavaBalance != null" v-cloak>
-                       Lava Balance: {{lavaBalance}}
+                   <li class="collection-item red lighten-2 white-text">
+
+                     <div class="selected-account-balance is-size-8 " v-if="lavaBalance != null" v-cloak>
+                        LAVA     <div class="pull-right"> {{lavaBalance}} </div>
                      </div>
+
                    </li>
                  </ul>
               </div>

@@ -51,7 +51,7 @@ overflow-y: auto;
 {
   .active
   {
-        border-bottom: 4px solid #e65838;
+        border-bottom: 4px solid #E57373;
   }
 }
 
@@ -63,10 +63,10 @@ overflow-y: auto;
   }
 }
 
-.list-item-hover-pink:hover
+.list-item-hover-red:hover
 {
-    border-top: 2px solid #ee209c;
-    border-bottom: 2px solid #ee209c;
+    border-top: 2px solid #E57373;
+    border-bottom: 2px solid #E57373;
 }
 
 .absolute-bottom
@@ -185,11 +185,14 @@ overflow-y: auto;
     background-color: #ee209c;
 }
 
-.icon-pink
+.color-pink
 {
   color:  #ee209c !important;
 }
-
+.color-red
+{
+  color:  #E57373 !important;
+}
 
 //font size
 
@@ -203,6 +206,12 @@ overflow-y: auto;
 
 .is-size-5 {
     font-size: 0.8rem !important;
+}
+
+.is-bold
+{
+  font-weight: bold;
+  
 }
 
 .hover-larger:hover
