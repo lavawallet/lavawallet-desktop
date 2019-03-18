@@ -34,7 +34,7 @@ export default class Transfer {
 
           selectedAddress: existingActiveAddress,
           errorMessage: null,
-          menuMode: 'standard',
+          menuMode: 'lava',
 
           tokenLoaded:false,
           ethBalance: null,
@@ -186,6 +186,16 @@ export default class Transfer {
           setMode: function(modeName)
           {
             this.menuMode = modeName;
+          },
+          async copySelectedAddress()
+          {
+            console.log('socket client')
+            var data = await self.socketClient.emitToSocket('copyToClipboard',this.selectedAddress)
+
+
+            self.flashMessage('Copied to clipboard!')
+
+            console.log('copied to clipboard',data)
           }
 
          }
@@ -299,6 +309,16 @@ export default class Transfer {
 
 
     return account;   // address and pkey
+  }
+
+
+  async flashMessage(msg)
+  {
+    Vue.set(transferComponent, 'flashMessage', 'Copied to clipboard!' )
+
+    await this.sleep(1000)
+
+    Vue.set(transferComponent, 'flashMessage', null )
   }
 
 

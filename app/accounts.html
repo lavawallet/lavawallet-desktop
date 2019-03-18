@@ -19,14 +19,15 @@
       <div class="row">
        <div class="col s3">
 
-         <h3>Accounts</h3>
+            <div class="whitespace-md"></div>
+
 
          <nav class="nav-group accounts-group" id="accounts-menu">
 
 
 
-           <span class="nav-group-item clickable " v-for="(item, index) in accounts" v-on:click="selectAccount($event)" v-bind:data-address="item.address">
-             <span class="icon " v-bind:class="{'icon-star': (item.address == selectedAddress),'icon-star-empty': (item.address != selectedAddress)}"></span>
+           <span class="nav-group-item clickable list-item-hover-pink" v-for="(item, index) in accounts" v-on:click="selectAccount($event)" v-bind:data-address="item.address">
+             <span class="icon icon-pink " v-bind:class="{'icon-star': (item.address == selectedAddress),'icon-star-empty': (item.address != selectedAddress)}"></span>
              {{ item.address }}
            </span>
 
@@ -44,7 +45,10 @@
 
          <div class="whitespace-md"></div>
 
-            <div class="row white-text quick-nav quick-nav-red" v-if="tokenLoaded" v-cloak>
+
+
+
+            <div class="row white-text quick-nav quick-nav-pink" v-if="tokenLoaded" v-cloak>
                <div class="col s4 orange lighten-2 hoverable clickable" v-on:click="setMode('overview')" v-bind:class="{'active': menuMode=='overview'}">Overview</div>
             </div>
 
@@ -131,13 +135,13 @@
        </div>
      </div>
 
-     <div class='flash-message absolute-bottom white-text teal text-center' v-if="flashMessage" v-cloak>
+     <div class='flash-message absolute-bottom white-text red text-center' v-if="flashMessage" v-cloak>
        {{flashMessage}}
      </div>
 
 
-     <div class="fixed-action-btn" style=" left: 23px; bottom: 50px; width: 60px;" v-cloak >
-       <a class="btn-floating btn-large electric-blue ">
+     <div class="fixed-action-btn" style=" left: 13px; bottom: 40px; width: 60px;" v-cloak >
+       <a class="btn-floating btn-large electric-red ">
          <i class="icon icon-list clickable" v-on:click="clickButton('showTxList')"></i>
        </a>
      </div>

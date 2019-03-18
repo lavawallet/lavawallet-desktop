@@ -13,8 +13,6 @@
         <%= require('html-loader!./assets/html/tx_sidebar.html') %>
 
     <div class="container" id="transfer">
-      <h3>Transfer</h3>
-
 
       <div class="missingAccount" v-if="selectedAddress == null" v-cloak>
 
@@ -28,86 +26,35 @@
 
 
 
-      <div class="tranfer-container">
-        {{selectedAddress}}
-      </div>
-
+      <div class="whitespace-sm"></div>
 
 
       <div class="row white-text quick-nav quick-nav-red">
-         <div class="col s4 orange lighten-2 hoverable clickable" v-on:click="setMode('standard')" v-bind:class="{'active': menuMode=='standard'}">Standard Transfer</div>
-         <div class="col s4 orange lighten-2 hoverable clickable" v-on:click="setMode('lava')" v-bind:class="{'active': menuMode=='lava'}">Lava Transfer</div>
-         <div class="col s4 orange lighten-2 hoverable clickable" v-on:click="setMode('volcano')" v-bind:class="{'active': menuMode=='volcano'}">Volcano Transfer</div>
-      </div>
 
+          <div class="col s4 orange lighten-2 hoverable clickable" v-on:click="setMode('lava')" v-bind:class="{'active': menuMode=='lava'}">Lava Transfer</div>
 
-      <div class="transfer-standard" v-if="tokenLoaded && menuMode == 'standard' " v-cloak>
+            <div class="col s2"></div>
 
-
-        <div class="subtitle-banner electric-blue lighten-2 white-text" v-if="tokenBalance != null" v-cloak>
-          External Balance: {{tokenBalance}}
-        </div>
-
-        <div class="row">
-          <div class="col s6">
-
-
-            <div class="simple-input-container"   >
-
-                  <div class="simple-input"  v-if="selectedAccount" >
-                    <div class="label">Transfer Amount</div>
-                    <input placeholder=""   type="text" class="validate" v-model='transferAmount'  >
-                  </div>
-
-                  <div class="simple-input"  v-if="selectedAccount" >
-                    <div class="label">Transfer To Address</div>
-                    <input placeholder=""   type="text" class="validate" v-model='transferTo'   >
-                  </div>
-
-                  <div class="btn" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('standardTransfer')">Transfer</div>
-              </div>
-
+          <div class="col s6 subtitle-banner red lighten-2 white-text is-size-6 hoverable" v-if="tokenBalance != null" v-cloak>
+              <div class="pull-left">  Lava Balance </div>   <div class="pull-right"> {{lavaBalance}} </div>
           </div>
-          <div class="col s6">
 
-
-          </div>
-        </div>
-
-
-        <div class="" v-if="!selectedAccount">
-          <div class="simple-input-container"   >
-              <div class="label">Unlock Account</div>
-              <div class="row">
-                <div class="simple-input input-sm col s4"   >
-                  <input placeholder=""   type="text" class="validate" v-model='accountPassword' v-on:keyup.enter="clickButton('unlock')">
-                </div>
-                <div class=" col s4"   >
-                  <div class="btn red lighten-2"    v-on:click="clickButton('unlock')">Unlock</div>
-                </div>
-
-
-                <div class=" col s4"  v-if='unlockError'  v-cloak >
-                  {{ unlockError }}
-                </div>
-
-        </div>
-      </div>
-      </div>
+       </div>
 
 
 
 
 
-      </div>
+
 
       <div class="transfer-lava" v-if="tokenLoaded && menuMode == 'lava' " v-cloak>
 
 
-
                 <div class="subtitle-banner red lighten-2 white-text" v-if="tokenBalance != null" v-cloak>
-                  Lava Balance: {{lavaBalance}}
+                  {{selectedAddress}}
+                   <span class="copy-content icon icon-docs hover-larger" v-on:click="copySelectedAddress()"> </span>
                 </div>
+
 
                 <div class="row">
                   <div class="col s6">
@@ -115,17 +62,17 @@
 
                     <div class="simple-input-container"   >
 
-                          <div class="simple-input"  v-if="selectedAccount" >
+                          <div class="simple-input input-sm "  v-if="selectedAccount" >
                             <div class="label">Transfer Amount</div>
                             <input placeholder=""   type="text" class="validate" v-model='transferAmount'  >
                           </div>
 
-                          <div class="simple-input"  v-if="selectedAccount" >
+                          <div class="simple-input input-sm "  v-if="selectedAccount" >
                             <div class="label">Transfer To Address</div>
                             <input placeholder=""   type="text" class="validate" v-model='transferTo'   >
                           </div>
 
-                          <div class="btn" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('lavaTransfer')">Transfer</div>
+                          <div class="btn red" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('lavaTransfer')">Transfer</div>
                       </div>
 
                   </div>
@@ -138,84 +85,55 @@
 
                 <div class="" v-if="!selectedAccount">
                   <div class="simple-input-container"   >
-                      <div class="label">Unlock Account</div>
                       <div class="row">
+
+
+                        <div class=" col s4"   >
+
+                        </div>
+
                         <div class="simple-input input-sm col s4"   >
-                          <input placeholder=""   type="text" class="validate" v-model='accountPassword' v-on:keyup.enter="clickButton('unlock')">
+                          <input placeholder=""   type="password" class="validate" v-model='accountPassword' v-on:keyup.enter="clickButton('unlock')">
                         </div>
                         <div class=" col s4"   >
+
                           <div class="btn red lighten-2"    v-on:click="clickButton('unlock')">Unlock</div>
                         </div>
 
 
-                        <div class=" col s4"  v-if='unlockError'  v-cloak >
-                          {{ unlockError }}
                         </div>
 
-                </div>
+                        <div class="row">
+
+                          <div class=" col s4"   >
+
+                          </div>
+
+                          <div class=" col s4"  v-if='unlockError'  v-cloak >
+                                {{ unlockError }}
+                          </div>
+
+                        </div>
               </div>
               </div>
 
 
       </div>
 
-      <div class="transfer-volcano" v-if="tokenLoaded && menuMode == 'volcano' " v-cloak>
 
 
 
-                <div class="subtitle-banner red lighten-2 white-text" v-if="tokenBalance != null" v-cloak>
-                  Lava Balance: {{lavaBalance}}
-                </div>
-
-                <div class="row">
-                  <div class="col s6">
-
-
-                    <div class="simple-input-container"   >
-
-                          <div class="simple-input"  v-if="selectedAccount" >
-                            <div class="label">Transfer Amount</div>
-                            <input placeholder=""   type="text" class="validate" v-model='transferAmount'  >
-                          </div>
-
-                          <div class="simple-input"  v-if="selectedAccount" >
-                            <div class="label">Transfer To Address</div>
-                            <input placeholder=""   type="text" class="validate" v-model='transferTo'   >
-                          </div>
-
-                          <div class="btn" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('volcanoTransfer')">Transfer</div>
-                      </div>
-
-                  </div>
-                  <div class="col s6">
-
-
-                  </div>
-                </div>
-
-
-                <div class="" v-if="!selectedAccount">
-                  <div class="simple-input-container"   >
-                      <div class="label">Unlock Account</div>
-                      <div class="row">
-                        <div class="simple-input input-sm col s4"   >
-                          <input placeholder=""   type="text" class="validate" v-model='accountPassword' v-on:keyup.enter="clickButton('unlock')">
-                        </div>
-                        <div class=" col s4"   >
-                          <div class="btn red lighten-2"     v-on:click="clickButton('unlock')">Unlock</div>
-                        </div>
-
-
-                        <div class=" col s4"  v-if='unlockError'  v-cloak >
-                          {{ unlockError }}
-                        </div>
-
-                </div>
-              </div>
-              </div>
-
-
+      <div class='flash-message absolute-bottom white-text red text-center' v-if="flashMessage" v-cloak>
+        {{flashMessage}}
       </div>
+
+
+      <div class="fixed-action-btn" style=" left: 13px; bottom: 40px; width: 60px;" v-cloak >
+        <a class="btn-floating btn-large electric-red ">
+          <i class="icon icon-list clickable" v-on:click="clickButton('showTxList')"></i>
+        </a>
+      </div>
+
 
 
 

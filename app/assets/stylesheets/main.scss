@@ -55,8 +55,19 @@ overflow-y: auto;
   }
 }
 
+.quick-nav-pink
+{
+  .active
+  {
+        border-bottom: 4px solid #ee209c;
+  }
+}
 
-
+.list-item-hover-pink:hover
+{
+    border-top: 2px solid #ee209c;
+    border-bottom: 2px solid #ee209c;
+}
 
 .absolute-bottom
 {
@@ -90,7 +101,7 @@ overflow-y: auto;
 {
   input
   {
-    height: 30px !important;
+    height: 24px !important;
   }
 
 }
@@ -103,7 +114,7 @@ overflow-y: auto;
   {
     width: 70% !important; //hacky?
 
-    border: 1px solid #00b89c !important;
+    border: 1px solid #e49747 !important;
     padding: 0.1em 0.8em !important;
     border-radius: 0.2em !important;
 
@@ -163,6 +174,22 @@ overflow-y: auto;
 {
     background-color: #209cee;
 }
+
+.electric-red
+{
+    background-color: #ee9c20;
+}
+
+.electric-red:hover
+{
+    background-color: #ee209c;
+}
+
+.icon-pink
+{
+  color:  #ee209c !important;
+}
+
 
 //font size
 
