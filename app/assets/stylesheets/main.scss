@@ -177,3 +177,9 @@ overflow-y: auto;
 .is-size-5 {
     font-size: 0.8rem !important;
 }
+
+.hover-larger:hover
+{
+  font-size:18px;
+  cursor:pointer;
+}
