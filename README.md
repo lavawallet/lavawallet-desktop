@@ -29,6 +29,12 @@ npm run webpack
 npm run app
 ```  
 
+
+# To Develop
+1. npm run dev
+2. npm run electron-dev 
+
+
 # Developer TODO
 1. Finish the transfer tab
 
