@@ -149,7 +149,22 @@ export default class Accounts {
                     break;
                 case 'showTxList':
 
-                    self.txSidebar.openSidebar('tx_list');
+                    var env = self.contractConfig.networkEnvironment;
+
+                    var lavaContractAddress = self.contractConfig.lavaContractAddress;
+                    var ethAccount = this.selectedAccount;
+
+                    var accountStatus = {
+                      ethBalance: this.ethBalance,
+                      tokenBalance: this.tokenBalance,
+                      selectedAddress: this.selectedAddress
+                    }
+
+
+                    var listData= await TXHelper.getOverviewForTxList( self.web3, env,  ethAccount, accountStatus )
+
+                    self.txSidebar.openSidebar('txlist', listData);
+
 
                     break;
                 default:

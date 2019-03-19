@@ -194,11 +194,12 @@ export default class Transfer {
 
                     var accountStatus = {
                       ethBalance: this.ethBalance,
-                      tokenBalance: this.tokenBalance
+                      tokenBalance: this.tokenBalance,
+                      selectedAddress: this.selectedAddress
                     }
 
 
-                    var listData= TXHelper.getOverviewForTxList( self.web3, env,  ethAccount, accountStatus )
+                    var listData= await TXHelper.getOverviewForTxList( self.web3, env,  ethAccount, accountStatus )
 
                     self.txSidebar.openSidebar('txlist', listData);
 

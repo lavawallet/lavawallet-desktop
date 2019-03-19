@@ -176,8 +176,9 @@ Needs different modes
         this.setSignatureOverviewData(data)
       }else{
 
-          Vue.set(sidebar,'accountStatus',data.accountStatus)
-          Vue.set(sidebar,'ethAccount',data.ethAccount)
+        console.log('setting from data',data )
+        Vue.set(sidebar,'accountStatus',data.accountStatus)
+        Vue.set(sidebar,'ethAccount',data.ethAccount)
 
 
         Vue.set(sidebar,'overviewType','tx_list');

@@ -142,7 +142,7 @@
      </div>
 
 
-     <div class="fixed-action-btn" style=" left: 13px; bottom: 40px; width: 60px;" v-cloak >
+     <div class="fixed-action-btn" style=" left: 13px; bottom: 40px; width: 60px;"  v-if="tokenLoaded" v-cloak >
        <a class="btn-floating btn-large electric-red ">
          <i class="icon icon-list clickable" v-on:click="clickButton('showTxList')"></i>
        </a>
