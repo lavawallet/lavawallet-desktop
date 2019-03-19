@@ -9,6 +9,7 @@ LIB TO ADD : ?
 var ethers = require('ethers');
 
 
+
 ## TODO
 1. Finish sidebar for monitoring TX
 2. Finish sidebar for signing EIP712 packets
@@ -20,6 +21,8 @@ var ethers = require('ethers');
 ## To Use
 
 ```bash
+
+install NodeJS 10
 
 # Install dependencies
 npm install

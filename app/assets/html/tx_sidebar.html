@@ -51,32 +51,53 @@
 
    <div class="signature-container">
 
+     <div class="card-panel grey lighten-2 padding-sm is-centered">
+       <h3>Signature Request</h3>
+     </div>
+
+
      <div class="title-header border-bottom-gray " >
        <div class="center">
-         <div class="padding-sm">
-           Account Name
+         <div class="padding-sm overflow-ellipsis red lighten-2 color-white">
+           {{ ethAccount.address }}
          </div>
-         <div class="padding-sm">
-           Account Address
+         <div class="whitespace-sm"></div>
+         <div class="padding-sm overflow-ellipsis red lighten-2 color-white">
+            LAVA: {{ accountStatus.tokenBalance }}
          </div>
        </div>
      </div>
 
 
-     <div class="whitespace-md"></div>
 
-     <h4> Signature Requested </h4>
+     <div class="is-centered">
+       <p> You are signing: </p>
+     </div>
 
      <div class="title-header border-bottom-gray " >
-       <div class="center">
-         <div class="padding-sm">
-           Account Name
-         </div>
-         <div class="padding-sm">
-           Account Address
-         </div>
+       <div class="">
+
+
+           <div class="static-textarea">
+
+             <label>Domain</label>
+               <ul class="typedDataView">
+                <li v-for="item in Object.keys(typedData.domain)">
+                  {{item}}: {{ typedData.domain[item] }}
+                </li>
+              </ul>
+              <label>Message</label>
+              <ul class="typedDataView">
+               <li v-for="item in Object.keys(typedData.message)">
+                 {{item}}: {{ typedData.message[item] }}
+               </li>
+             </ul>
+
+           </div>
+
+          
        </div>
-        
+
        <div class="btn red lighten-2 full-width hoverable clickable" v-bind:class="{'disabled': (txOverview.txError || minorError)}" v-on:click="clickButton('sign')">Sign</div>
 
 

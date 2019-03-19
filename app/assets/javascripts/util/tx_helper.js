@@ -1,8 +1,4 @@
 
- const LavaPacketUtils = require('./lava-packet-utils')
-//const LavaNetworkUtils = require('./lava-network-utils')
-//const LavaBalanceUtils = require('./lava-balance-utils')
-
 import EthGasOracle from '../eth-gas-oracle.js';
 
 
@@ -12,6 +8,7 @@ const ContractInterface = require('./contract_interface')
 var web3utils =  require('web3-utils');
 
 
+var LavaPacketUtils =  require('lava-packet-utils');
 
 export default class TXHelper {
 
@@ -63,7 +60,7 @@ export default class TXHelper {
       gasCost: estimatedGasCost,
       gasPriceNormal: gasPriceData.ethGasNormal,
       gasPriceFast: gasPriceData.ethGasFast,
-      txError:txError 
+      txError:txError
 
     }
   }
@@ -75,32 +72,37 @@ export default class TXHelper {
 
     console.log('get data for tx ')
 
-  //  var txMethod = await TXHelper.getTXMethod( web3, env, txCommand  )
-
-  //  var txCount = await web3.eth.getTransactionCount(txCommand.from);
-
-    var txError = null;
-  /*  var max_gas_cost = 17046240;
-
-    try{
-      var estimatedGasCost = await txMethod.estimateGas({
-        gas: max_gas_cost, from:txCommand.from, to: txCommand.to });
-    }catch(e)
-    {
-      estimatedGasCost = max_gas_cost;
-      txError = e.message ;
-    }
+     var txError = null;
 
 
+     var privKey = ethAccount.privateKey ;
 
-        var gasPriceData = await  EthGasOracle.getGasData();
-    */
+     var typedData = LavaPacketUtils.getLavaTypedDataFromParams(
+       lavaPacket.methodName,
+       lavaPacket.relayAuthority,
+       lavaPacket.from,
+       lavaPacket.to,
+       lavaPacket.wallet,
+       lavaPacket.tokens,
+       lavaPacket.relayerRewardTokens,
+       lavaPacket.expires,
+       lavaPacket.nonce
+     )
+
+
+     var typedDataHash = LavaPacketUtils.getLavaTypedDataHashFromPacket(lavaPacket);
+
+
+
 
     return {
       ethAccount: ethAccount,
       accountStatus: accountStatus,
 
       lavaPacket: lavaPacket,
+
+      typedData: typedData,
+      typedDataHash: typedDataHash,
 
       txError:txError
 

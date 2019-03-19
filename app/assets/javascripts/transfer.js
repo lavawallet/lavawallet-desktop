@@ -43,7 +43,7 @@ export default class Transfer {
           tokenLoaded:false,
           ethBalance: null,
           tokenBalance: null,
-          lavaBalance: null,
+          //lavaBalance: null,
 
 
           transferTo: null,
@@ -137,7 +137,8 @@ export default class Transfer {
 
 
                     var accountStatus = {
-                      ethBalance: this.ethBalance
+                      ethBalance: this.ethBalance,
+                      tokenBalance: this.tokenBalance
                     }
 
                     var tokenDecimals = parseInt(self.contractConfig.tokenDecimals);
@@ -168,25 +169,9 @@ export default class Transfer {
                         console.log(lavaPacket)
 
 
-                    var privKey = ethAccount.privateKey ;
 
 
-                    var typedDataHash = LavaPacketUtils.getLavaTypedDataHashFromPacket(lavaPacket);
-
-                    var signature = LavaPacketUtils.signTypedData(typedDataHash,privKey);
-
-
-                    var completeLavaPacket = lavaPacket;
-
-                    completeLavaPacket.signature = signature;
-
-                    console.log('completeLavaPacket', completeLavaPacket);
-
-                    var packetIsValid = LavaPacketUtils.lavaPacketHasValidSignature(completeLavaPacket);
-
-                    console.log('packet is valid ? ', packetIsValid )
- 
-                    var signatureOverview = await TXHelper.getOverviewForLavaTransaction( self.web3, env, completeLavaPacket , ethAccount, accountStatus );
+                    var signatureOverview = await TXHelper.getOverviewForLavaTransaction( self.web3, env, lavaPacket , ethAccount, accountStatus );
 
                     self.txSidebar.openSidebar( 'signature', signatureOverview );
 

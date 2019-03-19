@@ -6,6 +6,7 @@ import Vue from 'vue';
 
  import TXHelper from './util/tx_helper.js';
 
+ var LavaPacketUtils =  require('lava-packet-utils');
 
 var sidebar;
 
@@ -69,12 +70,16 @@ Needs different modes
            txOverview: {},
            txHistory: existingTxHistory,
 
+           ethAccount:{},
            accountStatus: {},
            gasPrice: 0,
            maxFee: 0,
            maxTotal: 0,
            ethBalance: 0,
            title: 'Confirm Transaction',
+           typedDataHash: null,
+           typedData: null,
+           lavaPacket: {},
 
            minorError: null
          },
@@ -213,6 +218,27 @@ Needs different modes
     async executeSignature()
     {
         console.log( 'conduct signature! ')
+
+        var typedDataHash = sidebar.typedDataHash;
+        var ethAccount = sidebar.ethAccount;
+        var lavaPacket = sidebar.lavaPacket;
+
+        var privKey = ethAccount.privateKey;
+
+        var signature = LavaPacketUtils.signTypedData(typedDataHash,privKey);
+
+
+        var completeLavaPacket = lavaPacket;
+
+        completeLavaPacket.signature = signature;
+
+        console.log('completeLavaPacket', completeLavaPacket);
+
+        var packetIsValid = LavaPacketUtils.lavaPacketHasValidSignature(completeLavaPacket);
+
+        console.log('packet is valid ? ', packetIsValid )
+
+
     }
 
 
@@ -224,10 +250,22 @@ Needs different modes
     }
 
 
-    setSignatureOverviewData(signatureData)
+    setSignatureOverviewData(data)
     {
       Vue.set(sidebar,'overviewType', 'signature')
-      console.log('set sig data', signatureData)
+
+      Vue.set(sidebar,'accountStatus',data.accountStatus)
+      Vue.set(sidebar,'ethAccount',data.ethAccount)
+
+      Vue.set(sidebar,'typedDataHash',data.typedDataHash)
+      Vue.set(sidebar,'typedData',data.typedData)
+      Vue.set(sidebar,'lavaPacket',data.lavaPacket)
+
+       
+
+      Vue.set(sidebar,'packetJson',data.lavaPacketJSON)
+
+      console.log('set sig data', data)
     }
 
 

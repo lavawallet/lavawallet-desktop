@@ -38,6 +38,10 @@ overflow-y: auto;
     font-size: 1.2em;
 }
 
+.is-centered
+{
+  text-align: center;
+}
 
 .quick-nav
 {
@@ -257,4 +261,19 @@ overflow-y: auto;
 .radius-5
 {
   border-radius:5px;
+}
+
+.static-textarea
+{
+  border: 1px solid black;
+  margin:5px;
+  padding:5px;
+  overflow:auto;
+  
+
+
+  li
+  {
+    line-height:24px;
+  }
 }
