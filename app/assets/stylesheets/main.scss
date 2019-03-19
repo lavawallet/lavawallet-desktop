@@ -269,8 +269,14 @@ overflow-y: auto;
   margin:5px;
   padding:5px;
   overflow:auto;
-  
 
+  label
+  {
+    color:#555;
+    display:block;
+    width:100%;
+    font-weight: bold;
+  }
 
   li
   {

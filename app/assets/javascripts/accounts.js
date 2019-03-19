@@ -164,7 +164,7 @@ export default class Accounts {
           },
           selectAccount: function (e) {
             // `this` inside methods points to the Vue instance
-            console.log('clicked ' +    '!', e.target)
+            console.log('meep clicked ' +    '!', e.target)
 
             var target = e.target;
             var address = target.getAttribute('data-address');
@@ -215,6 +215,9 @@ export default class Accounts {
     if(data.success)
     {
       accountInfo = data.accountInfo;
+      console.log('got accountInfo',accountInfo)
+    }else{
+      console.error('failed to getAccountInfo')
     }
 
 

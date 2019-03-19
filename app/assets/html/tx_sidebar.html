@@ -83,23 +83,24 @@
              <label>Domain</label>
                <ul class="typedDataView">
                 <li v-for="item in Object.keys(typedData.domain)">
-                  {{item}}: {{ typedData.domain[item] }}
+                  <label>{{item}}:</label> {{ typedData.domain[item] }}
                 </li>
               </ul>
               <label>Message</label>
               <ul class="typedDataView">
                <li v-for="item in Object.keys(typedData.message)">
-                 {{item}}: {{ typedData.message[item] }}
+                 <label>{{item}}:</label> {{ typedData.message[item] }}
                </li>
              </ul>
 
            </div>
 
-          
+
        </div>
 
-       <div class="btn red lighten-2 full-width hoverable clickable" v-bind:class="{'disabled': (txOverview.txError || minorError)}" v-on:click="clickButton('sign')">Sign</div>
-
+       <div class="whitespace-sm"></div>
+        <div class="btn red lighten-2 full-width hoverable clickable" v-bind:class="{'disabled': (txOverview.txError || minorError)}" v-on:click="clickButton('sign')">Sign</div>
+       <div class="whitespace-sm"></div>
 
 
      </div>

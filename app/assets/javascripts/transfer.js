@@ -8,7 +8,7 @@ var web3utils =  require('web3-utils');
 import TXHelper from './util/tx_helper.js';
 
 var LavaPacketUtils =  require('lava-packet-utils');
-
+import  LavaPacketHelper from './util/lava-packet-helper'
 //import LavaPacketUtils from 'lava-packet-utils';
 
 export default class Transfer {
@@ -53,8 +53,10 @@ export default class Transfer {
 
           expirationBlock: 0,
 
-          relayNodeURL: '',
-          packetData: '',
+          relayNodeURL: contractConfig.lavaRelayURL,
+          relayResponse: null,
+          packetData: null,
+          completeLavaPacket:  null,
 
           flashMessage: null
         },
@@ -168,12 +170,19 @@ export default class Transfer {
 
                         console.log(lavaPacket)
 
+                        Vue.set(transferComponent, 'completeLavaPacket', null )
+                        Vue.set(transferComponent, 'relayResponse', null )
 
 
 
                     var signatureOverview = await TXHelper.getOverviewForLavaTransaction( self.web3, env, lavaPacket , ethAccount, accountStatus );
 
-                    self.txSidebar.openSidebar( 'signature', signatureOverview );
+                    self.txSidebar.openSidebar( 'signature', signatureOverview, function(completeLavaPacket){
+
+
+                        Vue.set(transferComponent, 'completeLavaPacket', completeLavaPacket )
+
+                      });
 
                     break;
                 case 'showTxList':
@@ -184,6 +193,7 @@ export default class Transfer {
                 case 'broadcast':
 
                      console.log('broadcasting tx !! ')
+                     self.broadcastPacket( transferComponent.completeLavaPacket  )
 
                     break;
                 default:
@@ -288,7 +298,22 @@ export default class Transfer {
     }
   }
 
+  async broadcastPacket(lavaPacketData)
+  {
+    var lavaNodeURL= transferComponent.relayNodeURL;
+    var response = await LavaPacketHelper.sendLavaPacket(lavaNodeURL ,lavaPacketData )
+    console.log('relay responded with ', response)
 
+    if(response.success)
+    {
+      Vue.set(transferComponent, 'relayResponse',  'Success!' )
+    }else {
+      Vue.set(transferComponent, 'relayResponse',  response.message )
+    }
+
+
+
+  }
 
   //this is on the front end , we need to access the backend
   async unlockEthAccount(password)

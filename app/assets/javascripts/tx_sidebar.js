@@ -10,7 +10,7 @@ import Vue from 'vue';
 
 var sidebar;
 
-
+var sidebarCallback;
 
 /*
 Needs different modes
@@ -158,13 +158,15 @@ Needs different modes
     }
 
 
-    openSidebar(type,data)
+    openSidebar(type,data,callback)
     {
 
 
       var sb = document.getElementById('tx-sidebar');
 
       var instance = M.Sidenav.getInstance( sb );
+
+      sidebarCallback = callback;
 
       instance.open();
 
@@ -239,6 +241,8 @@ Needs different modes
         console.log('packet is valid ? ', packetIsValid )
 
 
+        sidebarCallback( completeLavaPacket )
+
     }
 
 
@@ -261,11 +265,7 @@ Needs different modes
       Vue.set(sidebar,'typedData',data.typedData)
       Vue.set(sidebar,'lavaPacket',data.lavaPacket)
 
-       
 
-      Vue.set(sidebar,'packetJson',data.lavaPacketJSON)
-
-      console.log('set sig data', data)
     }
 
 

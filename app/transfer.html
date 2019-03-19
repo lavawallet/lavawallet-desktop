@@ -119,7 +119,7 @@
                   <div class="col s6">
 
 
-                    <div class="simple-input-container"   >
+                    <div class="simple-input-container" v-if="completeLavaPacket" v-cloak   >
 
                       <div class="simple-input input-sm "  v-if="selectedAccount" >
                         <div class="label color-white">Relay Node URL </div>
@@ -128,13 +128,17 @@
                         </div>
                       </div>
 
+                        <div v-if="!relayResponse">
                           <div class="btn red lighten-2 full-width hoverable clickable" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('broadcast')">Broadcast</div>
-
+                        </div>
+                        <div v-if="relayResponse" class="color-white">
+                           {{ relayResponse }}
+                        </div>
 
                           <div class="simple-input input-sm "  v-if="selectedAccount" >
                             <div class="label color-white">Lava Packet Data </div>
                             <div class="form-row">
-                              <textarea placeholder=""   type="textarea" class="validate" v-model='packetData' rows="7"  ></textarea>
+                              <textarea placeholder=""   type="textarea" class="color-white"   rows="7"  >{{completeLavaPacket}}</textarea>
                             </div>
                           </div>
 
