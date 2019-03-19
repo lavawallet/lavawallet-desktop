@@ -186,24 +186,7 @@ export default class Transfer {
 
                     console.log('packet is valid ? ', packetIsValid )
 
-                   /*
-
-                    var txCommand = {
-                      from: this.selectedAddress,
-                      contract: 'lavawallet',
-                      to: lavaContractAddress,
-                      functionName: 'transferTokensFromWithSignature',
-                      params: [
-                        'transfer',
-                        this.selectedAddress,
-                        addressTo,
-                        tokenAddress,
-                        transferAmountRaw,
-                        //reward
-                        //expires
-                        //nonce
-                        //signature
-                      ] };*/
+                 
 
                     self.txSidebar.openSidebar(   );
 
