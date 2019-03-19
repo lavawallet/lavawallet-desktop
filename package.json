@@ -35,6 +35,7 @@
     "js-sha3": "^0.7.0",
     "jsdom": "^11.11.0",
     "keythereum": "^1.0.4",
+    "lava-packet-utils": "^1.0.9",
     "materialize-css": "^0.100.2",
     "request": "^2.87.0",
     "scrypt": "git://github.com/admazzola/scrypt.git",

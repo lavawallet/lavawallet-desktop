@@ -3,9 +3,13 @@ import Vue from 'vue';
 var transferComponent;
 
 var web3utils =  require('web3-utils');
-var lavaUtils = require("./util/lava-utils");
+//var lavaUtils = require("./util/lava-utils");
 
 import TXHelper from './util/tx_helper.js';
+
+var LavaPacketUtils =  require('lava-packet-utils');
+
+//import LavaPacketUtils from 'lava-packet-utils';
 
 export default class Transfer {
   constructor( ){
@@ -125,9 +129,12 @@ export default class Transfer {
 
                     var env = self.contractConfig.networkEnvironment;
                     var addressTo = this.transferTo;
-                    var tokenAddress = self.contractConfig.tokenAddress;
-                    var lavaAddress = self.contractConfig.lavaAddress;
+                  //  var tokenAddress = self.contractConfig.tokenAddress;
+                    var lavaContractAddress = self.contractConfig.lavaContractAddress;
                     var ethAccount = this.selectedAccount;
+
+
+
 
                     var accountStatus = {
                       ethBalance: this.ethBalance
@@ -135,35 +142,56 @@ export default class Transfer {
 
                     var tokenDecimals = parseInt(self.contractConfig.tokenDecimals);
 
+
                     var transferAmount = parseFloat(this.transferAmount) ;
                     var transferAmountRaw = parseFloat(this.transferAmount) * Math.pow(10,tokenDecimals);
 
+                    var relayAuthority = "0x0000000000000000000000000000000000000000";
+                    var method = this.transferTokenMethod;
                     var relayerReward = this.relayerReward;
                     var expires = this.expirationBlock;
                     var nonce = web3utils.randomHex(32);
 
-                    var params = lavaUtils.getLavaParamsFromData(
-                        'transfer',
+
+
+                    var lavaPacket = LavaPacketUtils.getLavaPacket(
+                        method,
+                        relayAuthority,
                         this.selectedAddress,
                         addressTo,
-                        lavaAddress,
-                        tokenAddress,
+                        lavaContractAddress,
                         transferAmountRaw,
                         relayerReward,
                         expires,
                         nonce);
 
-                    var msgParams = {data: params};
-                    var privKey = ethAccount.privateKey;
-                    //needs to be a buffer ?
+                        console.log(lavaPacket)
 
-                    var signature = lavaUtils.signTypedData(privKey,msgParams);
 
+                    var privKey = ethAccount.privateKey ;
+
+
+                    var typedDataHash = LavaPacketUtils.getLavaTypedDataHashFromPacket(lavaPacket);
+
+                    var signature = LavaPacketUtils.signTypedData(typedDataHash,privKey);
+
+
+                    var completeLavaPacket = lavaPacket;
+
+                    completeLavaPacket.signature = signature;
+
+                    console.log('completeLavaPacket', completeLavaPacket);
+
+                    var packetIsValid = LavaPacketUtils.lavaPacketHasValidSignature(completeLavaPacket);
+
+                    console.log('packet is valid ? ', packetIsValid )
+
+                   /*
 
                     var txCommand = {
                       from: this.selectedAddress,
                       contract: 'lavawallet',
-                      to: lavaAddress,
+                      to: lavaContractAddress,
                       functionName: 'transferTokensFromWithSignature',
                       params: [
                         'transfer',
@@ -175,11 +203,11 @@ export default class Transfer {
                         //expires
                         //nonce
                         //signature
-                      ] };
+                      ] };*/
 
                     self.txSidebar.openSidebar(   );
 
-                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount, accountStatus );
+                    var txOverview = await TXHelper.getOverviewForLavaTransaction( self.web3, env, completeLavaPacket , ethAccount, accountStatus );
 
                     self.txSidebar.openSidebar( txOverview );
 

@@ -268,6 +268,8 @@ export default class Accounts {
   {
       var accounts = [];
 
+
+
       for(var address of list)
       {
         var acct = {
@@ -277,7 +279,7 @@ export default class Accounts {
         accounts.push(acct)
       }
 
-
+        console.log('render accts list ', accounts)
       Vue.set(accountsComponent, 'accounts', accounts )
   }
 
