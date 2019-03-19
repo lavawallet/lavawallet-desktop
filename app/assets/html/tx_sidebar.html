@@ -47,6 +47,49 @@
  </div>
 
 
+ <div class="sidebar-page" v-if="overviewType=='signature'" data-page-type="tx_list" v-cloak >
+
+   <div class="signature-container">
+
+     <div class="title-header border-bottom-gray " >
+       <div class="center">
+         <div class="padding-sm">
+           Account Name
+         </div>
+         <div class="padding-sm">
+           Account Address
+         </div>
+       </div>
+     </div>
+
+
+     <div class="whitespace-md"></div>
+
+     <h4> Signature Requested </h4>
+
+     <div class="title-header border-bottom-gray " >
+       <div class="center">
+         <div class="padding-sm">
+           Account Name
+         </div>
+         <div class="padding-sm">
+           Account Address
+         </div>
+       </div>
+        
+       <div class="btn red lighten-2 full-width hoverable clickable" v-bind:class="{'disabled': (txOverview.txError || minorError)}" v-on:click="clickButton('sign')">Sign</div>
+
+
+
+     </div>
+
+
+   </div>
+
+
+ </div>
+
+
 <div class="sidebar-page"  v-if="overviewType=='standard_tx'" data-page-type="standard_tx" v-cloak >
 
 

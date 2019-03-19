@@ -63,55 +63,46 @@ export default class TXHelper {
       gasCost: estimatedGasCost,
       gasPriceNormal: gasPriceData.ethGasNormal,
       gasPriceFast: gasPriceData.ethGasFast,
-      txError:txError,
-
-      overviewType: 'standard_tx'
+      txError:txError 
 
     }
   }
 
-//TODO 
+//TODO
   static async getOverviewForLavaTransaction( web3, env, lavaPacket , ethAccount , accountStatus)
   {
 
 
-        var txMethod = await TXHelper.getTXMethod( web3, env, txCommand  )
+    console.log('get data for tx ')
 
-        var txCount = await web3.eth.getTransactionCount(txCommand.from);
+  //  var txMethod = await TXHelper.getTXMethod( web3, env, txCommand  )
 
-        var txError = null;
-        var max_gas_cost = 17046240;
+  //  var txCount = await web3.eth.getTransactionCount(txCommand.from);
 
-        try{
-          var estimatedGasCost = await txMethod.estimateGas({
-            gas: max_gas_cost, from:txCommand.from, to: txCommand.to });
-        }catch(e)
-        {
-          estimatedGasCost = max_gas_cost;
-          txError = e.message ;
-        }
+    var txError = null;
+  /*  var max_gas_cost = 17046240;
+
+    try{
+      var estimatedGasCost = await txMethod.estimateGas({
+        gas: max_gas_cost, from:txCommand.from, to: txCommand.to });
+    }catch(e)
+    {
+      estimatedGasCost = max_gas_cost;
+      txError = e.message ;
+    }
 
 
 
         var gasPriceData = await  EthGasOracle.getGasData();
-
+    */
 
     return {
       ethAccount: ethAccount,
-      accountStatus: accountStatus   ,
+      accountStatus: accountStatus,
 
-      from: txCommand.from,
-      to: txCommand.to,
-      ethAmount: 0,
-      txCommand: txCommand,
-      txMethod:txMethod,
-      txCount:txCount,
-      gasCost: estimatedGasCost,
-      gasPriceNormal: gasPriceData.ethGasNormal,
-      gasPriceFast: gasPriceData.ethGasFast,
-      txError:txError,
+      lavaPacket: lavaPacket,
 
-      overviewType: 'standard_tx'
+      txError:txError
 
     }
 

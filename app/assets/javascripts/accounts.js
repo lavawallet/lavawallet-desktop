@@ -113,11 +113,11 @@ export default class Accounts {
                       functionName: 'approveAndCall',
                       params: [spender,depositAmountRaw,"0x00"] };
 
-                    self.txSidebar.openSidebar(   );
+                    //self.txSidebar.openSidebar(   );
 
                     var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount, accountStatus );
 
-                    self.txSidebar.openSidebar( txOverview );
+                    self.txSidebar.openSidebar('transfer', txOverview );
 
                     break;
 
@@ -144,12 +144,12 @@ export default class Accounts {
 
                     var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount );
 
-                    self.txSidebar.openSidebar(txOverview);
+                    self.txSidebar.openSidebar('transfer',  txOverview);
 
                     break;
                 case 'showTxList':
 
-                    self.txSidebar.openSidebar();
+                    self.txSidebar.openSidebar('tx_list');
 
                     break;
                 default:

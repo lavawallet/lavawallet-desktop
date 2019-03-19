@@ -85,7 +85,7 @@ Needs different modes
               if(this.overviewType == 'tx_list')
               {
                 //get data of each tx from the provider ..
-                
+
               }
 
               if(this.overviewType == 'standard_tx')
@@ -137,6 +137,12 @@ Needs different modes
                    self.closeSidebar();
                    break;
 
+
+                case 'sign':
+                  self.executeSignature();
+                  self.closeSidebar();
+                  break;
+
              }
 
            }
@@ -147,7 +153,7 @@ Needs different modes
     }
 
 
-    openSidebar(txOverview)
+    openSidebar(type,data)
     {
 
 
@@ -157,8 +163,10 @@ Needs different modes
 
       instance.open();
 
-      if(txOverview){
-        this.setTxOverviewData(txOverview)
+      if(type == 'transfer'){
+        this.setTxOverviewData(data)
+      }else if(type == 'signature'){
+        this.setSignatureOverviewData(data)
       }else{
         Vue.set(sidebar,'overviewType','tx_list');
       }
@@ -202,6 +210,12 @@ Needs different modes
       Vue.set(sidebar,'txHistory',list);
     }
 
+    async executeSignature()
+    {
+        console.log( 'conduct signature! ')
+    }
+
+
     async executeTransaction(txOverviewData)
     {
       var txInfo = await TXHelper.executeTransaction(this.web3, txOverviewData);
@@ -210,19 +224,21 @@ Needs different modes
     }
 
 
-
+    setSignatureOverviewData(signatureData)
+    {
+      Vue.set(sidebar,'overviewType', 'signature')
+      console.log('set sig data', signatureData)
+    }
 
 
     setTxOverviewData(txOverviewData)
     {
-      Vue.set(sidebar,'overviewType',txOverviewData.overviewType)
+      Vue.set(sidebar,'overviewType', 'standard_tx')
       Vue.set(sidebar,'txOverview',txOverviewData)
       Vue.set(sidebar,'accountStatus',txOverviewData.accountStatus)
 
       var gasPriceFormatted = parseFloat(txOverviewData.gasPriceNormal).toPrecision(1)
       Vue.set(sidebar,'gasPrice', gasPriceFormatted )
-
-
 
 
       console.log('setting txData',txOverviewData)

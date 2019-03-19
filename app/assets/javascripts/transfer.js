@@ -114,11 +114,11 @@ export default class Transfer {
                       functionName: 'transfer',
                       params: [addressTo,transferAmountRaw] };
 
-                    self.txSidebar.openSidebar(   );
+                  //  self.txSidebar.openSidebar(   );
 
                     var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount, accountStatus );
 
-                    self.txSidebar.openSidebar( txOverview );
+                    self.txSidebar.openSidebar('transfer', txOverview );
 
                     break;
 
@@ -185,14 +185,10 @@ export default class Transfer {
                     var packetIsValid = LavaPacketUtils.lavaPacketHasValidSignature(completeLavaPacket);
 
                     console.log('packet is valid ? ', packetIsValid )
+ 
+                    var signatureOverview = await TXHelper.getOverviewForLavaTransaction( self.web3, env, completeLavaPacket , ethAccount, accountStatus );
 
-                 
-
-                    self.txSidebar.openSidebar(   );
-
-                    var txOverview = await TXHelper.getOverviewForLavaTransaction( self.web3, env, completeLavaPacket , ethAccount, accountStatus );
-
-                    self.txSidebar.openSidebar( txOverview );
+                    self.txSidebar.openSidebar( 'signature', signatureOverview );
 
                     break;
                 case 'showTxList':
