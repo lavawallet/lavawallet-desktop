@@ -29,13 +29,13 @@
       <div class="whitespace-sm"></div>
 
 
-      <div class="row white-text quick-nav quick-nav-red">
+      <div class="row white-text quick-nav quick-nav-red" style="margin:0;">
 
           <div class="col s4 orange lighten-2 hoverable clickable" v-on:click="setMode('lava')" v-bind:class="{'active': menuMode=='lava'}">Lava Transfer</div>
 
             <div class="col s2"></div>
 
-          <div class="col s6 subtitle-banner red lighten-2 white-text is-size-6 hoverable" v-if="tokenBalance != null" v-cloak>
+          <div class="col s6 subtitle-banner red lighten-2 white-text is-size-10 hoverable" v-if="tokenBalance != null" v-cloak>
               <div class="pull-left">  Lava Balance </div>   <div class="pull-right"> {{lavaBalance}} </div>
           </div>
 
@@ -67,12 +67,29 @@
 
                     <div class="simple-input-container"   >
 
+                      <div class="simple-input input-sm "  v-if="selectedAccount" >
+                        <div class="label color-white">Method</div>
+                        <div class="form-row">
+
+                          <div class="select">
+                             <select class=" " onchange=" " v-model="transferTokenMethod" placeholder="lava method">
+                               <option>transfer</option>
+                               <option>approve</option>
+                            </select>
+                          </div>
+
+                        </div>
+                      </div>
+
                           <div class="simple-input input-sm "  v-if="selectedAccount" >
                             <div class="label color-white">Amount</div>
                             <div class="form-row">
                               <input placeholder=""   type="text" class="validate" v-model='transferAmount'  >
                             </div>
                           </div>
+
+
+
 
                           <div class="simple-input input-sm "  v-if="selectedAccount" >
                             <div class="label color-white">Recipient </div>
@@ -81,7 +98,18 @@
                             </div>
                           </div>
 
-                          <div class="btn red pull-right" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('sign')">Sign</div>
+                          <div class="simple-input input-sm "  v-if="selectedAccount" >
+                            <div class="label color-white">Relayer Reward </div>
+                            <div class="form-row">
+                              <input placeholder=""   type="text" class="validate" v-model='relayerReward'   >
+                            </div>
+                          </div>
+
+
+
+                          <div class="btn red lighten-2 full-width hoverable clickable" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('sign')">Sign</div>
+
+
                       </div>
 
                   </div>
@@ -93,14 +121,25 @@
 
                     <div class="simple-input-container"   >
 
-                          <div class="simple-input input-sm "  v-if="selectedAccount" >
-                           </div>
-
-                          <div class="simple-input input-sm "  v-if="selectedAccount" >
-                           </div>
-
-                          <div class="btn red" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('lavaTransfer')">Transfer</div>
+                      <div class="simple-input input-sm "  v-if="selectedAccount" >
+                        <div class="label color-white">Relay Node URL </div>
+                        <div class="form-row">
+                          <input placeholder=""   type="text" class="validate" v-model='relayNodeURL'   ></input>
+                        </div>
                       </div>
+
+                          <div class="btn red lighten-2 full-width hoverable clickable" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('lavaTransfer')">Broadcast</div>
+
+
+                          <div class="simple-input input-sm "  v-if="selectedAccount" >
+                            <div class="label color-white">Lava Packet Data </div>
+                            <div class="form-row">
+                              <textarea placeholder=""   type="textarea" class="validate" v-model='packetData' rows="7"  ></textarea>
+                            </div>
+                          </div>
+
+
+                     </div>
 
 
 
@@ -151,7 +190,7 @@
 
 
 
-      <div class='flash-message absolute-bottom white-text red text-center radius-5' v-if="flashMessage" v-cloak>
+      <div class='flash-message absolute-bottom white-text red lighten-2 text-center radius-5' v-if="flashMessage" v-cloak>
         {{flashMessage}}
       </div>
 

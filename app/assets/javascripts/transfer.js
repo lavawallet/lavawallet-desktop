@@ -43,10 +43,14 @@ export default class Transfer {
 
 
           transferTo: null,
+          transferTokenMethod: 'transfer',
           transferAmount: 0,
+          relayerReward: 0,
 
           expirationBlock: 0,
-          relayerReward: 0,
+
+          relayNodeURL: '',
+          packetData: '',
 
           flashMessage: null
         },
@@ -177,7 +181,20 @@ export default class Transfer {
                     self.txSidebar.openSidebar( txOverview );
 
                     break;
+                case 'showTxList':
 
+                    self.txSidebar.openSidebar();
+
+                    break;
+                case 'sign':
+
+                    self.txSidebar.openSidebar();
+
+                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount, accountStatus );
+
+                    self.txSidebar.openSidebar( txOverview );
+
+                    break;
                 default:
                     break;
             }
@@ -325,5 +342,5 @@ export default class Transfer {
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
-    
+
 };

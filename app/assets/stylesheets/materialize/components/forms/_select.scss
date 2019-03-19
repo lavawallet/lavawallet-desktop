@@ -1,7 +1,7 @@
 /* Select Field
    ========================================================================== */
 
-select { display: none; }
+//select { display: none; }
 select.browser-default { display: block; }
 
 select {
@@ -10,7 +10,8 @@ select {
   padding: $select-padding;
   border: $select-border;
   border-radius: $select-radius;
-  height: $input-height;
+  //height: $input-height;
+  height: 2.25em;
 }
 
 .select-label {

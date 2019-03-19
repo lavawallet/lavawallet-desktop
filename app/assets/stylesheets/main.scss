@@ -119,7 +119,7 @@ overflow-y: auto;
 
 .simple-input
 {
-  padding:5px !important;
+  padding: 1px !important;
 
   input
   {
@@ -212,6 +212,14 @@ overflow-y: auto;
 
 //font size
 
+.is-size-12 {
+    font-size: 2rem !important;
+}
+
+.is-size-10 {
+    font-size: 1.6rem !important;
+}
+
 .is-size-8 {
     font-size: 1.2rem !important;
 }
@@ -222,6 +230,11 @@ overflow-y: auto;
 
 .is-size-5 {
     font-size: 0.8rem !important;
+}
+
+.full-width
+{
+  width:100%;
 }
 
 .is-bold
