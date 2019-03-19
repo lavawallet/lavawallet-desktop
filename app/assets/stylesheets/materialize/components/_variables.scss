@@ -164,11 +164,11 @@ $dropdown-item-height: 50px !default;
 
 // Text Inputs + Textarea
 $input-height: 3rem !default;
-$input-border-color: color("grey", "base") !default;
+$input-border-color: color("red", "base") !default;
 $input-border: 1px solid $input-border-color !default;
 $input-background: #fff !default;
 $input-error-color: $error-color !default;
-$input-success-color: $success-color !default;
+$input-success-color: color("orange", "base")  !default;
 $input-focus-color: $primary-color !default;
 $input-font-size: 16px !default;
 $input-margin-bottom: 8px;

@@ -1,4 +1,14 @@
 
+.background-neutral
+{
+    background-color: #423f3a;
+}
+
+
+.background-gray
+{
+    background-color: #2f2f2f;
+}
 
 .pretty-navbar
 {
@@ -14,7 +24,7 @@
 
 [v-cloak] {display: none}
 
-.accounts-group
+.accounts-groupcolor
 {
 height: 300px;
 overflow-y: auto;
@@ -121,7 +131,7 @@ overflow-y: auto;
 
     border: 1px solid black;
     //padding: 0px 5px;
-
+    background-color: #eee !important;
   }
 
   input:hover
@@ -195,6 +205,11 @@ overflow-y: auto;
   color:  #E57373 !important;
 }
 
+.color-white
+{
+  color:  #eee !important;
+}
+
 //font size
 
 .is-size-8 {
@@ -215,8 +230,18 @@ overflow-y: auto;
 
 }
 
+.form-row
+{
+  display: block !important;
+}
+
 .hover-larger:hover
 {
   font-size:18px;
   cursor:pointer;
+}
+
+.radius-5
+{
+  border-radius:5px;
 }
