@@ -9,7 +9,14 @@ let mainWindow
 
 async function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 450})
+
+  //https://medium.com/fantageek/changing-electron-app-icon-acf26906c5ad
+
+  mainWindow = new BrowserWindow({
+    width: 800,
+     height: 450,
+     icon: __dirname + ‘/icon/icon.icns’
+  })
   mainWindow.setMenu(null)
 
   await WalletCore.init()

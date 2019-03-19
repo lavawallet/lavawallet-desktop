@@ -5,14 +5,14 @@
 ![image](https://user-images.githubusercontent.com/38132633/42248914-2d7dc512-7ef6-11e8-87dc-ab63b626f468.png)
 
 
-LIB TO ADD : ?
+ 
 var ethers = require('ethers');
 
 
 
 ## TODO
 1. Finish sidebar for monitoring TX
-2. Finish sidebar for signing EIP712 packets
+2. Replace Keythereum with Ethers
 
 
 
