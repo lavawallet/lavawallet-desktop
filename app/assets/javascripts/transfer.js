@@ -119,7 +119,9 @@ export default class Transfer {
                     break;
 
 
-                case 'lavaTransfer':
+                case 'sign':
+
+                  console.log('signing data!!')
 
                     var env = self.contractConfig.networkEnvironment;
                     var addressTo = this.transferTo;
@@ -153,6 +155,7 @@ export default class Transfer {
 
                     var msgParams = {data: params};
                     var privKey = ethAccount.privateKey;
+                    //needs to be a buffer ?
 
                     var signature = lavaUtils.signTypedData(privKey,msgParams);
 
@@ -186,13 +189,9 @@ export default class Transfer {
                     self.txSidebar.openSidebar();
 
                     break;
-                case 'sign':
+                case 'broadcast':
 
-                    self.txSidebar.openSidebar();
-
-                    var txOverview = await TXHelper.getOverviewForStandardTransaction( self.web3, env, txCommand , ethAccount, accountStatus );
-
-                    self.txSidebar.openSidebar( txOverview );
+                     console.log('broadcasting tx !! ')
 
                     break;
                 default:
