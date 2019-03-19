@@ -22,7 +22,7 @@
             <div class="whitespace-md"></div>
 
 
-         <nav class="nav-group accounts-group" id="accounts-menu">
+         <nav class="nav-group accounts-group" id="accounts-menu"  v-if="tokenLoaded" v-cloak>
 
 
 
@@ -48,7 +48,7 @@
 
 
 
-            <div class="row white-text quick-nav quick-nav-red" v-if="tokenLoaded" v-cloak>
+            <div class="row white-text quick-nav quick-nav-red"  >
                <div class="col s4 orange lighten-2 hoverable clickable" v-on:click="setMode('overview')" v-bind:class="{'active': menuMode=='overview'}">Overview</div>
             </div>
 
