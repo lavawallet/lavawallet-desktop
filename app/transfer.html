@@ -131,7 +131,8 @@
                         <div v-if="!relayResponse">
                           <div class="btn red lighten-2 full-width hoverable clickable" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('broadcast')">Broadcast</div>
                         </div>
-                        <div v-if="relayResponse" class="color-white">
+
+                        <div v-if="relayResponse" class=" orange lighten-2 color-white is-size-10 is-centered">
                            {{ relayResponse }}
                         </div>
 

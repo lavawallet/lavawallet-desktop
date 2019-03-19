@@ -187,7 +187,20 @@ export default class Transfer {
                     break;
                 case 'showTxList':
 
-                    self.txSidebar.openSidebar();
+                    var env = self.contractConfig.networkEnvironment;
+
+                    var lavaContractAddress = self.contractConfig.lavaContractAddress;
+                    var ethAccount = this.selectedAccount;
+
+                    var accountStatus = {
+                      ethBalance: this.ethBalance,
+                      tokenBalance: this.tokenBalance
+                    }
+
+
+                    var listData= TXHelper.getOverviewForTxList( self.web3, env,  ethAccount, accountStatus )
+
+                    self.txSidebar.openSidebar('txlist', listData);
 
                     break;
                 case 'broadcast':

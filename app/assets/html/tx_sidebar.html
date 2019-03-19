@@ -12,13 +12,18 @@
 
    <div class="transaction-list">
 
+     <div class="whitespace-md"></div>
+
+
+
      <div class="title-header border-bottom-gray " >
        <div class="center">
-         <div class="padding-sm">
-           Account Name
+         <div class="padding-sm overflow-ellipsis red lighten-2 color-white">
+           {{ ethAccount.address }}
          </div>
-         <div class="padding-sm">
-           Account Address
+         <div class="whitespace-sm"></div>
+         <div class="padding-sm overflow-ellipsis red lighten-2 color-white">
+            LAVA: {{ accountStatus.tokenBalance }}
          </div>
        </div>
      </div>

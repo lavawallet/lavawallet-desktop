@@ -175,6 +175,11 @@ Needs different modes
       }else if(type == 'signature'){
         this.setSignatureOverviewData(data)
       }else{
+
+          Vue.set(sidebar,'accountStatus',data.accountStatus)
+          Vue.set(sidebar,'ethAccount',data.ethAccount)
+
+
         Vue.set(sidebar,'overviewType','tx_list');
       }
 

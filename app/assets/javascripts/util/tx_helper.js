@@ -17,6 +17,14 @@ export default class TXHelper {
   Should return everything that we want to render on the sidepanel
 
   **/
+  static async getOverviewForTxList( web3, env,  ethAccount , accountStatus )
+  {
+    return {
+      ethAccount: ethAccount,
+      accountStatus: accountStatus   
+
+    }
+  }
 
 
   static async getOverviewForStandardTransaction( web3, env, txCommand , ethAccount , accountStatus)
