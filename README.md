@@ -8,7 +8,7 @@
 
 ### Release 0.20 Beta 
 
-https://github.com/lavawallet/lavawallet-desktop/blob/master/dist/LavaWallet-Win.zip
+https://github.com/lavawallet/lavawallet-desktop/raw/master/dist/LavaWallet-Win.zip
 
 
 
