@@ -6,7 +6,9 @@
 
 
 
-var ethers = require('ethers');
+### Release 0.20 Beta 
+
+https://github.com/lavawallet/lavawallet-desktop/blob/master/dist/LavaWallet-Win.zip
 
 
 
