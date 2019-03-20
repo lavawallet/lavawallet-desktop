@@ -11,6 +11,50 @@ const request = require('request')
 
 module.exports =  {
 
+        async getRelayStats( lavaNodeURL )
+        {
+
+          if(!lavaNodeURL.startsWith("http://"))
+          {
+            lavaNodeURL = "http://"+lavaNodeURL;
+          }
+
+          if(!lavaNodeURL.endsWith("/stats"))
+          {
+            lavaNodeURL = lavaNodeURL+"/stats";
+          }
+
+
+          var options = {
+            method: 'GET',
+            body: {} ,
+            url: lavaNodeURL,
+            json: true ,
+            headers: {
+             //  'Content-Type': 'application/x-www-form-urlencoded'
+             // "Content-Type": "application/json",
+            }
+           }
+
+           var response = await new Promise(async resolve => {
+
+               request(options, function (err, res, body) {
+                if (err) {
+                  console.log('Error :', err)
+                  resolve(err)
+                }
+                console.log(' Body :', body)
+                resolve(body)
+               });
+
+             });
+
+             console.log('relay stats ',response)
+
+             return response ;
+        }
+
+
 
 
         async broadcastPacket(packetData,lavaNodeURL)
@@ -58,7 +102,7 @@ module.exports =  {
 
               });
 
-              console.log('lala',response)
+              console.log('relay response is ',response)
 
               return response ;
         }

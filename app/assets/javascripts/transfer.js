@@ -149,9 +149,12 @@ export default class Transfer {
                     var transferAmount = parseFloat(this.transferAmount) ;
                     var transferAmountRaw = parseFloat(this.transferAmount) * Math.pow(10,tokenDecimals);
 
+                    var relayerRewardAmount = this.relayerReward;
+                    var relayerRewardAmountRaw = this.relayerReward * Math.pow(10,tokenDecimals);
+
                     var relayAuthority = "0x0000000000000000000000000000000000000000";
                     var method = this.transferTokenMethod;
-                    var relayerReward = this.relayerReward;
+
                     var expires = this.expirationBlock;
                     var nonce = web3utils.randomHex(32);
 
@@ -164,7 +167,7 @@ export default class Transfer {
                         addressTo,
                         lavaContractAddress,
                         transferAmountRaw,
-                        relayerReward,
+                        relayerRewardAmountRaw,
                         expires,
                         nonce);
 
@@ -234,9 +237,32 @@ export default class Transfer {
       })
 
 
+
+      setInterval( function(){self.getRelayStats()}, 8000 )
+      this.getRelayStats()
+
   }
 
+  async getRelayStats()
+  {
+        var lavaNodeURL= transferComponent.relayNodeURL;
+        var httpRequest =  await LavaPacketHelper.getRelayStats( lavaNodeURL )
 
+        if(httpRequest.success)
+        {
+          var stats = httpRequest.relayResponse;
+          var recommendedReward = stats.targetNormalRewardTokens;
+
+
+          if( isNaN(transferComponent.relayerReward) ||   transferComponent.relayerReward <= 0  )
+          {
+
+              Vue.set(transferComponent, 'relayerReward', recommendedReward )
+          }
+        }
+
+
+  }
 
 
 
@@ -332,6 +358,7 @@ export default class Transfer {
   //this is on the front end , we need to access the backend
   async unlockEthAccount(password)
   {
+    var self = this;
     var address = transferComponent.selectedAddress;
 
 
@@ -346,6 +373,11 @@ export default class Transfer {
 
 
       Vue.set(transferComponent, 'selectedAccount',  account )
+
+      Vue.nextTick(function () {
+          self.getRelayStats()
+      })
+
 
     }else{
       error = data.message;
