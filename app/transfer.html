@@ -75,6 +75,14 @@
                     <div class="simple-input-container"   >
 
                       <div class="simple-input input-sm "  v-if="selectedAccount" >
+                        <div class="label color-white">Relay Node URL </div>
+                        <div class="form-row">
+                          <input placeholder=""   type="text" class="validate" v-model='relayNodeURL'   ></input>
+                        </div>
+                      </div>
+
+
+                      <div class="simple-input input-sm "  v-if="selectedAccount" >
                         <div class="label color-white">Method</div>
                         <div class="form-row">
 
@@ -113,6 +121,8 @@
                           </div>
 
 
+                            <div class="whitespace-sm"></div>
+
 
                           <div class="btn red lighten-2 full-width hoverable clickable" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('sign')">Sign</div>
 
@@ -128,12 +138,9 @@
 
                     <div class="simple-input-container" v-if="completeLavaPacket" v-cloak   >
 
-                      <div class="simple-input input-sm "  v-if="selectedAccount" >
-                        <div class="label color-white">Relay Node URL </div>
-                        <div class="form-row">
-                          <input placeholder=""   type="text" class="validate" v-model='relayNodeURL'   ></input>
-                        </div>
-                      </div>
+
+
+                      <div class="whitespace-sm"></div>
 
                         <div v-if="!relayResponse">
                           <div class="btn red lighten-2 full-width hoverable clickable" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('broadcast')">Broadcast</div>
@@ -142,6 +149,9 @@
                         <div v-if="relayResponse" class=" orange lighten-2 color-white is-size-10 is-centered">
                            {{ relayResponse }}
                         </div>
+
+                        <div class="whitespace-sm"></div>
+
 
                           <div class="simple-input input-sm "  v-if="selectedAccount" >
                             <div class="label color-white">Lava Packet Data </div>

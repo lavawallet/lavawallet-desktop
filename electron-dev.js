@@ -12,7 +12,7 @@ async function createWindow () {
   console.log('icon',__dirname + '/build/icon.ico')
   mainWindow = new BrowserWindow({
     width: 800,
-     height: 450,
+     height: 550,
      icon: __dirname + '/build/icon.ico'
   })
 
