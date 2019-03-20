@@ -13,7 +13,8 @@
     "ganache-cli": "ganache-cli -e 100 --db chaindata -d -m test",
     "dist": "electron-builder",
     "asar": "asar pack ./ dist/app.asar ",
-    "pack": "electron-packager . lavawallet --platform=all --prune=true --ignore=dist/* ",
+    "pack": "electron-packager . lavawallet --platform=all --prune=true  ",
+    "package-win": "electron-packager . lavawallet --overwrite --platform=win32 --asar=true ",
 
     "test": "mocha -t 10000 --compilers js:babel-core/register ./test/test.js "
   },
