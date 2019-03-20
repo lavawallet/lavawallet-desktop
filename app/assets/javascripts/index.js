@@ -32,6 +32,7 @@ import TXSidebar from './tx_sidebar';
 var txSidebar = new TXSidebar();
 
 var Web3 = require('web3')
+var Ethers =require('ethers')
 
 var contractConfig = {};
 

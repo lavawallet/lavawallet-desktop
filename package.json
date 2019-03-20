@@ -38,16 +38,13 @@
     "jquery": "^3.3.1",
     "js-sha3": "^0.7.0",
     "jsdom": "^11.11.0",
-
     "lava-packet-utils": "^1.0.9",
     "materialize-css": "^0.100.2",
     "request": "^2.87.0",
-
     "sha3": "^1.2.0",
     "socket.io": "^2.1.1",
     "underscore": "^1.9.1",
     "vue": "^2.5.13",
-
     "web3-utils": "^1.0.0-beta.24"
   },
   "devDependencies": {

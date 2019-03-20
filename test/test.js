@@ -1,16 +1,22 @@
 var INFURA_MAINNET_URL = 'https://mainnet.infura.io/gmXEVo5luMPUGPqg6mhy';
 
 
-var Web3 = require('web3')
+//var Web3 = require('web3')
 
-var web3 = new Web3()
-web3.setProvider(new web3.providers.HttpProvider(INFURA_MAINNET_URL))
+//var web3 = new Web3()
+//web3.setProvider(new web3.providers.HttpProvider(INFURA_MAINNET_URL))
+var Ethers = require('ethers')
+
+let web3Provider = new Ethers.providers.JsonRpcProvider(INFURA_MAINNET_URL);
+//let web3Provider = new Ethers.providers.Web3Provider(currentProvider);
+
 
 var env = 'mainnet';
 
 import TXHelper from '../app/assets/javascripts/util/tx_helper.js';
 import EthGasOracle from '../app/assets/javascripts/eth-gas-oracle.js';
 
+//import AccountHelper from '../lib/account-helper'
 
 import SocketClient from '../app/assets/javascripts/socketclient';
 
@@ -19,8 +25,8 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
 const { window } = new JSDOM(``, {
-     url: "https://localhost:3000",
-     referrer: "https://localhost:3000",
+     url: "https://localhost:3142",
+     referrer: "https://localhost:3142",
      contentType: "text/html",
      includeNodeLocations: true
    });
@@ -32,7 +38,7 @@ var assert = require('assert');
 
 
 
-    it('uses tx helper ', async function() {
+    /*it('uses tx helper ', async function() {
 
 
       var amount = 0;
@@ -60,14 +66,29 @@ var assert = require('assert');
           var relayData = await  EthGasOracle.getGasData();
           assert.ok(relayData)
 
-   });
+   });*/
 
+
+   it('can make an account', async function() {
+
+     var socketClient = new SocketClient();
+     await socketClient.init(window);
+       //   var account = await  AccountHelper.unlockAccount('0xd7f4e3980d5780c4c2b3096e95d9b01b16d55abb','password');
+        var data = await socketClient.emitToSocket('createAccount' );
+
+         assert.ok(data)
+
+  });
 
    it('can unlock an account', async function() {
 
 
 
       console.log('window',window.location.hostname)
+
+
+
+
 
 
       var socketClient = new SocketClient();
