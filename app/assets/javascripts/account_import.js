@@ -2,6 +2,7 @@ import Vue from 'vue';
 
 var blockies = require('./util/blockies')
 // require('./util/keythereum')
+ var Ethers =require('ethers')
 
 var importComponent;
 
@@ -44,12 +45,18 @@ export default class AccountImport {
 
               self.renderAccount(this.address);
            },
-           importRawPrivateKey: function ( ) {
+           importRawPrivateKey: async function ( ) {
              this.errorMessage = null;
             //  console.log('import raw key', this.privateKeyRaw );
 
               if(!this.addingPrivateKey)
               {
+
+                if(this.privateKeyRaw.startsWith('0x')   )
+                {
+                  this.privateKeyRaw = this.privateKeyRaw.substring(2,this.privateKeyRaw.length)
+                }
+
                 if( this.privateKeyRaw.length != 64  )
                 {
                   console.log('invalid length')
@@ -70,20 +77,32 @@ export default class AccountImport {
 
               var options = {};
 
-              console.log(this.privateKeyRaw)
+              //console.log(this.privateKeyRaw)
+
+
+              var pKey = this.privateKeyRaw;
+              var web3Provider = null;
+              var passwd = this.password;
+
+              let wallet = new Ethers.Wallet(pKey, web3Provider);
+
+              let encryptedWalletJSON = await wallet.encrypt(passwd);
+              let encryptedWallet = JSON.parse(encryptedWalletJSON)
 
 
               //fix me
-              
-              var dk = keythereum.create( );
 
-              var keyObject = keythereum.dump(this.password, this.privateKeyRaw, new Buffer(dk.salt), new Buffer(dk.iv), {options});
+            //  var dk = keythereum.create( );
 
-               self.renderAccount(keyObject.address);
+            //  var keyObject = keythereum.dump(this.password, this.privateKeyRaw, new Buffer(dk.salt), new Buffer(dk.iv), {options});
 
-               console.log('created key object', keyObject )
 
-               this.importedAccount = keyObject;
+
+                 self.renderAccount(encryptedWallet.address);
+
+                 console.log('created acct', encryptedWallet )
+
+                 this.importedAccount = encryptedWalletJSON;
 
 
            },
@@ -104,16 +123,19 @@ export default class AccountImport {
                 this.address = '0x' + this.address;
               }
 
-              self.renderAccount(this.address);
 
-              this.importedAccount = fileContents;
+
+
+
+                  this.importedAccount = JSON.stringify(fileContents);
+                      self.renderAccount(this.address);
 
 
               //var privateKey = keythereum.recover(password, keyObject);
             },
             saveAccount: async function ( ) {
               this.errorMessage = null;
-               console.log('save' )
+               console.log('save', importComponent.importedAccount )
 
 
                var keyObject = importComponent.importedAccount ;

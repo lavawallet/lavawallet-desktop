@@ -233,6 +233,11 @@ Needs different modes
 
         var privKey = ethAccount.privateKey;
 
+        if(privKey.startsWith('0x') )
+        {
+          var privKey = privKey.substring(2,privKey.length)
+        }
+
         var signature = LavaPacketUtils.signTypedData(typedDataHash,privKey);
 
 

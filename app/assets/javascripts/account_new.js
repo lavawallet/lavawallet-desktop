@@ -24,6 +24,7 @@ export default class AccountNew {
           accountRendering: false,
           backingUp: false,
           backedUp: false,
+          downloadedBackup: false,
 
           errorMessage: null
         },
@@ -54,34 +55,30 @@ export default class AccountNew {
 
                self.renderAccount( address )
 
+               Vue.set(accountComponent, 'backingUp', true )
+               Vue.set(accountComponent, 'backedUp', false )
+
+
+
+
            },
            saveAccount: async function () {
 
-             //address is changing !!??
+              var walletData = accountComponent.wallet;
+               var pKey = walletData.signingKey.privateKey;
+               var web3Provider = null;
 
-             var passwd = accountComponent.password;
-             var wallet = accountComponent.wallet;
-             var options = {};
+                var passwd = accountComponent.password;
+                
+               let wallet = new Ethers.Wallet(pKey, web3Provider);
+               let encryptedWalletJSON = await wallet.encrypt(passwd);
+               let encryptedWallet = JSON.parse(encryptedWalletJSON)
 
-              let encryptedWallet = await wallet.encrypt(passwd);
-            // var keyObject = keythereum.dump(password, (dk.privateKey), (dk.salt), (dk.iv), {options});
-
-             if( !accountComponent.address.endsWith(encryptedWallet.address))
-             {
-               console.log(encryptedWallet.address)
-
-               accountComponent.errorMessage = "Address doesn't match?"
-               return;
-             }
-
-              var data = await self.socketClient.emitToSocket('saveAccount',encryptedWallet);
+                var data = await  self.socketClient.emitToSocket('saveAccount',JSON.stringify(encryptedWallet) );
 
 
-               if(data.success)
-               {
-                 window.location.href = '/accounts.html'
-               }
 
+                  window.location.href = '/accounts.html'
 
            },
            startBackup: function () {
@@ -89,7 +86,7 @@ export default class AccountNew {
 
 
            },
-           downloadBackup: async function (el) {
+           saveBackup: async function () {
 
              var passwd = accountComponent.password;
              var walletData = accountComponent.wallet;
@@ -127,23 +124,26 @@ export default class AccountNew {
                return;
              }
 
-              var btn = document.getElementById('downloadBackupButton')
 
-              var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify( encryptedWallet ));
-
-              btn.setAttribute("href", "data:"+data);
-              btn.setAttribute("download", "data.json");
 
               Vue.set(accountComponent, 'backingUp', false )
               Vue.set(accountComponent, 'backedUp', true )
 
 
-              var data = await  self.socketClient.emitToSocket('saveAccount',JSON.stringify(encryptedWallet) );
+              Vue.nextTick(function () {
+                var btn = document.getElementById('downloadBackupButton')
 
-               if(data.success)
-               {
-                 window.location.href = '/accounts.html'
-               }
+                var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify( encryptedWallet ));
+
+                btn.setAttribute("href", "data:"+data);
+                btn.setAttribute("download", "data.json");
+              })
+
+           },
+           downloadBackup: async function (el) {
+
+
+               Vue.set(accountComponent, 'downloadedBackup', true )
 
 
            }

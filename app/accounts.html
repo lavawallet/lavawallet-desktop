@@ -12,17 +12,17 @@
 
        <%= require('html-loader!./assets/html/tx_sidebar.html') %>
 
-    <div class="container" id="accounts">
+    <div class="container full-height" id="accounts">
 
 
 
-      <div class="row">
-       <div class="col s3">
+      <div class="row full-height">
+       <div class="col s4 full-height" style=" overflow-y: auto;     height: 90%;">
 
             <div class="whitespace-md"></div>
 
 
-         <nav class="nav-group accounts-group" id="accounts-menu"   v-cloak>
+         <nav class="nav-group accounts-group full-height" id="accounts-menu"   v-cloak>
 
 
 
@@ -36,12 +36,14 @@
              Add Account
            </span>
 
+               <div class="whitespace-md"></div>
+
          </nav>
 
        </div>
        <div class="col s1">
        </div>
-       <div class="col s8">
+       <div class="col s7">
 
          <div class="whitespace-md"></div>
 
