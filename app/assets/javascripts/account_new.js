@@ -105,20 +105,23 @@ export default class AccountNew {
 
              var pKey = walletData.signingKey.privateKey;
 
+             var web3Provider = null;
+
              let wallet = new Ethers.Wallet(pKey, web3Provider);
 
 
              //let wallet = new ethers.Wallet(privateKey);
-             let encryptedWallet = await wallet.encrypt(passwd);
-
+             let encryptedWalletJSON = await wallet.encrypt(passwd);
+             let encryptedWallet = JSON.parse(encryptedWalletJSON)
 
             // var keyObject = keythereum.dump(password, (dk.privateKey), (dk.salt), (dk.iv), {options});
+            console.log('meeep',encryptedWallet, encryptedWallet.address )
+            var newAddress = '0x' + encryptedWallet.address
+            var existingAddress = accountComponent.address.toLowerCase()
 
-
-
-             if( !accountComponent.address.endsWith(encryptedWallet.address))
+             if( !existingAddress.endsWith(newAddress))
              {
-               console.log('does not match', encryptedWallet.address, accountComponent.address)
+               console.log('does not match', newAddress, existingAddress)
 
                accountComponent.errorMessage = "Address doesn't match?"
                return;
@@ -135,7 +138,7 @@ export default class AccountNew {
               Vue.set(accountComponent, 'backedUp', true )
 
 
-              var data = await  self.socketClient.emitToSocket('saveAccount',encryptedWallet);
+              var data = await  self.socketClient.emitToSocket('saveAccount',JSON.stringify(encryptedWallet) );
 
                if(data.success)
                {
