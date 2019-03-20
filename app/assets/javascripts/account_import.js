@@ -117,7 +117,19 @@ export default class AccountImport {
 
 
 
-              this.address = fileContents.address;
+
+
+              if(!fileContents.success)
+              {
+                console.log( 'error!!!!! ')
+                this.errorMessage = fileContents.message
+                return
+              }
+
+              var keyFile = fileContents.file
+
+              this.address = keyFile.address;
+
 
               if(!this.address.startsWith('0x')){
                 this.address = '0x' + this.address;
@@ -125,10 +137,9 @@ export default class AccountImport {
 
 
 
+                this.importedAccount = JSON.stringify(keyFile);
 
-
-                  this.importedAccount = JSON.stringify(fileContents);
-                      self.renderAccount(this.address);
+                self.renderAccount(this.address);
 
 
               //var privateKey = keythereum.recover(password, keyObject);
@@ -164,7 +175,10 @@ export default class AccountImport {
 
   renderAccount(address)
   {
-
+    if(!address)
+    {
+      return
+    }
 
     if(!address.startsWith('0x')){
       address = '0x' + address;
@@ -208,16 +222,22 @@ export default class AccountImport {
                 return function(e) {
                  var parsedFileJson = JSON.parse(e.target.result);
 
-                 resolve(parsedFileJson);
+                 resolve(  { success:true, file: parsedFileJson }  );
 
                 // self.initiateLavaPackTransaction( JSON.parse( parsedFileJson) )
 
                 };
+
+
+
+
               })(file);
+
+
 
             reader.readAsText(file); // start reading the file data.
         }else{
-          reject('Wrong filetype')
+          resolve({success:false, message: 'Wrong filetype (.json)' })
         }
 
       });
