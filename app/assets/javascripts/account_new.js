@@ -1,7 +1,8 @@
 import Vue from 'vue';
 
 var blockies = require('./util/blockies')
- require('./util/keythereum')
+ //require('./util/keythereum')
+ var Ethers =require('ethers')
 
 var accountComponent;
 
@@ -19,7 +20,7 @@ export default class AccountNew {
         data: {
           address: null,
           password: '',
-          dk: null,
+          wallet: null,
           accountRendering: false,
           backingUp: false,
           backedUp: false,
@@ -29,20 +30,24 @@ export default class AccountNew {
         methods: {
            newAccount: async function () {
 
-             var data = await self.socketClient.emitToSocket('createAccount',null);
+             var dataJSON = await self.socketClient.emitToSocket('createAccount',null);
+
+                console.log('got ',  dataJSON)
 
 
+               var data = JSON.parse(dataJSON);
+               var wallet = data.wallet
 
 
-               var acct = JSON.parse(data);
+               var address = wallet.signingKey.address;
 
-               console.log('got ',  acct)
-               var address = acct.address;
-
-               accountComponent.dk = acct.derivation;
+              /* accountComponent.dk = acct.derivation;
                accountComponent.dk.privateKey = Buffer.from(accountComponent.dk.privateKey)
                accountComponent.dk.salt = Buffer.from(accountComponent.dk.salt)
                accountComponent.dk.iv = Buffer.from(accountComponent.dk.iv)
+                  */
+
+                accountComponent.wallet = wallet;
 
                accountComponent.address = address;
                accountComponent.accountRendering = true;
@@ -54,21 +59,22 @@ export default class AccountNew {
 
              //address is changing !!??
 
-             var password = accountComponent.password;
-             var dk = accountComponent.dk;
+             var passwd = accountComponent.password;
+             var wallet = accountComponent.wallet;
              var options = {};
 
-             var keyObject = keythereum.dump(password, (dk.privateKey), (dk.salt), (dk.iv), {options});
+              let encryptedWallet = await wallet.encrypt(passwd);
+            // var keyObject = keythereum.dump(password, (dk.privateKey), (dk.salt), (dk.iv), {options});
 
-             if( !accountComponent.address.endsWith(keyObject.address))
+             if( !accountComponent.address.endsWith(encryptedWallet.address))
              {
-               console.log(keyObject.address)
+               console.log(encryptedWallet.address)
 
                accountComponent.errorMessage = "Address doesn't match?"
                return;
              }
 
-              var data = await self.socketClient.emitToSocket('saveAccount',keyObject);
+              var data = await self.socketClient.emitToSocket('saveAccount',encryptedWallet);
 
 
                if(data.success)
@@ -85,10 +91,10 @@ export default class AccountNew {
            },
            downloadBackup: async function (el) {
 
-             var password = accountComponent.password;
-             var dk = accountComponent.dk;
+             var passwd = accountComponent.password;
+             var walletData = accountComponent.wallet;
 
-             if(password.length < 6)
+             if(passwd.length < 6)
              {
                this.errorMessage = 'Minimum password length: 6'
               return
@@ -97,13 +103,22 @@ export default class AccountNew {
 
              var options = {};
 
-             var keyObject = keythereum.dump(password, (dk.privateKey), (dk.salt), (dk.iv), {options});
+             var pKey = walletData.signingKey.privateKey;
+
+             let wallet = new Ethers.Wallet(pKey, web3Provider);
+
+
+             //let wallet = new ethers.Wallet(privateKey);
+             let encryptedWallet = await wallet.encrypt(passwd);
+
+
+            // var keyObject = keythereum.dump(password, (dk.privateKey), (dk.salt), (dk.iv), {options});
 
 
 
-             if( !accountComponent.address.endsWith(keyObject.address))
+             if( !accountComponent.address.endsWith(encryptedWallet.address))
              {
-               console.log('does not match', keyObject.address, accountComponent.address)
+               console.log('does not match', encryptedWallet.address, accountComponent.address)
 
                accountComponent.errorMessage = "Address doesn't match?"
                return;
@@ -111,7 +126,7 @@ export default class AccountNew {
 
               var btn = document.getElementById('downloadBackupButton')
 
-              var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(keyObject));
+              var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify( encryptedWallet ));
 
               btn.setAttribute("href", "data:"+data);
               btn.setAttribute("download", "data.json");
@@ -120,7 +135,7 @@ export default class AccountNew {
               Vue.set(accountComponent, 'backedUp', true )
 
 
-              var data = await  self.socketClient.emitToSocket('saveAccount',keyObject);
+              var data = await  self.socketClient.emitToSocket('saveAccount',encryptedWallet);
 
                if(data.success)
                {

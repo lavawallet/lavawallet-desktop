@@ -31,12 +31,12 @@ var accountNew = new AccountNew();
 import TXSidebar from './tx_sidebar';
 var txSidebar = new TXSidebar();
 
-var Web3 = require('web3')
-var Ethers =require('ethers')
+//var Web3 = require('web3')
+var Ethers = require('ethers')
 
 var contractConfig = {};
 
-var web3;
+var web3Provider;
 var env;
 
 async function init()
@@ -49,10 +49,10 @@ async function init()
 
   await loadWeb3(socketClient);
 
-  console.log('www', web3)
+  console.log('www', web3Provider)
 
   if(document.getElementById("tx-sidebar")){
-    txSidebar.init(web3);
+    txSidebar.init( web3Provider  );
   }
 
   if(document.getElementById("home")){
@@ -64,11 +64,11 @@ async function init()
   }
 
   if(document.getElementById("accounts")){
-    accounts.init(socketClient,txSidebar,web3,contractConfig);
+    accounts.init(socketClient,txSidebar, web3Provider ,contractConfig);
   }
 
   if(document.getElementById("transfer")){
-    transfer.init(socketClient,txSidebar,web3,contractConfig);
+    transfer.init(socketClient,txSidebar, web3Provider ,contractConfig);
   }
 
   if(document.getElementById("add-account")){
@@ -101,8 +101,11 @@ async function loadWeb3(socketClient)
       contractConfig.lavaRelayURL = data.lavaRelayURL;
       contractConfig.networkEnvironment = data.networkEnvironment;
 
-      web3 = new Web3();
-      web3.setProvider(contractConfig.web3Provider);
+    //  web3 = new Web3();
+    //  web3.setProvider(contractConfig.web3Provider);
+      web3Provider = new Ethers.providers.JsonRpcProvider(contractConfig.web3Provider);
+
+
       env = contractConfig.networkEnvironment;
 
 

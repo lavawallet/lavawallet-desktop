@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 var blockies = require('./util/blockies')
- require('./util/keythereum')
+// require('./util/keythereum')
 
 var importComponent;
 
@@ -72,6 +72,9 @@ export default class AccountImport {
 
               console.log(this.privateKeyRaw)
 
+
+              //fix me
+              
               var dk = keythereum.create( );
 
               var keyObject = keythereum.dump(this.password, this.privateKeyRaw, new Buffer(dk.salt), new Buffer(dk.iv), {options});
