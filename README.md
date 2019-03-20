@@ -6,7 +6,7 @@
 
 
 
-### Release 0.20 Beta 
+### Release 0.20 Beta
 
 https://github.com/lavawallet/lavawallet-desktop/raw/master/dist/LavaWallet-Win.zip
 
@@ -24,7 +24,7 @@ https://github.com/lavawallet/lavawallet-desktop/raw/master/dist/LavaWallet-Win.
 
 ```bash
 
-install NodeJS 10
+install NodeJS 10.9.0 (nvm install 10.9.0)
 
 # Install dependencies
 npm install

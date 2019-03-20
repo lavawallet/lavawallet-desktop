@@ -15,7 +15,6 @@
     "asar": "asar pack ./ dist/app.asar ",
     "pack": "electron-packager . lavawallet --platform=all --prune=true  ",
     "package-win": "electron-packager . lavawallet --overwrite --platform=win32 --asar=true ",
-
     "test": "mocha -t 10000 --compilers js:babel-core/register ./test/test.js "
   },
   "repository": "https://github.com/electron/electron-quick-start",
@@ -27,7 +26,6 @@
   "license": "CC0-1.0",
   "dependencies": {
     "child_process": "^1.0.2",
-
     "electron-json-storage": "^4.1.0",
     "eth-sig-util": "^1.4.2",
     "ethereumjs-tx": "^1.3.6",
@@ -40,17 +38,16 @@
     "jquery": "^3.3.1",
     "js-sha3": "^0.7.0",
     "jsdom": "^11.11.0",
-    "keythereum": "^1.0.4",
+
     "lava-packet-utils": "^1.0.9",
     "materialize-css": "^0.100.2",
     "request": "^2.87.0",
-    "scrypt": "git://github.com/admazzola/scrypt.git",
+
     "sha3": "^1.2.0",
     "socket.io": "^2.1.1",
     "underscore": "^1.9.1",
     "vue": "^2.5.13",
-    "web3": "^1.0.0-beta.24",
-    "web3-eth-accounts": "^1.0.0-beta.24",
+
     "web3-utils": "^1.0.0-beta.24"
   },
   "devDependencies": {
@@ -90,7 +87,6 @@
   },
   "build": {
     "appId": "yourappid",
-
     "linux": {
       "target": [
         "AppImage",
