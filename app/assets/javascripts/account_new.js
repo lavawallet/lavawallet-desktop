@@ -83,7 +83,7 @@ export default class AccountNew {
 
 
            },
-           downloadBackup: function (el) {
+           downloadBackup: async function (el) {
 
              var password = accountComponent.password;
              var dk = accountComponent.dk;
@@ -118,6 +118,16 @@ export default class AccountNew {
 
               Vue.set(accountComponent, 'backingUp', false )
               Vue.set(accountComponent, 'backedUp', true )
+
+
+              var data = await  self.socketClient.emitToSocket('saveAccount',keyObject);
+
+               if(data.success)
+               {
+                 window.location.href = '/accounts.html'
+               }
+
+
            }
          }
       })

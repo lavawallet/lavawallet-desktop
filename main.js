@@ -12,10 +12,11 @@ async function createWindow () {
 
   //https://medium.com/fantageek/changing-electron-app-icon-acf26906c5ad
 
+  console.log('icon',__dirname + '/build/icon.ico')
   mainWindow = new BrowserWindow({
     width: 800,
      height: 450,
-     icon: __dirname + ‘/icon/icon.icns’
+     icon: __dirname + '/build/icon.ico'
   })
   mainWindow.setMenu(null)
 

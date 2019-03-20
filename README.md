@@ -5,7 +5,7 @@
 ![image](https://user-images.githubusercontent.com/38132633/42248914-2d7dc512-7ef6-11e8-87dc-ab63b626f468.png)
 
 
- 
+
 var ethers = require('ethers');
 
 
@@ -38,6 +38,9 @@ npm run app
 2. Integrate lava balance and lava transfers
 
 
+Rebuild Eletron with
+electron-rebuild -v 4.1.0
+
 
 
 ### Menus
@@ -61,6 +64,8 @@ npm run app
 * Lets you edit the 'active token' address - the primary token the wallet uses
 
 
+
+## package to exe
 
 
 

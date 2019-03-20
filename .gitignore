@@ -4,3 +4,8 @@ chaindata
 
 public
 dist
+
+lavawallet-desktop-darwin-x64
+lavawallet-desktop-linux-x64
+lavawallet-desktop-mas-x64
+lavawallet-desktop-win32-x64
