@@ -14,7 +14,7 @@ https://github.com/lavawallet/lavawallet-desktop/raw/master/dist/LavaWallet-Win.
 
 ## TODO
 1. Finish sidebar for monitoring TX
-2. Replace Keythereum with Ethers
+
 
 
 
