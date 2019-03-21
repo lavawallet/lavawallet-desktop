@@ -1,4 +1,4 @@
-var INFURA_MAINNET_URL = 'https://mainnet.infura.io/gmXEVo5luMPUGPqg6mhy';
+var INFURA_MAINNET_URL = 'https://mainnet.infura.io/v3/0d5121b7e8e045a887086de55075994f';
 
 
 //var Web3 = require('web3')
