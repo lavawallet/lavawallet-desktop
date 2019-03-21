@@ -8,8 +8,9 @@ var web3utils =  require('web3-utils');
 import TXHelper from './util/tx_helper.js';
 
 var LavaPacketUtils =  require('lava-packet-utils');
-import  LavaPacketHelper from './util/lava-packet-helper'
-//import LavaPacketUtils from 'lava-packet-utils';
+import  LavaPacketHelper from './util/lava-packet-helper';
+
+
 
 export default class Transfer {
   constructor( ){
@@ -52,6 +53,7 @@ export default class Transfer {
           relayerReward: 0,
 
           expirationBlock: 0,
+          currentEthBlock: 0,
 
           relayNodeURL: contractConfig.lavaRelayURL,
           relayResponse: null,
@@ -69,6 +71,10 @@ export default class Transfer {
             {
               self.renderAccountData(existingActiveAddress)
             }
+
+
+
+            this. currentEthBlock =
 
 
             document.dispatchEvent(new Event('SidenavContentLoaded'));
@@ -155,7 +161,15 @@ export default class Transfer {
                     var relayAuthority = "0x0000000000000000000000000000000000000000";
                     var method = this.transferTokenMethod;
 
-                    var expires = this.expirationBlock;
+                    if( this.currentEthBlock <=0  )
+                    {
+                      console.error('? no eth block ?')
+                      return;
+                    }
+
+                    var expires = this.currentEthBlock + 500;
+                    //var expires = this.expirationBlock;
+
                     var nonce = web3utils.randomHex(32);
 
 
@@ -222,6 +236,8 @@ export default class Transfer {
           {
             this.menuMode = modeName;
           },
+
+
           async copySelectedAddress()
           {
             console.log('socket client')
@@ -241,7 +257,29 @@ export default class Transfer {
       setInterval( function(){self.getRelayStats()}, 8000 )
       this.getRelayStats()
 
+      setInterval( function(){self.getEthInfo()}, 8000 )
+      this.getEthInfo()
+
   }
+  async getEthInfo()
+  {
+    var self = this;
+    var data = await self.socketClient.emitToSocket('getNetworkInfo');
+
+
+
+    if(data.success)
+    {
+      console.log('got data!!', data)
+
+      Vue.set(transferComponent, 'currentEthBlock', data.networkInfo.currentEthBlock )
+
+    }else{
+      console.log('??',data)
+    }
+
+  }
+
 
   async getRelayStats()
   {
@@ -376,6 +414,7 @@ export default class Transfer {
 
       Vue.nextTick(function () {
           self.getRelayStats()
+            self.getEthInfo()
       })
 
 
