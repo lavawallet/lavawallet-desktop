@@ -69,7 +69,7 @@ export default class AccountNew {
                var web3Provider = null;
 
                 var passwd = accountComponent.password;
-                
+
                let wallet = new Ethers.Wallet(pKey, web3Provider);
                let encryptedWalletJSON = await wallet.encrypt(passwd);
                let encryptedWallet = JSON.parse(encryptedWalletJSON)
@@ -134,9 +134,10 @@ export default class AccountNew {
                 var btn = document.getElementById('downloadBackupButton')
 
                 var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify( encryptedWallet ));
+                var fileName = "eth_" + newAddress.toString() + ".json"
 
                 btn.setAttribute("href", "data:"+data);
-                btn.setAttribute("download", "data.json");
+                btn.setAttribute("download", fileName);
               })
 
            },
