@@ -3,6 +3,7 @@ import Vue from 'vue';
 var transferComponent;
 
 var web3utils =  require('web3-utils');
+const TokenUtils =  require('./util/token-utils');
 //var lavaUtils = require("./util/lava-utils");
 
 import TXHelper from './util/tx_helper.js';
@@ -153,10 +154,21 @@ export default class Transfer {
 
 
                     var transferAmount = parseFloat(this.transferAmount) ;
-                    var transferAmountRaw = parseFloat(this.transferAmount) * Math.pow(10,tokenDecimals);
+                    var transferAmountRaw = TokenUtils.getRawFromDecimalFormat(this.transferAmount,tokenDecimals);
 
                     var relayerRewardAmount = this.relayerReward;
-                    var relayerRewardAmountRaw = this.relayerReward * Math.pow(10,tokenDecimals);
+                    var relayerRewardAmountRaw = TokenUtils.getRawFromDecimalFormat(this.relayerReward,tokenDecimals);
+
+
+
+
+
+
+
+
+
+
+
 
                     var relayAuthority = "0x0000000000000000000000000000000000000000";
                     var method = this.transferTokenMethod;
