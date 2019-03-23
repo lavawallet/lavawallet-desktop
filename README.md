@@ -6,9 +6,17 @@
 
 
 
-### Release 0.20 Beta
+### Release 0.24 Beta
 
 https://github.com/lavawallet/lavawallet-desktop/raw/master/dist/LavaWallet-Win.zip
+
+
+
+## New Updates 
+1. Added support for Nametag Token when resolving the To Address (https://nametagtoken.com)
+
+
+
 
 
 
