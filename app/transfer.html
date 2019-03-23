@@ -106,11 +106,17 @@
 
 
 
-                          <div class="simple-input input-sm "  v-if="selectedAccount" >
+                          <div class="simple-input input-sm " style="position:relative"  v-if="selectedAccount" >
                             <div class="label color-white">Recipient </div>
                             <div class="form-row">
-                              <input placeholder=""   type="text" class="validate" v-model='transferTo'   >
+                              <input placeholder=""   type="text" class="validate" v-bind:class="{'success':recipientValid, 'error':!recipientValid}" v-model='recipientRaw' v-on:change='updateRecipient'   >
                             </div>
+
+                            <div v-if='loadingNametag' v-cloak style="position:absolute; top:5px;left:30px">
+                              <%= require('html-loader!./assets/html/loadbar.html') %>
+
+                            </div>
+
                           </div>
 
                           <div class="simple-input input-sm "  v-if="selectedAccount" >
@@ -124,7 +130,7 @@
                             <div class="whitespace-sm"></div>
 
 
-                          <div class="btn red lighten-2 full-width hoverable clickable" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('sign')">Sign</div>
+                          <div class="btn red lighten-2 full-width hoverable clickable" v-bind:class="{'disabled': (!selectedAccount || !recipientValid )}" v-on:click="clickButton('sign')">Sign</div>
 
 
                       </div>

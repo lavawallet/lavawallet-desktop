@@ -6,11 +6,13 @@ var web3utils =  require('web3-utils');
 const TokenUtils =  require('./util/token-utils');
 //var lavaUtils = require("./util/lava-utils");
 
+
 import TXHelper from './util/tx_helper.js';
 
 var LavaPacketUtils =  require('lava-packet-utils');
 import  LavaPacketHelper from './util/lava-packet-helper';
 
+var  nametagUtils =  require('./util/nametag-token-utils');
 
 
 export default class Transfer {
@@ -47,8 +49,11 @@ export default class Transfer {
           tokenBalance: null,
           //lavaBalance: null,
 
-
+          loadingNametag: false,
+          recipientRaw: null,
+          recipientValid: false,
           transferTo: null,
+
           transferTokenMethod: 'transfer',
           transferAmount: 0,
           relayerReward: 0,
@@ -162,14 +167,6 @@ export default class Transfer {
 
 
 
-
-
-
-
-
-
-
-
                     var relayAuthority = "0x0000000000000000000000000000000000000000";
                     var method = this.transferTokenMethod;
 
@@ -242,6 +239,62 @@ export default class Transfer {
                 default:
                     break;
             }
+
+          },
+          updateRecipient: async function( )
+          {
+
+
+
+
+            this.recipientValid = false;
+
+            console.log('update recipient', this.recipientRaw )
+
+            var newTransferTo;
+
+            if(  this.recipientRaw.startsWith('@')   )
+            {
+              Vue.set(transferComponent, 'loadingNametag', true)
+
+
+              var nametag = this.recipientRaw.substring(1,this.recipientRaw.length)
+
+              console.log('nametag',nametag)
+
+            //  var data = await self.socketClient.emitToSocket('getNametagInfo', nametag )
+            //  newTransferTo = data.ownerAddress;
+              newTransferTo = await nametagUtils.queryTokenOwner(self.web3, nametag );
+
+                  console.log('newTransferTo',newTransferTo)
+              Vue.set(transferComponent, 'loadingNametag', false)
+
+
+
+            }else{
+
+              newTransferTo = this.recipientRaw;
+            }
+
+
+            if( newTransferTo && newTransferTo.startsWith('0x') && web3utils.isAddress(newTransferTo) )
+            {
+                console.log('meep', newTransferTo )
+
+
+              Vue.set(transferComponent, 'recipientValid', true)
+              Vue.set(transferComponent, 'transferTo', newTransferTo)
+
+
+            }else{
+              console.log('error, not a valid address')
+
+                Vue.set(transferComponent, 'recipientValid', false)
+
+
+            }
+
+
 
           },
           setMode: function(modeName)

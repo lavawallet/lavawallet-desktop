@@ -69,36 +69,7 @@ var assert = require('assert');
    });*/
 
 
-   it('can make an account', async function() {
-
-     var socketClient = new SocketClient();
-     await socketClient.init(window);
-       //   var account = await  AccountHelper.unlockAccount('0xd7f4e3980d5780c4c2b3096e95d9b01b16d55abb','password');
-        var dataJSON = await socketClient.emitToSocket('createAccount' );
-        var data = JSON.parse(dataJSON)
-        console.log('test got data',data)
-        assert.ok(data.success)
-
-
-
-
-        var pKey = data.wallet.signingKey.privateKey;
-
-        let wallet = new Ethers.Wallet(pKey, web3Provider);
-
-        console.log('made wallet',wallet)
-
-        var password = 'password'
-        let encryptedWallet =  await wallet.encrypt(password);
-
-        console.log('made encryptedWallet',encryptedWallet)
-
-        var data2 = await socketClient.emitToSocket('saveAccount',encryptedWallet );
-
-
-          assert.ok(data2)
-
-  });
+ 
 
    it('can unlock an account', async function() {
 

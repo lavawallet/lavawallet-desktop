@@ -31,12 +31,20 @@ export default class AccountNew {
         methods: {
            newAccount: async function () {
 
-             var dataJSON = await self.socketClient.emitToSocket('createAccount',null);
+            /* var dataJSON = await self.socketClient.emitToSocket('createAccount',null);
+
+
+
 
                 console.log('got ',  dataJSON)
 
 
-               var data = JSON.parse(dataJSON);
+               var data = JSON.parse(dataJSON);*/
+
+
+               var data = self.createAccount()
+
+
                var wallet = data.wallet
 
 
@@ -154,6 +162,16 @@ export default class AccountNew {
 
   }
 
+  createAccount()
+  {
+
+      let wallet = Ethers.Wallet.createRandom();
+
+
+       return { success:true, wallet: wallet  };
+
+
+  }
 
   renderAccount(address)
   {

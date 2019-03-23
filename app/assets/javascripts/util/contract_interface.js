@@ -1,49 +1,107 @@
 
 const Tx = require('ethereumjs-tx')
 
+
 const lavaContractJSON = require('../../../../lib/contracts/LavaToken.json');
 //const approveCallTokenContractJSON = require('../../../../lib/contracts/_0xBitcoinToken.json');
+const nametagContractJSON = require('../../../../lib/contracts/NametagToken.json');
+
 
 const tokenContractJSON = require('../../../../lib/contracts/ERC20Interface.json');
- //const deployedContractInfo = require('../../../../lib/contracts/DeployedContractInfo.json');
+ const deployedContractInfo = require('../../../../lib/contracts/DeployedContractInfo.json');
 
+
+ var Ethers =require('ethers')
 
 module.exports = class ContractInterface  {
 
 
   //getWalletContract(web3,env).methods.signatureBurned('lalala').call()
 
-  static getContract(web3,env,contractName,contractAddress)
+  static getContract(web3Provider,env,contractName,contractAddress)
   {
     if(contractName == 'erc20token')
     {
-      return new web3.eth.Contract(tokenContractJSON.abi,contractAddress)
+        return new Ethers.Contract(address, tokenContractJSON.abi, web3Provider);
     }
 
     if(contractName == 'erc20token_approveAndCall')
     {
-      return new web3.eth.Contract(approveCallTokenContractJSON.abi,contractAddress)
+        return new Ethers.Contract(address, approveCallTokenContractJSON.abi, web3Provider);
     }
 
     if(contractName == 'lava')
     {
-      return new web3.eth.Contract(lavaContractJSON.abi,contractAddress)
+      return new Ethers.Contract(address, lavaContractJSON.abi, web3Provider);
     }
   }
 
-  static getTokenContract(web3,address)
+  static getTokenContract(web3Provider,env)
   {
-    console.log('meep address ', address)
-    return new web3.eth.Contract(tokenContractJSON.abi,address)
+    var address = ContractInterface.getTokenContractAddress(env)
+
+
+    return new Ethers.Contract(address, tokenContractJSON.abi, web3Provider);
   }
 
-  static getLavaContract(web3, address)
+  static getLavaContract(web3Provider, env)
   {
+    var address = ContractInterface.getLavaContractAddress(env)
 
 
-    return new web3.eth.Contract(lavaContractJSON.abi,address)
+    return new Ethers.Contract(address, lavaContractJSON.abi, web3Provider);
   }
 
+
+  static getNametagContract(web3Provider, env)
+  {
+      var address = ContractInterface.getNametagContractAddress(env)
+
+    return new Ethers.Contract(address, nametagContractJSON.abi, web3Provider);
+  }
+
+
+
+    static getTokenContractAddress(env)
+    {
+      if(env == 'development')
+      {
+        return deployedContractInfo.networks.testnet.contracts._0xbitcointoken.blockchain_address;
+      }else if(env == 'staging'){
+        return deployedContractInfo.networks.staging.contracts._0xbitcointoken.blockchain_address;
+      }else{
+        return deployedContractInfo.networks.mainnet.contracts._0xbitcointoken.blockchain_address;
+      }
+
+    }
+
+
+    static getLavaContractAddress(env)
+    {
+      if(env == 'development')
+      {
+        return deployedContractInfo.networks.testnet.contracts.lavatoken.blockchain_address;
+      }else if(env == 'staging'){
+        return deployedContractInfo.networks.staging.contracts.lavatoken.blockchain_address;
+      }else{
+        return deployedContractInfo.networks.mainnet.contracts.lavatoken.blockchain_address;
+      }
+
+    }
+
+
+  static getNametagContractAddress(env)
+  {
+    if(env == 'development')
+    {
+      return deployedContractInfo.networks.testnet.contracts.nametagtoken.blockchain_address;
+    }else if(env == 'staging'){
+      return deployedContractInfo.networks.staging.contracts.nametagtoken.blockchain_address;
+    }else{
+      return deployedContractInfo.networks.mainnet.contracts.nametagtoken.blockchain_address;
+    }
+
+  }
 
 /*  static getTokenContractAddress(env)
   {

@@ -136,6 +136,20 @@ overflow-y: auto;
     border: 1px solid black;
     //padding: 0px 5px;
     background-color: #eee !important;
+
+
+  }
+
+  input.success{
+
+      border: 2px solid #99e447 !important;
+
+  }
+
+  input.error{
+
+      border: 2px solid #e6616e !important;
+
   }
 
   input:hover

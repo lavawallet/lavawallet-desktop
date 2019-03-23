@@ -1,6 +1,6 @@
 {
   "name": "lavawallet-desktop",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A desktop client for storing and sending ERC20 tokens.",
   "email": "admin@0xbitcoin.org",
   "author": "GitHub",
@@ -25,6 +25,7 @@
   ],
   "license": "CC0-1.0",
   "dependencies": {
+    "bignumber.js": "^8.1.1",
     "child_process": "^1.0.2",
     "electron-json-storage": "^4.1.0",
     "eth-sig-util": "^1.4.2",
