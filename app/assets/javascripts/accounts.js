@@ -40,8 +40,8 @@ export default class Accounts {
 
           menuMode: 'overview',
 
-          depositAmount: 0,
-          withdrawAmount:0,
+          approveAmount: 0,
+        //  withdrawAmount:0,
 
 
           flashMessage: null
@@ -84,7 +84,7 @@ export default class Accounts {
 
                     console.log( this.account  )
                     break;
-                case 'deposit':
+                case 'approve':
 
                     var env = self.contractConfig.networkEnvironment;
                     var address = self.contractConfig.tokenAddress;
@@ -99,19 +99,19 @@ export default class Accounts {
 
                       console.log('pwr', Math.pow(10,tokenDecimals) )
 
-                    var depositAmount = parseFloat(this.depositAmount);
-                    var depositAmountRaw = parseFloat(this.depositAmount) * Math.pow(10,tokenDecimals);
+                    var approveAmount = parseFloat(this.approveAmount);
+                    var approveAmountRaw = parseFloat(this.approveAmount) * Math.pow(10,tokenDecimals);
 
-                    console.log('deposit', depositAmount )
-                    console.log('deposit amt ', depositAmountRaw)
+                    console.log('approve', approveAmount )
+                    console.log('approve amt ', approveAmountRaw)
 
 
                     var txCommand = {
                       from: this.selectedAddress,
-                      contract: 'erc20token_approveAndCall',
+                      contract: 'erc20token',
                       to: address,
-                      functionName: 'approveAndCall',
-                      params: [spender,depositAmountRaw,"0x00"] };
+                      functionName: 'approve',
+                      params: [spender,approveAmountRaw] };
 
                     //self.txSidebar.openSidebar(   );
 
@@ -121,7 +121,7 @@ export default class Accounts {
 
                     break;
 
-                case 'withdraw':
+                /*case 'withdraw':
                     console.log('withdraw', this.withdrawAmount )
                     var env = self.contractConfig.networkEnvironment;
                     var address = self.contractConfig.lavaContractAddress;
@@ -146,7 +146,7 @@ export default class Accounts {
 
                     self.txSidebar.openSidebar('transfer',  txOverview);
 
-                    break;
+                    break;*/
                 case 'showTxList':
 
                     var env = self.contractConfig.networkEnvironment;

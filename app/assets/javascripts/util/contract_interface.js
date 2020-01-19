@@ -22,17 +22,18 @@ module.exports = class ContractInterface  {
   {
     if(contractName == 'erc20token')
     {
-        return new Ethers.Contract(address, tokenContractJSON.abi, web3Provider);
+      console.log(' get contract ', contractName, contractAddress) // not working ?
+        return new Ethers.Contract(contractAddress, tokenContractJSON.abi, web3Provider);
     }
 
-    if(contractName == 'erc20token_approveAndCall')
+  if(contractName == 'erc20token_approveAndCall')
     {
-        return new Ethers.Contract(address, approveCallTokenContractJSON.abi, web3Provider);
+        return new Ethers.Contract(contractAddress, approveCallTokenContractJSON.abi, web3Provider);
     }
 
     if(contractName == 'lava')
     {
-      return new Ethers.Contract(address, lavaContractJSON.abi, web3Provider);
+      return new Ethers.Contract(contractAddress, lavaContractJSON.abi, web3Provider);
     }
   }
 

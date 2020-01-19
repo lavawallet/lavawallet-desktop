@@ -72,14 +72,14 @@
                    <li class="collection-item red lighten-2 white-text">
 
                      <div class="selected-account-balance is-size-8 " v-if="tokenBalance != null" v-cloak>
-                        LAVA     <div class="pull-right"> {{tokenBalance}} </div>
+                        0xBTC     <div class="pull-right"> {{tokenBalance}} </div>
                      </div>
 
                    </li>
                  </ul>
               </div>
 
-              <div class="account-deposit" v-if="tokenLoaded && menuMode == 'deposit' " v-cloak>
+              <div class="account-approve" v-if="tokenLoaded  " v-cloak>
 
                 <div class="subtitle-banner electric-blue white-text" v-if="tokenBalance != null" v-cloak>
                   External Balance: {{tokenBalance}}
@@ -90,18 +90,18 @@
 
 
                     <div class="simple-input-container"   >
-                      <div class="label">Deposit Tokens</div>
+                      <div class="label">Approve Tokens</div>
                         <div class="simple-input"   >
-                          <input placeholder="" id="depositAmount" type="text" class="validate" v-model='depositAmount' v-if="selectedAccount" >
+                          <input placeholder="" id="approveAmount" type="text" class="validate" v-model='approveAmount' v-if="selectedAccount" >
                           </div>
-                          <div class="btn" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('deposit')">Deposit</div>
+                          <div class="btn" v-bind:class="{'disabled': !selectedAccount}" v-on:click="clickButton('approve')">Approve</div>
                       </div>
 
                   </div>
                   <div class="col s6">
                     <div class="padding-1">
                       <div class="is-size-8" v-if="tokenBalance != null" v-cloak>
-                        Lava Balance: {{tokenBalance}}
+                        Approved Balance: {{tokenBalance}}
                       </div>
                     </div>
 

@@ -21,7 +21,7 @@ export default class TXHelper {
   {
     return {
       ethAccount: ethAccount,
-      accountStatus: accountStatus   
+      accountStatus: accountStatus
 
     }
   }
@@ -32,7 +32,7 @@ export default class TXHelper {
 
 
 
-    console.log('get data for tx ')
+    console.log('get data for tx ',  txCommand)
 
     var txMethod = await TXHelper.getTXMethod( web3, env, txCommand  )
 
