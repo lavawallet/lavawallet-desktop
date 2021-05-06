@@ -44,7 +44,7 @@
     "request": "^2.87.0",
     "sha3": "^1.2.0",
     "socket.io": "^2.1.1",
-    "underscore": "^1.9.1",
+    "underscore": "^1.12.1",
     "vue": "^2.5.13",
     "web3-utils": "^1.0.0-beta.24"
   },
