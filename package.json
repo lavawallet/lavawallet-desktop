@@ -62,7 +62,7 @@
     "browserify": "^15.2.0",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.9",
-    "electron": "4.1.0",
+    "electron": "18.3.7",
     "electron-builder": "^20.38.5",
     "electron-packager": "^13.1.1",
     "electron-rebuild": "^1.8.4",
